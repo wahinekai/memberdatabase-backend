@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BackendHost": {
+    "LocalDevelopment": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
