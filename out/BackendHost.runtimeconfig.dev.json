@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\cbpod\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\cbpod\\.nuget\\packages"
-    ]
-  }
-}

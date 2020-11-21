@@ -1,24 +1,25 @@
 # Build Environment
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS restore
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
-COPY src/Backend.sln ./src/
-COPY src/BackendHost/BackendHost.csproj ./src/BackendHost/
-RUN dotnet restore ./src
+# Copy everything and build
 COPY ./src ./src
-
-# Build and Run Development Image
-FROM restore as run_dev
-
-ENTRYPOINT ["dotnet", "watch", "--project", "./src/Backend.sln" "run", "--project", ".\BackendHost\BackendHost.csproj"]
-
-# Copy everything else and build
-FROM restore as build
-RUN dotnet build --no-restore ./src --output ./out
+RUN dotnet publish -c Release ./src/BackendHost/BackendHost.csproj --output ./out
 
 # Build production runtime image
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS run_prod
+FROM mcr.microsoft.com/dotnet/sdk:5.0
+
+# Set Runtime environment variables
+ENV ASPNETCORE_ENVIRONMENT="Production"
+ENV ASPNETCORE_URLS="http://0.0.0.0:5000;https://0.0.0.0:5001"
+
+# Expose Ports
+EXPOSE 5000 
+EXPOSE 5001
+
+# Copy over production dll
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "BackendHost.dll"]
+
+# Set Entrypoint
+ENTRYPOINT dotnet BackendHost.dll

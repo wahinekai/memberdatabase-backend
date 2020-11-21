@@ -4,7 +4,10 @@
 
 namespace WahineKai.Backend.Host
 {
-    public record User
+    /// <summary>
+    /// Model of a user.
+    /// </summary>
+    public class User
     {
         /// <summary>
         /// Gets user email address.
