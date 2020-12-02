@@ -9,6 +9,7 @@ namespace WahineKai.Backend.Host.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using WahineKai.Backend.DTO;
 
     /// <summary>
     /// User controller class
@@ -35,11 +36,14 @@ namespace WahineKai.Backend.Host.Controllers
         public User Get()
         {
             this.logger.LogInformation("In GET method.");
-            return new User
+            var user = new UserWithToken
             {
+                Token = "TOKEN",
+                FirstName = "Cameron",
                 Email = "test@test.com",
-                Password = "password",
             };
+            user.Validate();
+            return user;
         }
     }
 }
