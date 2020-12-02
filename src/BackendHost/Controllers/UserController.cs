@@ -1,6 +1,9 @@
-﻿// <copyright file="UserController.cs" company="Wahine Kai">
+﻿// -----------------------------------------------------------------------
+// <copyright file="UserController.cs" company="Wahine Kai">
 // Copyright (c) Wahine Kai. All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
+// -----------------------------------------------------------------------
 
 namespace WahineKai.Backend.Host.Controllers
 {
@@ -8,7 +11,7 @@ namespace WahineKai.Backend.Host.Controllers
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// User controller class.
+    /// User controller class
     /// </summary>
     [ApiController]
     public class UserController : ControllerBase
@@ -18,16 +21,16 @@ namespace WahineKai.Backend.Host.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController"/> class.
         /// </summary>
-        /// <param name="logger">Logger given by ASP.NET.</param>
+        /// <param name="logger">Logger given by ASP.NET</param>
         public UserController(ILogger<UserController> logger)
         {
             this.logger = logger;
         }
 
         /// <summary>
-        /// Sample get method to setup backend.
+        /// Sample get method to setup backend
         /// </summary>
-        /// <returns>A sample user.</returns>
+        /// <returns>A sample user</returns>
         [HttpGet("user")]
         public User Get()
         {

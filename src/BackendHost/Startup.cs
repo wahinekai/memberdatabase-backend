@@ -1,6 +1,9 @@
+// -----------------------------------------------------------------------
 // <copyright file="Startup.cs" company="Wahine Kai">
 // Copyright (c) Wahine Kai. All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
+// -----------------------------------------------------------------------
 
 namespace WahineKai.Backend.Host
 {
@@ -12,14 +15,14 @@ namespace WahineKai.Backend.Host
     using Microsoft.OpenApi.Models;
 
     /// <summary>
-    /// Startup configuration.
+    /// Startup configuration
     /// </summary>
     public class Startup
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// Initializes a new instance of the <see cref="Startup"/> class
         /// </summary>
-        /// <param name="configuration">ASP.NET configuration.</param>
+        /// <param name="configuration">ASP.NET configuration</param>
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
@@ -33,7 +36,7 @@ namespace WahineKai.Backend.Host
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
-        /// <param name="services">Service object passed in from ASP.NET.</param>
+        /// <param name="services">Service object passed in from ASP.NET</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -46,8 +49,8 @@ namespace WahineKai.Backend.Host
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        /// <param name="app">ASP.NET application builder.</param>
-        /// <param name="env">ASP.NET Web host environeent.</param>
+        /// <param name="app">ASP.NET application builder</param>
+        /// <param name="env">ASP.NET Web host environeent</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

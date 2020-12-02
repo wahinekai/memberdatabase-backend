@@ -1,21 +1,29 @@
+// -----------------------------------------------------------------------
 // <copyright file="User.cs" company="Wahine Kai">
 // Copyright (c) Wahine Kai. All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
+// -----------------------------------------------------------------------
 
 namespace WahineKai.Backend.Host
 {
     /// <summary>
     /// Model of a user.
     /// </summary>
-    public class User
+    public record User
     {
         /// <summary>
-        /// Gets user email address.
+        /// Gets user first name
+        /// </summary>
+        public string FirstName { get; init; }
+
+        /// <summary>
+        /// Gets user email address
         /// </summary>
         public string Email { get; init; }
 
         /// <summary>
-        /// Gets user Password.
+        /// Gets user Password
         /// </summary>
         public string Password { get; init; }
     }

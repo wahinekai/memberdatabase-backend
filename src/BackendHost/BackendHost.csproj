@@ -6,6 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="StyleCop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="StyleCop.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.0" NoWarn="NU1605" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
