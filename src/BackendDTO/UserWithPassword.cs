@@ -12,7 +12,7 @@ namespace WahineKai.Backend.DTO
     /// <summary>
     /// Model of a user.
     /// </summary>
-    public record UserWithPassword : User
+    public class UserWithPassword : User
     {
         /// <summary>
         /// Gets user Password

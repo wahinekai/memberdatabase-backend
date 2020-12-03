@@ -8,6 +8,7 @@
 namespace WahineKai.Backend.Host
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
 
     /// <summary>
@@ -31,6 +32,23 @@ namespace WahineKai.Backend.Host
         /// <returns>A Host builder that can be built and run</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.Sources.Clear();
+
+                    var env = hostingContext.HostingEnvironment;
+
+                    // Add configuration files
+                    config.AddJsonFile("Properties/appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"Properties/{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                    config.AddEnvironmentVariables();
+
+                    if (args != null)
+                    {
+                        config.AddCommandLine(args);
+                    }
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

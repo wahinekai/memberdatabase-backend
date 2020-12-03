@@ -8,8 +8,12 @@
 namespace WahineKai.Backend.Host.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
+    using WahineKai.Backend.Common;
     using WahineKai.Backend.DTO;
+    using WahineKai.Backend.Service;
+    using WahineKai.Backend.Service.Contracts;
 
     /// <summary>
     /// User controller class
@@ -17,33 +21,32 @@ namespace WahineKai.Backend.Host.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IConfiguration configuration;
         private readonly ILogger<UserController> logger;
+        private readonly Settings settings;
+        private readonly IUserService<UserController> userService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController"/> class.
         /// </summary>
         /// <param name="logger">Logger given by ASP.NET</param>
-        public UserController(ILogger<UserController> logger)
+        /// <param name="configuration">Global configuration given by ASP.NET</param>
+        public UserController(ILogger<UserController> logger, IConfiguration configuration)
         {
             this.logger = logger;
+            this.configuration = Ensure.IsNotNull(() => configuration);
+            this.settings = new Settings(this.configuration);
+            this.userService = new UserService<UserController>(this.logger, this.settings);
         }
 
         /// <summary>
         /// Sample get method to setup backend
         /// </summary>
         /// <returns>A sample user</returns>
-        [HttpGet("user")]
+        [HttpGet("/user")]
         public User Get()
         {
-            this.logger.LogInformation("In GET method.");
-            var user = new UserWithToken
-            {
-                Token = "TOKEN",
-                FirstName = "Cameron",
-                Email = "test@test.com",
-            };
-            user.Validate();
-            return user;
+            return this.userService.Get();
         }
     }
 }

@@ -8,6 +8,8 @@
 namespace WahineKai.Backend.Common
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Utility Methods to sanity check objects and arguments
@@ -55,12 +57,11 @@ namespace WahineKai.Backend.Common
         /// <typeparam name="T">The array element type</typeparam>
         /// <param name="input">A function which, when invoked, gives the array</param>
         /// <returns>A non-null and non-empty array</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "Nullable array")]
-        public static T[] IsNotNullOrEmpty<T>(Func<T[]?> input)
+        public static IEnumerable<T> IsNotNullOrEmpty<T>(Func<IEnumerable<T>?> input)
         {
-            var invoked = Ensure.IsNotNull<T[]>(input);
+            var invoked = Ensure.IsNotNull<IEnumerable<T>>(input);
 
-            if (invoked.Length == 0)
+            if (!invoked.Any())
             {
                 throw new ArgumentException($"{invoked} is empty");
             }
