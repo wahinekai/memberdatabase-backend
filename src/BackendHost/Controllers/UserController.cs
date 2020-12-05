@@ -24,19 +24,23 @@ namespace WahineKai.Backend.Host.Controllers
         private readonly IConfiguration configuration;
         private readonly ILogger<UserController> logger;
         private readonly Settings settings;
-        private readonly IUserService<UserController> userService;
+        private readonly IUserService userService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController"/> class.
         /// </summary>
-        /// <param name="logger">Logger given by ASP.NET</param>
+        /// <param name="loggerFactory">Logger factory given by ASP.NET</param>
         /// <param name="configuration">Global configuration given by ASP.NET</param>
-        public UserController(ILogger<UserController> logger, IConfiguration configuration)
+        public UserController(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
-            this.logger = logger;
+            loggerFactory = Ensure.IsNotNull(() => loggerFactory);
+            this.logger = loggerFactory.CreateLogger<UserController>();
+
             this.configuration = Ensure.IsNotNull(() => configuration);
+
             this.settings = new Settings(this.configuration);
-            this.userService = new UserService<UserController>(this.logger, this.settings);
+
+            this.userService = new UserService(loggerFactory, this.settings);
         }
 
         /// <summary>

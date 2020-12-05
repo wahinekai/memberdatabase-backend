@@ -7,19 +7,29 @@
 
 namespace WahineKai.Backend.Host
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Identity.Web;
     using Microsoft.OpenApi.Models;
     using WahineKai.Backend.Common;
+    using WahineKai.Backend.Host.Middleware;
 
     /// <summary>
     /// Startup configuration
     /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Cors Policy used by this application
+        /// </summary>
+        private const string CorsPolicy = "AllowAllOrigins";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Startup"/> class
         /// </summary>
@@ -46,10 +56,43 @@ namespace WahineKai.Backend.Host
         /// <param name="services">Service object passed in from ASP.NET</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            // This is required to be instantiated before the OpenIdConnectOptions starts getting configured.
+            // By default, the claims mapping will map claim names in the old format to accommodate older SAML applications.
+            // 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role' instead of 'roles'
+            // This flag ensures that the ClaimsIdentity claims collection will be built from the claims in the token
+            // JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            // Adds Microsoft Identity platform (AAD v2.0) support to protect this Api
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(
+                    options =>
+                {
+                    this.Configuration.Bind("AzureAdB2C", options);
+                },
+                    options => { this.Configuration.Bind("AzureAdB2C", options); });
+
+            // Require authentication on all controllers
+            services.AddControllers(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend", Version = "v1" });
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(Startup.CorsPolicy, builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
             });
         }
 
@@ -66,13 +109,17 @@ namespace WahineKai.Backend.Host
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend v1"));
             }
-            else
-            {
-                app.UseHttpsRedirection();
-            }
 
+            app.UseHttpsRedirection();
             app.UseRouting();
 
+            // Allow all authenticated requests
+            app.UseCors(Startup.CorsPolicy);
+
+            app.UseMiddleware<RequestLoggingMiddleware>();
+
+            // Allow authentication & authorization for endpoints
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

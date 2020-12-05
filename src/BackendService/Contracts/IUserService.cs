@@ -12,8 +12,7 @@ namespace WahineKai.Backend.Service.Contracts
     /// <summary>
     /// Service for interaction with users
     /// </summary>
-    /// <typeparam name="TILoggerType">Type of logger given to the service</typeparam>
-    public interface IUserService<TILoggerType>
+    public interface IUserService
     {
         /// <summary>
         /// Get a test user

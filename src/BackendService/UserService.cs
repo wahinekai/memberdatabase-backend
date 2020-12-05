@@ -14,28 +14,28 @@ namespace WahineKai.Backend.Service
     using WahineKai.Backend.Service.Contracts;
 
     /// <inheritdoc/>
-    public class UserService<TILoggerType> : IUserService<TILoggerType>
+    public class UserService : IUserService
     {
-        private readonly ILogger<TILoggerType> logger;
+        private readonly ILogger logger;
         private readonly Settings settings;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserService{TILoggerType}"/> class.
+        /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        /// <param name="logger">Logger for this call stack</param>
+        /// <param name="loggerFactory">Logger factory for this service</param>
         /// <param name="settings">Application settings</param>
-        public UserService(ILogger<TILoggerType> logger, Settings settings)
+        public UserService(ILoggerFactory loggerFactory, Settings settings)
         {
             this.settings = Ensure.IsNotNull(() => settings);
-            this.logger = Ensure.IsNotNull(() => logger);
+            loggerFactory = Ensure.IsNotNull(() => loggerFactory);
+            this.logger = loggerFactory.CreateLogger<UserService>();
         }
 
         /// <inheritdoc/>
         public User Get()
         {
-            var user = new UserWithToken
+            var user = new User
             {
-                Token = "TOKEN",
                 FirstName = "Cameron",
                 Email = "test@test.com",
             };
