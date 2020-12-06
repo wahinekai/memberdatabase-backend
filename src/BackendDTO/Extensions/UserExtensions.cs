@@ -36,7 +36,7 @@ namespace WahineKai.Backend.DTO.Extensions
                     throw new ArgumentException($"{user.Country} is not a supported country");
                 }
 
-                // Setup state checker - at the moment, I have to hand-do supported countreis
+                // Setup state checker - at the moment, I have to hand-do supported countries
                 var regions = user.Country switch
                 {
                     "United States" => Ensure.IsNotNullOrEmpty(() => Factory.Make(CountrySelection.UnitedStates)),

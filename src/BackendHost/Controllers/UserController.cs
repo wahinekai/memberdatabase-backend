@@ -10,7 +10,6 @@ namespace WahineKai.Backend.Host.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
     using WahineKai.Backend.DTO;
     using WahineKai.Backend.Service;
     using WahineKai.Backend.Service.Contracts;
@@ -21,9 +20,6 @@ namespace WahineKai.Backend.Host.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IConfiguration configuration;
-        private readonly ILogger<UserController> logger;
-        private readonly Settings settings;
         private readonly IUserService userService;
 
         /// <summary>
@@ -32,15 +28,9 @@ namespace WahineKai.Backend.Host.Controllers
         /// <param name="loggerFactory">Logger factory given by ASP.NET</param>
         /// <param name="configuration">Global configuration given by ASP.NET</param>
         public UserController(ILoggerFactory loggerFactory, IConfiguration configuration)
+            : base(loggerFactory, configuration)
         {
-            loggerFactory = Ensure.IsNotNull(() => loggerFactory);
-            this.logger = loggerFactory.CreateLogger<UserController>();
-
-            this.configuration = Ensure.IsNotNull(() => configuration);
-
-            this.settings = new Settings(this.configuration);
-
-            this.userService = new UserService(loggerFactory, this.settings);
+            this.userService = new UserService(loggerFactory, this.Settings);
         }
 
         /// <summary>
@@ -50,7 +40,7 @@ namespace WahineKai.Backend.Host.Controllers
         [HttpGet("/user")]
         public User Get()
         {
-            return this.userService.Get();
+            return this.userService.Get(this.GetUserEmailFromContext());
         }
     }
 }

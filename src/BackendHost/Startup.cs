@@ -76,6 +76,7 @@ namespace WahineKai.Backend.Host
             {
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
+                    .RequireClaim("emails")
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });

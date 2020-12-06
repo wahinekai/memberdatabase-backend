@@ -17,7 +17,8 @@ namespace WahineKai.Backend.Service.Contracts
         /// <summary>
         /// Get a test user
         /// </summary>
+        /// <param name="authenticatedUserEmail">E-mail address of the authenticated user</param>
         /// <returns>A hardcoded test user</returns>
-        public User Get();
+        public User Get(string authenticatedUserEmail);
     }
 }
