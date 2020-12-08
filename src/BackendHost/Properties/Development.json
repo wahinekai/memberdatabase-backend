@@ -1,6 +1,5 @@
 {
   "Settings": {
-    "test": "Development"
   },
   "AzureAdB2C": {
     "Instance": "https://wahinekaidevelopment.b2clogin.com",

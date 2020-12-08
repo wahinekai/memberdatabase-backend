@@ -7,6 +7,7 @@
 
 namespace WahineKai.Backend.Host
 {
+    using System.Text.Json.Serialization;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
@@ -79,7 +80,12 @@ namespace WahineKai.Backend.Host
                     .RequireClaim("emails")
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            })
+               .AddJsonOptions(options =>
+               {
+                   // Enums are serialized to strings with custom names
+                   options.JsonSerializerOptions.Converters.Add(new JsonStringEnumMemberConverter());
+               });
 
             services.AddSwaggerGen(c =>
             {

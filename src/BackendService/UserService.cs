@@ -7,10 +7,10 @@
 
 namespace WahineKai.Backend.Service
 {
+    using System;
     using Microsoft.Extensions.Logging;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.DTO;
-    using WahineKai.Backend.DTO.Extensions;
     using WahineKai.Backend.Service.Contracts;
 
     /// <inheritdoc/>
@@ -33,8 +33,12 @@ namespace WahineKai.Backend.Service
             {
                 FirstName = "Cameron",
                 Email = authenticatedUserEmail,
+                Chapter = Chapter.Canada,
+                JoinedDate = new DateTime(2010, 08, 28),
+                RenewalDate = new DateTime(2021, 08, 28),
             };
-            user.SettingsAwareValidation(this.Settings);
+
+            user.Validate();
             return user;
         }
     }

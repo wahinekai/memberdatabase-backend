@@ -10,19 +10,38 @@ namespace WahineKai.Backend.Host
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
+    using WahineKai.Backend.Common.Contracts;
 
     /// <summary>
     /// Entrypoint to Backend API
     /// </summary>
-    public class Entrypoint
+    public sealed class Entrypoint : IEntrypoint
     {
+        private readonly string[] commandLineArguments;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Entrypoint"/> class.
+        /// </summary>
+        /// <param name="args">Command-line arguments</param>
+        public Entrypoint(string[] args)
+        {
+            this.commandLineArguments = args;
+        }
+
         /// <summary>
         /// Main method entrypoint
         /// </summary>
         /// <param name="args">Command line arguments</param>
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var program = new Entrypoint(args);
+            program.Start();
+        }
+
+        /// <inheritdoc/>
+        public void Start()
+        {
+            this.CreateHostBuilder(this.commandLineArguments).Build().Run();
         }
 
         /// <summary>
@@ -30,7 +49,7 @@ namespace WahineKai.Backend.Host
         /// </summary>
         /// <param name="args">Command line arguments</param>
         /// <returns>A Host builder that can be built and run</returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {

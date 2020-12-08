@@ -26,15 +26,5 @@ namespace WahineKai.Backend.Common
         {
             this.configuration = Ensure.IsNotNull(() => configuration);
         }
-
-        /// <summary>
-        /// Gets supported countries array parameter
-        /// </summary>
-        public ICollection<string> SupportedCountries => this.configuration["Settings:SupportedCountries"].Split(";").ToList();
-
-        /// <summary>
-        /// Gets test setting parameter
-        /// </summary>
-        public string Test => this.configuration["Settings:test"];
     }
 }
