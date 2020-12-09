@@ -7,8 +7,6 @@
 
 namespace WahineKai.Backend.Common
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>

@@ -1,10 +1,12 @@
 {
-  "Settings": {
-  },
   "AzureAdB2C": {
     "Instance": "https://wahinekaidevelopment.b2clogin.com",
     "ClientId": "030a0045-7db3-4eb6-952a-95ab954a83cf",
     "Domain": "wahinekaidevelopment.onmicrosoft.com",
     "SignUpSignInPolicyId": "B2C_1_signup_signin"
+  },
+  "CosmosConfiguration": {
+    "EndpointUrl": "https://wahine-kai-member-database.documents.azure.com:443/",
+    "PrimaryKey": "<Our Azure Cosmos account Primary Key (set in user settings, do not add here!!!)>"
   }
 }

@@ -7,13 +7,38 @@
 
 namespace WahineKai.Backend.SeedDatabase.Host
 {
+    using System;
+    using Microsoft.Extensions.Configuration;
     using WahineKai.Backend.Common.Contracts;
+    using WahineKai.Backend.DTO.Properties;
 
     /// <summary>
     /// Entrypoint for SeedDatabaseHost console application
     /// </summary>
     public sealed class Entrypoint : IEntrypoint
     {
+        private readonly CosmosConfiguration cosmosConfiguration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Entrypoint"/> class.
+        /// </summary>
+        public Entrypoint()
+        {
+            var builder = new ConfigurationBuilder();
+
+            // Tell the builder to look for the appsettings.json file
+            builder.AddJsonFile("Properties/appsettings.json", optional: false, reloadOnChange: true);
+
+            // Add user secrets
+            builder.AddUserSecrets<Entrypoint>();
+
+            // Build configuration
+            var configuration = builder.Build();
+
+            // Build and validate Cosmos Configuration
+            this.cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(configuration);
+        }
+
         /// <summary>
         /// Main method entrypoint
         /// </summary>
@@ -26,7 +51,7 @@ namespace WahineKai.Backend.SeedDatabase.Host
         /// <inheritdoc/>
         public void Start()
         {
-            var seeder = new DatabaseSeeder();
+            var seeder = new DatabaseSeeder(this.cosmosConfiguration);
             seeder.Clear();
             seeder.Seed();
         }
