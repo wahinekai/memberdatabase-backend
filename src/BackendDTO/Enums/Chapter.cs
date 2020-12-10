@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.Backend.DTO.Enums
 {
     using System.Runtime.Serialization;
 

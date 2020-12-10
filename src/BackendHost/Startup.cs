@@ -18,7 +18,6 @@ namespace WahineKai.Backend.Host
     using Microsoft.Extensions.Hosting;
     using Microsoft.Identity.Web;
     using Microsoft.OpenApi.Models;
-    using WahineKai.Backend.Common;
     using WahineKai.Backend.Host.Middleware;
 
     /// <summary>
@@ -38,18 +37,12 @@ namespace WahineKai.Backend.Host
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this.Settings = new Settings(this.Configuration);
         }
 
         /// <summary>
         /// Gets ASP.NET configuration.
         /// </summary>
         public IConfiguration Configuration { get; }
-
-        /// <summary>
-        /// Gets configurable settings we care about for this application
-        /// </summary>
-        public Settings Settings { get; }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.

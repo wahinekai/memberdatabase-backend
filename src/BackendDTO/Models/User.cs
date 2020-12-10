@@ -5,13 +5,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.Backend.DTO.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using Newtonsoft.Json;
     using StatesAndProvinces;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.DTO.Enums;
@@ -21,6 +22,27 @@ namespace WahineKai.Backend.DTO
     /// </summary>
     public class User
     {
+        /// <summary>
+        /// Container Id for this model
+        /// </summary>
+        public const string ContainerId = "Users";
+
+        /// <summary>
+        /// Partion key for this container
+        /// </summary>
+        public const string PartitionKey = "/Email";
+
+        /// <summary>
+        /// Gets or sets Azure Cosmos DB id for this user
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public virtual Guid Id { get; set; } = Guid.NewGuid();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a user is an admin user
+        /// </summary>
+        public bool Admin { get; set; } = false;
+
         /// <summary>
         /// Gets or sets user first name, required
         /// </summary>

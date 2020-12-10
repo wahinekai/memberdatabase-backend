@@ -63,6 +63,9 @@ namespace WahineKai.Backend.Host
 
                     config.AddEnvironmentVariables();
 
+                    // Add user secrets
+                    config.AddUserSecrets<Entrypoint>();
+
                     if (args != null)
                     {
                         config.AddCommandLine(args);

@@ -8,6 +8,7 @@
 namespace WahineKai.Backend.Host.Controllers
 {
     using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using WahineKai.Backend.Common;
@@ -15,6 +16,8 @@ namespace WahineKai.Backend.Host.Controllers
     /// <summary>
     /// Base class for all controllers
     /// </summary>
+    [ApiController]
+    [Route("api/v1/[Controller]/[Action]")]
     public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         /// <summary>
@@ -22,14 +25,12 @@ namespace WahineKai.Backend.Host.Controllers
         /// </summary>
         /// <param name="loggerFactory">Logger factory given by ASP.NET</param>
         /// <param name="configuration">Global configuration given by ASP.NET</param>
-        public ControllerBase(ILoggerFactory loggerFactory, IConfiguration configuration)
+        protected ControllerBase(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
             loggerFactory = Ensure.IsNotNull(() => loggerFactory);
             this.Logger = loggerFactory.CreateLogger<ControllerBase>();
 
             this.Configuration = Ensure.IsNotNull(() => configuration);
-
-            this.Settings = new Settings(this.Configuration);
         }
 
         /// <summary>
@@ -41,11 +42,6 @@ namespace WahineKai.Backend.Host.Controllers
         /// Gets logger given by .NET
         /// </summary>
         protected ILogger Logger { get; init; }
-
-        /// <summary>
-        /// Gets settings derived from configuration
-        /// </summary>
-        protected Settings Settings { get; init; }
 
         /// <summary>
         /// Gets the user email from the HTTP Context

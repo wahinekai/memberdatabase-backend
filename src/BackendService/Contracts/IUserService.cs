@@ -7,7 +7,9 @@
 
 namespace WahineKai.Backend.Service.Contracts
 {
-    using WahineKai.Backend.DTO;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using WahineKai.Backend.DTO.Models;
 
     /// <summary>
     /// Service for interaction with users
@@ -15,10 +17,24 @@ namespace WahineKai.Backend.Service.Contracts
     public interface IUserService
     {
         /// <summary>
-        /// Get a test user
+        /// Get the profile of the authenticated user
         /// </summary>
-        /// <param name="authenticatedUserEmail">E-mail address of the authenticated user</param>
+        /// <param name="userEmail">E-mail address of the authenticated user</param>
         /// <returns>A hardcoded test user</returns>
-        public User Get(string authenticatedUserEmail);
+        public Task<User> GetMeAsync(string userEmail);
+
+        /// <summary>
+        /// Get all users in the database
+        /// </summary>
+        /// <param name="userEmail">E-mail address of the authenticated user</param>
+        /// <returns>A hardcoded test user</returns>
+        public Task<ICollection<User>> GetAllAsync(string userEmail);
+
+        /// <summary>
+        /// Creates a user in the chosen repository
+        /// </summary>
+        /// <param name="user">The user to add to the repository</param>
+        /// <returns>The created user in the repository</returns>
+        public Task<User> CreateUserAsync(User user);
     }
 }

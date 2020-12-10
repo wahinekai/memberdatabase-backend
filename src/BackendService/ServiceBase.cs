@@ -7,6 +7,7 @@
 
 namespace WahineKai.Backend.Service
 {
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using WahineKai.Backend.Common;
 
@@ -19,13 +20,13 @@ namespace WahineKai.Backend.Service
         /// Initializes a new instance of the <see cref="ServiceBase"/> class.
         /// </summary>
         /// <param name="loggerFactory">Logger factory for this service</param>
-        /// <param name="settings">Application settings</param>
-        public ServiceBase(ILoggerFactory loggerFactory, Settings settings)
+        /// <param name="configuration">Application configuration</param>
+        public ServiceBase(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
-            this.Settings = Ensure.IsNotNull(() => settings);
+            this.Configuration = Ensure.IsNotNull(() => configuration);
 
             loggerFactory = Ensure.IsNotNull(() => loggerFactory);
-            this.Logger = loggerFactory.CreateLogger<UserService>();
+            this.Logger = loggerFactory.CreateLogger<ServiceBase>();
         }
 
         /// <summary>
@@ -34,8 +35,8 @@ namespace WahineKai.Backend.Service
         protected ILogger Logger { get; init; }
 
         /// <summary>
-        /// Gets global settings created from configuration
+        /// Gets global configuration
         /// </summary>
-        protected Settings Settings { get; init; }
+        protected IConfiguration Configuration { get; init; }
     }
 }

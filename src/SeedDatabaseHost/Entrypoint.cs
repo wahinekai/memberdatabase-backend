@@ -7,7 +7,7 @@
 
 namespace WahineKai.Backend.SeedDatabase.Host
 {
-    using System;
+    using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using WahineKai.Backend.Common.Contracts;
     using WahineKai.Backend.DTO.Properties;
@@ -15,7 +15,7 @@ namespace WahineKai.Backend.SeedDatabase.Host
     /// <summary>
     /// Entrypoint for SeedDatabaseHost console application
     /// </summary>
-    public sealed class Entrypoint : IEntrypoint
+    public sealed class Entrypoint : IAsyncEntrypoint
     {
         private readonly CosmosConfiguration cosmosConfiguration;
 
@@ -42,18 +42,20 @@ namespace WahineKai.Backend.SeedDatabase.Host
         /// <summary>
         /// Main method entrypoint
         /// </summary>
-        public static void Main()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public static async Task Main()
         {
             var program = new Entrypoint();
-            program.Start();
+            await program.StartAsync();
         }
 
         /// <inheritdoc/>
-        public void Start()
+        public async Task StartAsync()
         {
-            var seeder = new DatabaseSeeder(this.cosmosConfiguration);
-            seeder.Clear();
-            seeder.Seed();
+            var seeder = new DatabaseSeeder(this.cosmosConfiguration, true);
+
+            await seeder.Clear();
+            await seeder.Seed();
         }
     }
 }

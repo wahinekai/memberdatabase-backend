@@ -26,17 +26,23 @@ namespace WahineKai.Backend.DTO.Properties
         public string? PrimaryKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the database id of this cosmos configuration
+        /// </summary>
+        public string? DatabaseId { get; set; }
+
+        /// <summary>
         /// Builds a cosmos configuration from a configuration
         /// </summary>
         /// <param name="configuration">Dotnet configuration object</param>
         /// <returns>A validated Cosmos configuration. Throws if not possible.</returns>
-        public static CosmosConfiguration BuildFromConfiguration(IConfigurationRoot configuration)
+        public static CosmosConfiguration BuildFromConfiguration(IConfiguration configuration)
         {
             // Build CosmosConfiguration
             var cosmosConfiguration = new CosmosConfiguration
             {
                 EndpointUrl = configuration["CosmosConfiguration:EndpointUrl"],
                 PrimaryKey = configuration["CosmosConfiguration:PrimaryKey"],
+                DatabaseId = configuration["CosmosConfiguration:DatabaseId"],
             };
 
             // Validate Cosmos Configuration
@@ -52,6 +58,7 @@ namespace WahineKai.Backend.DTO.Properties
         {
             this.EndpointUrl = Ensure.IsNotNullOrWhitespace(() => this.EndpointUrl);
             this.PrimaryKey = Ensure.IsNotNullOrWhitespace(() => this.PrimaryKey);
+            this.DatabaseId = Ensure.IsNotNullOrWhitespace(() => this.DatabaseId);
         }
     }
 }
