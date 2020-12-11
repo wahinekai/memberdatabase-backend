@@ -12,16 +12,16 @@ namespace WahineKai.Backend.DTO.Models
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using Newtonsoft.Json;
     using StatesAndProvinces;
     using WahineKai.Backend.Common;
+    using WahineKai.Backend.Common.Contracts;
     using WahineKai.Backend.DTO.Enums;
 
     /// <summary>
     /// Model of a user.
     /// </summary>
-    public class User
+    public class User : IValidatable
     {
         /// <summary>
         /// Container Id for this model
@@ -243,9 +243,7 @@ namespace WahineKai.Backend.DTO.Models
             return replacedUser;
         }
 
-        /// <summary>
-        /// Ensure this object is a valid user record
-        /// </summary>
+        /// <inheritdoc/>
         public void Validate()
         {
             // User must have a name
