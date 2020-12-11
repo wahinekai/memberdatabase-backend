@@ -16,19 +16,19 @@ namespace WahineKai.Backend.DTO.Properties
     public class CosmosConfiguration
     {
         /// <summary>
-        /// Gets or sets the url of the Cosmos DB endpoint
+        /// Gets the url of the Cosmos DB endpoint
         /// </summary>
-        public string? EndpointUrl { get; set; }
+        public string? EndpointUrl { get; init; }
 
         /// <summary>
-        /// Gets or sets the primary key of the Cosmos DB endpoint
+        /// Gets the primary key of the Cosmos DB endpoint
         /// </summary>
-        public string? PrimaryKey { get; set; }
+        public string? PrimaryKey { get; init; }
 
         /// <summary>
-        /// Gets or sets the database id of this cosmos configuration
+        /// Gets the database id of this cosmos configuration
         /// </summary>
-        public string? DatabaseId { get; set; }
+        public string? DatabaseId { get; init; }
 
         /// <summary>
         /// Builds a cosmos configuration from a configuration
@@ -56,9 +56,9 @@ namespace WahineKai.Backend.DTO.Properties
         /// </summary>
         public void Validate()
         {
-            this.EndpointUrl = Ensure.IsNotNullOrWhitespace(() => this.EndpointUrl);
-            this.PrimaryKey = Ensure.IsNotNullOrWhitespace(() => this.PrimaryKey);
-            this.DatabaseId = Ensure.IsNotNullOrWhitespace(() => this.DatabaseId);
+            Ensure.IsNotNullOrWhitespace(() => this.EndpointUrl);
+            Ensure.IsNotNullOrWhitespace(() => this.PrimaryKey);
+            Ensure.IsNotNullOrWhitespace(() => this.DatabaseId);
         }
     }
 }

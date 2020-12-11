@@ -7,6 +7,7 @@
 
 namespace WahineKai.Backend.Service.Contracts
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using WahineKai.Backend.DTO.Models;
@@ -17,24 +18,52 @@ namespace WahineKai.Backend.Service.Contracts
     public interface IUserService
     {
         /// <summary>
-        /// Get the profile of the authenticated user
+        /// Get the profile of the a user
         /// </summary>
-        /// <param name="userEmail">E-mail address of the authenticated user</param>
-        /// <returns>A hardcoded test user</returns>
-        public Task<User> GetMeAsync(string userEmail);
+        /// <param name="userEmail">E-mail address of the user to get</param>
+        /// <param name="callingUserEmail">The email address of the user calling this service.  Defaults to the user to get.</param>
+        /// <returns>A validated user</returns>
+        public Task<User> GetByEmailAsync(string userEmail, string? callingUserEmail = null);
+
+        /// <summary>
+        /// Get the profile of the a user
+        /// </summary>
+        /// <param name="id">Id of the user to get</param>
+        /// <param name="callingUserEmail">The email address of the user calling this service</param>
+        /// <returns>A validated user</returns>
+        public Task<User> GetByIdAsync(Guid id, string? callingUserEmail);
 
         /// <summary>
         /// Get all users in the database
         /// </summary>
-        /// <param name="userEmail">E-mail address of the authenticated user</param>
-        /// <returns>A hardcoded test user</returns>
-        public Task<ICollection<User>> GetAllAsync(string userEmail);
+        /// <param name="callingUserEmail">E-mail address of the calling user</param>
+        /// <returns>A collection of validated users</returns>
+        public Task<ICollection<User>> GetAllAsync(string callingUserEmail);
 
         /// <summary>
         /// Creates a user in the chosen repository
         /// </summary>
         /// <param name="user">The user to add to the repository</param>
+        /// <param name="callingUserEmail">E-mail address of the calling user</param>
         /// <returns>The created user in the repository</returns>
-        public Task<User> CreateUserAsync(User user);
+        public Task<User> CreateAsync(User user, string callingUserEmail);
+
+        /// <summary>
+        /// Replace the user with making the request with the new user information
+        /// </summary>
+        /// <param name="userEmail">The email of the authenticated user making this request</param>
+        /// <param name="updatedUser">The updated user to replace it with</param>
+        /// <param name="callingUserEmail">E-mail address of the calling user, defaults to the email to replace</param>
+        /// <returns>The updated user</returns>
+        public Task<User> ReplaceByEmailAsync(string userEmail, User updatedUser, string? callingUserEmail = null);
+
+        /// <summary>
+        /// Replace the user with the specified id with the new user
+        /// </summary>
+        /// <param name="id">The id of the user to replace</param>
+        /// <param name="updatedUser">The updated user to replace it with</param>
+        /// <param name="callingUserEmail">E-mail address of the calling user</param>
+        /// <returns>The updated user</returns>
+        public Task<User> ReplaceByIdAsync(Guid id, User updatedUser, string callingUserEmail);
     }
 }

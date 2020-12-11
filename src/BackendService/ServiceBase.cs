@@ -27,6 +27,8 @@ namespace WahineKai.Backend.Service
 
             loggerFactory = Ensure.IsNotNull(() => loggerFactory);
             this.Logger = loggerFactory.CreateLogger<ServiceBase>();
+
+            this.Logger.LogTrace("Construction of ServiceBase complete");
         }
 
         /// <summary>

@@ -43,8 +43,7 @@ namespace WahineKai.Backend.Host.Middleware
             }
             finally
             {
-                this.logger.LogInformation(
-                    $"Request {context.Request?.Method} {context.Request?.Path.Value} => {context.Response?.StatusCode}.\n");
+                this.logger.LogInformation($"Request {context.Request?.Method} {context.Request?.Path.Value} => {context.Response?.StatusCode}.\n");
             }
         }
     }

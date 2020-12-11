@@ -24,10 +24,14 @@ namespace WahineKai.Backend.DTO
         public CosmosRepositoryBase(CosmosConfiguration cosmosConfiguration, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            this.Logger.LogTrace("Construction of Cosmos Repository Base starting");
+
             this.CosmosConfiguration = Ensure.IsNotNull(() => cosmosConfiguration);
             this.CosmosConfiguration.Validate();
 
             this.CosmosClient = new Microsoft.Azure.Cosmos.CosmosClient(this.CosmosConfiguration.EndpointUrl, this.CosmosConfiguration.PrimaryKey);
+
+            this.Logger.LogTrace("Construction of Cosmos Repository Base complete");
         }
 
         /// <summary>

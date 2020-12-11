@@ -55,10 +55,5 @@ namespace WahineKai.Backend.DTO.Enums
         /// Maine chapter
         /// </summary>
         Maine,
-
-        /// <summary>
-        /// Default, not valid
-        /// </summary>
-        NoChapter,
     }
 }

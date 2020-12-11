@@ -23,6 +23,8 @@ namespace WahineKai.Backend.DTO
         {
             loggerFactory = Ensure.IsNotNull(() => loggerFactory);
             this.Logger = loggerFactory.CreateLogger<RepositoryBase>();
+
+            this.Logger.LogTrace("Construction of repository base complete");
         }
 
         /// <summary>

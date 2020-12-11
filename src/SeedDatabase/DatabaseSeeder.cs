@@ -11,16 +11,19 @@ namespace WahineKai.Backend.SeedDatabase
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Cosmos.Linq;
+    using Microsoft.Extensions.Logging;
     using WahineKai.Backend.Common;
+    using WahineKai.Backend.DTO;
+    using WahineKai.Backend.DTO.Contracts;
     using WahineKai.Backend.DTO.Enums;
     using WahineKai.Backend.DTO.Models;
     using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Backend.SeedDatabase.Contracts;
 
     /// <summary>
     /// Project for seeding the development database with data
     /// </summary>
-    public sealed class DatabaseSeeder
+    public sealed class DatabaseSeeder : IDatabaseSeeder
     {
         private static readonly string[] Boards = { "5'10\" custom", "8'2\" funboard" };
 
@@ -87,9 +90,8 @@ namespace WahineKai.Backend.SeedDatabase
                 },
             };
 
-        private readonly CosmosConfiguration cosmosConfiguration;
-
-        private readonly Microsoft.Azure.Cosmos.CosmosClient cosmosClient;
+        private readonly IUserRepository userRepository;
+        private readonly ILogger logger;
 
         private bool databaseCleared;
 
@@ -97,16 +99,24 @@ namespace WahineKai.Backend.SeedDatabase
         /// Initializes a new instance of the <see cref="DatabaseSeeder"/> class.
         /// </summary>
         /// <param name="cosmosConfiguration">Configuration to access Cosmos DB</param>
+        /// <param name="loggerFactory">Logger factory to create loggers</param>
         /// <param name="databaseCleared">Whether the database is currently clear.  Defaults to false.</param>
-        public DatabaseSeeder(CosmosConfiguration? cosmosConfiguration, bool databaseCleared = false)
+        public DatabaseSeeder(CosmosConfiguration? cosmosConfiguration, ILoggerFactory loggerFactory, bool databaseCleared = false)
         {
             this.databaseCleared = databaseCleared;
 
-            // Set and validate cosmos configuration
-            this.cosmosConfiguration = Ensure.IsNotNull(() => cosmosConfiguration);
-            this.cosmosConfiguration.Validate();
+            // Validate cosmos configuration
+            cosmosConfiguration = Ensure.IsNotNull(() => cosmosConfiguration);
+            cosmosConfiguration.Validate();
 
-            this.cosmosClient = new Microsoft.Azure.Cosmos.CosmosClient(this.cosmosConfiguration.EndpointUrl, this.cosmosConfiguration.PrimaryKey);
+            // Validate logger factory and set logger
+            loggerFactory = Ensure.IsNotNull(() => loggerFactory);
+            this.logger = loggerFactory.CreateLogger<DatabaseSeeder>();
+
+            // Set user repository
+            this.userRepository = new CosmosUserRepository(cosmosConfiguration, loggerFactory);
+
+            this.logger.LogDebug("Database seeder construction complete");
         }
 
         /// <summary>
@@ -114,11 +124,8 @@ namespace WahineKai.Backend.SeedDatabase
         /// </summary>
         public static ICollection<User> Users { get => UsersArray.ToList(); }
 
-        /// <summary>
-        /// Adds new data to the database.  Assumes an empty database before running.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task Seed()
+        /// <inheritdoc/>
+        public async Task SeedAsync()
         {
             // If database is not cleared yet, we can't seed it
             if (!this.databaseCleared)
@@ -126,48 +133,37 @@ namespace WahineKai.Backend.SeedDatabase
                 throw new InvalidOperationException("Database is not clear");
             }
 
-            // Create a database
-            var databaseResponse = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(this.cosmosConfiguration.DatabaseId);
-            var database = Ensure.IsNotNull(() => databaseResponse).Database;
-
-            var containerProperties = new Microsoft.Azure.Cosmos.ContainerProperties(User.ContainerId, User.PartitionKey);
-
-            // Create a Users container
-            var containerResponse = await database.CreateContainerIfNotExistsAsync(containerProperties);
-            var container = Ensure.IsNotNull(() => containerResponse).Container;
+            this.logger.LogDebug($"Adding {Users.Count} users to the database");
 
             // Add users to the container
             foreach (var user in Users)
             {
                 user.Validate();
-                var createUserResponse = await container.CreateItemAsync(user);
+                this.logger.LogTrace($"Creating user with id {user.Id} and email {user.Email} in the database");
+
+                await this.userRepository.CreateUserAsync(user);
             }
+
+            this.logger.LogInformation("Database seeding complete");
         }
 
-        /// <summary>
-        /// Clears the database
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task Clear()
+        /// <inheritdoc/>
+        public async Task ClearAsync()
         {
-            // Clear users container
-            var container = this.cosmosClient.GetContainer(this.cosmosConfiguration.DatabaseId, User.ContainerId);
+            var users = await this.userRepository.GetAllUsersAsync();
 
-            // Get all users
-            using var iterator = container.GetItemLinqQueryable<User>()
-                .ToFeedIterator();
+            this.logger.LogDebug($"Removing {users.Count} users from the database");
 
-            while (iterator.HasMoreResults)
+            foreach (var user in users)
             {
-                foreach (var user in await iterator.ReadNextAsync())
-                {
-                    // Delete each user
-                    await container.DeleteItemAsync<User>(user.Id.ToString(), new Microsoft.Azure.Cosmos.PartitionKey(user.Email));
-                }
+                this.logger.LogTrace($"Removing user with id {user.Id} and Email {user.Email} from the database");
+                await this.userRepository.DeleteUserAsync(user);
             }
 
             // Set database cleared to be true
             this.databaseCleared = true;
+
+            this.logger.LogInformation($"Database clearing complete");
         }
     }
 }

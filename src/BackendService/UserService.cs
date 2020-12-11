@@ -7,6 +7,7 @@
 
 namespace WahineKai.Backend.Service
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
@@ -31,48 +32,164 @@ namespace WahineKai.Backend.Service
         public UserService(ILoggerFactory loggerFactory, IConfiguration configuration)
             : base(loggerFactory, configuration)
         {
+            this.Logger.LogTrace("Construction of User Service beginning");
+
             // Build cosmos configuration
             var cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(this.Configuration);
 
             this.userRepository = new CosmosUserRepository(cosmosConfiguration, loggerFactory);
+
+            this.Logger.LogTrace("Construction of User Service complete");
         }
 
         /// <inheritdoc/>
-        public async Task<User> GetMeAsync(string userEmail)
+        public async Task<User> GetByEmailAsync(string userEmail, string? callingUserEmail = null)
         {
+            // Sanity check input
+            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
+
+            // Calling user is user to get
+            callingUserEmail ??= userEmail;
+
+            await this.EnsureCallingUserPermissions(callingUserEmail);
+
+            this.Logger.LogDebug($"Getting user with email {userEmail} from repository");
+
             var user = await this.userRepository.GetUserByEmailAsync(userEmail);
-            Ensure.IsTrue(() => user.Admin);
+
+            this.Logger.LogTrace($"Got user with email {user.Email} and id {user.Id} from the user repository");
 
             return user;
         }
 
         /// <inheritdoc/>
-        public async Task<ICollection<User>> GetAllAsync(string userEmail)
+        public async Task<User> GetByIdAsync(Guid id, string? callingUserEmail)
         {
-            var user = await this.userRepository.GetUserByEmailAsync(userEmail);
-            Ensure.IsTrue(() => user.Admin);
+            // Sanity check input
+            id = Ensure.IsNotNull(() => id);
+
+            await this.EnsureCallingUserPermissions(callingUserEmail);
+
+            this.Logger.LogDebug($"Getting user with id {id} from repository");
+
+            var user = await this.userRepository.GetUserByIdAsync(id);
+
+            this.Logger.LogTrace($"Got user with email {user.Email} and id {user.Id} from the user repository");
+
+            return user;
+        }
+
+        /// <inheritdoc/>
+        public async Task<ICollection<User>> GetAllAsync(string callingUserEmail)
+        {
+            await this.EnsureCallingUserPermissions(callingUserEmail);
+
+            this.Logger.LogDebug("Getting all users from the user repository");
 
             var users = await this.userRepository.GetAllUsersAsync();
             Ensure.IsNotNullOrEmpty(() => users);
+
+            this.Logger.LogDebug($"Got {users.Count} users from the user repository");
 
             return users;
         }
 
         /// <inheritdoc/>
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User> CreateAsync(User user, string callingUserEmail)
         {
+            await this.EnsureCallingUserPermissions(callingUserEmail);
+
+            this.Logger.LogDebug("Creating a user in the repository");
+
             // input sanity checking
             user = Ensure.IsNotNull(() => user);
             user.Validate();
 
-            // Get from repository
+            // Create in repository
             var userFromRepository = await this.userRepository.CreateUserAsync(user);
 
             // Sanity check output
             userFromRepository = Ensure.IsNotNull(() => userFromRepository);
             userFromRepository.Validate();
 
+            this.Logger.LogTrace($"Create user with id {user.Id} and email {user.Email} in the repository");
+
             return userFromRepository;
+        }
+
+        /// <inheritdoc/>
+        public async Task<User> ReplaceByEmailAsync(string userEmail, User updatedUser, string? callingUserEmail = null)
+        {
+            // Sanity check input
+            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
+            updatedUser = Ensure.IsNotNull(() => updatedUser);
+
+            // CallingUserEmail is userEmail by default
+            callingUserEmail ??= userEmail;
+
+            // Ensure user who making this request has the permissions to perform this action
+            await this.EnsureCallingUserPermissions(callingUserEmail);
+
+            // Get old user
+            var oldUser = await this.userRepository.GetUserByEmailAsync(userEmail);
+
+            // Update user and return it
+            this.Logger.LogTrace($"Replacing user with email {userEmail} with new values");
+
+            var replacedUser = User.Replace(oldUser, updatedUser);
+            var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
+
+            // Sanity check output
+            userFromDatabase = Ensure.IsNotNull(() => userFromDatabase);
+            userFromDatabase.Validate();
+
+            this.Logger.LogDebug("Updated 1 user in the database");
+
+            return userFromDatabase;
+        }
+
+        /// <inheritdoc/>
+        public async Task<User> ReplaceByIdAsync(Guid id, User updatedUser, string? callingUserEmail)
+        {
+            // Sanity check input
+            id = Ensure.IsNotNull(() => id);
+            updatedUser = Ensure.IsNotNull(() => updatedUser);
+
+            // Ensure user who making this request has the permissions to perform this action
+            await this.EnsureCallingUserPermissions(callingUserEmail);
+
+            // Get old user
+            var oldUser = await this.userRepository.GetUserByIdAsync(id);
+
+            // Update user and return it
+            this.Logger.LogTrace($"Replacing user with id {id} with new values");
+
+            var replacedUser = User.Replace(oldUser, updatedUser);
+            var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
+
+            // Sanity check output
+            userFromDatabase = Ensure.IsNotNull(() => userFromDatabase);
+            userFromDatabase.Validate();
+
+            this.Logger.LogDebug("Updated 1 user in the database");
+
+            return userFromDatabase;
+        }
+
+        /// <summary>
+        /// Ensure that the calling user exists and is an admin user
+        /// </summary>
+        /// <param name="callingUserEmail">The calling user's email address</param>
+        /// <returns>A <see cref="Task"/></returns>
+        private async Task EnsureCallingUserPermissions(string? callingUserEmail)
+        {
+            // Sanity check input
+            callingUserEmail = Ensure.IsNotNullOrWhitespace(() => callingUserEmail);
+
+            this.Logger.LogTrace($"Checkeing that user with email {callingUserEmail} exists is an administrator");
+
+            var user = await this.userRepository.GetUserByEmailAsync(callingUserEmail);
+            Ensure.IsTrue(() => user.Admin);
         }
     }
 }

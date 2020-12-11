@@ -18,6 +18,8 @@ namespace WahineKai.Backend.Host.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/[Controller]/[Action]")]
+    [Route("api/v1/[Controller]/[Action]/{userEmail}")]
+    [Route("api/v1/[Controller]/[Action]/{userId:guid}")]
     public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         /// <summary>
@@ -31,6 +33,8 @@ namespace WahineKai.Backend.Host.Controllers
             this.Logger = loggerFactory.CreateLogger<ControllerBase>();
 
             this.Configuration = Ensure.IsNotNull(() => configuration);
+
+            this.Logger.LogTrace("Construction of ControllerBase complete");
         }
 
         /// <summary>
@@ -49,6 +53,8 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>The user's email</returns>
         protected string GetUserEmailFromContext()
         {
+            this.Logger.LogDebug("Checking HTTP Request context to get Email");
+
             // Get claim from HTTP context
             var emailsClaim = this.HttpContext.User.Claims.Single(claim => claim.Type.Equals("emails"));
             Ensure.IsNotNull(() => emailsClaim);
@@ -56,6 +62,8 @@ namespace WahineKai.Backend.Host.Controllers
             // Get email from claim
             var email = emailsClaim.Value;
             Ensure.IsNotNullOrWhitespace(() => email);
+
+            this.Logger.LogTrace($"Got email {email} from the HTTP request context");
 
             return email;
         }

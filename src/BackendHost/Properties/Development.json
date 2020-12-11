@@ -9,5 +9,12 @@
     "EndpointUrl": "https://wahine-kai-member-database.documents.azure.com:443/",
     "PrimaryKey": "<Our Azure Cosmos account Primary Key (set in user settings, do not add here!!!)>",
     "DatabaseId":  "wahine-kai-member-database"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
   }
 }

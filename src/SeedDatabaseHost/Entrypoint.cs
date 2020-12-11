@@ -9,6 +9,7 @@ namespace WahineKai.Backend.SeedDatabase.Host
 {
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
     using WahineKai.Backend.Common.Contracts;
     using WahineKai.Backend.DTO.Properties;
 
@@ -52,10 +53,11 @@ namespace WahineKai.Backend.SeedDatabase.Host
         /// <inheritdoc/>
         public async Task StartAsync()
         {
-            var seeder = new DatabaseSeeder(this.cosmosConfiguration, true);
+            using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
+            var seeder = new DatabaseSeeder(this.cosmosConfiguration, loggerFactory);
 
-            await seeder.Clear();
-            await seeder.Seed();
+            await seeder.ClearAsync();
+            await seeder.SeedAsync();
         }
     }
 }
