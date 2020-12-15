@@ -18,7 +18,6 @@ namespace WahineKai.Backend.Host.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/[Controller]/[Action]")]
-    [Route("api/v1/[Controller]/[Action]/{userEmail}")]
     [Route("api/v1/[Controller]/[Action]/{userId:guid}")]
     public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
     {
