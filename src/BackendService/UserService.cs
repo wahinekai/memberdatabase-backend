@@ -80,21 +80,6 @@ namespace WahineKai.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task<ICollection<User>> GetAllAsync(string callingUserEmail)
-        {
-            await this.EnsureCallingUserPermissions(callingUserEmail);
-
-            this.Logger.LogDebug("Getting all users from the user repository");
-
-            var users = await this.userRepository.GetAllUsersAsync();
-            Ensure.IsNotNullOrEmpty(() => users);
-
-            this.Logger.LogDebug($"Got {users.Count} users from the user repository");
-
-            return users;
-        }
-
-        /// <inheritdoc/>
         public async Task<User> CreateAsync(User user, string callingUserEmail)
         {
             await this.EnsureCallingUserPermissions(callingUserEmail);

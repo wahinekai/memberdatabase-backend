@@ -34,13 +34,6 @@ namespace WahineKai.Backend.Service.Contracts
         public Task<User> GetByIdAsync(Guid id, string? callingUserEmail);
 
         /// <summary>
-        /// Get all users in the database
-        /// </summary>
-        /// <param name="callingUserEmail">E-mail address of the calling user</param>
-        /// <returns>A collection of validated users</returns>
-        public Task<ICollection<User>> GetAllAsync(string callingUserEmail);
-
-        /// <summary>
         /// Creates a user in the chosen repository
         /// </summary>
         /// <param name="user">The user to add to the repository</param>

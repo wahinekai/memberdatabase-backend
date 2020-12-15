@@ -8,7 +8,6 @@
 namespace WahineKai.Backend.Host.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -54,20 +53,6 @@ namespace WahineKai.Backend.Host.Controllers
         }
 
         /// <summary>
-        /// Gets a user by email
-        /// </summary>
-        /// <param name="userEmail">The email of the user to get</param>
-        /// <returns>A valuserIdated user</returns>
-        [HttpGet]
-        [ActionName("Email")]
-        public async Task<User> GetByEmailAsync(string userEmail)
-        {
-            this.Logger.LogDebug($"Getting the user with email {userEmail}");
-            var user = await this.userService.GetByEmailAsync(userEmail, this.GetUserEmailFromContext());
-            return user;
-        }
-
-        /// <summary>
         /// Gets a user by userId
         /// </summary>
         /// <param name="userId">The userId of the user to get</param>
@@ -79,19 +64,6 @@ namespace WahineKai.Backend.Host.Controllers
             this.Logger.LogDebug($"Getting the user with userId {userId}");
             var user = await this.userService.GetByIdAsync(userId, this.GetUserEmailFromContext());
             return user;
-        }
-
-        /// <summary>
-        /// Get all users from database
-        /// </summary>
-        /// <returns>A collection of all users' profiles</returns>
-        [HttpGet]
-        [ActionName("All")]
-        public async Task<ICollection<User>> GetAllAsync()
-        {
-            this.Logger.LogDebug("Getting all users");
-            var users = await this.userService.GetAllAsync(this.GetUserEmailFromContext());
-            return users;
         }
 
         /// <summary>
@@ -128,21 +100,6 @@ namespace WahineKai.Backend.Host.Controllers
             // User service to replace in repository
             var userFromService = await this.userService.ReplaceByEmailAsync(this.GetUserEmailFromContext(), updatedUser);
             return userFromService;
-        }
-
-        /// <summary>
-        /// Replaces parameters in a user's profile
-        /// </summary>
-        /// <param name="userEmail">The email of the user to replace</param>
-        /// <param name="updatedUser">The updated user to replace with</param>
-        /// <returns>The newly updated user from the database</returns>
-        [HttpPut]
-        [ActionName("Email")]
-        public async Task<User> ReplaceByEmailAsync(string userEmail, [FromBody] User updatedUser)
-        {
-            this.Logger.LogDebug($"Replacing the user with email {userEmail}");
-            var user = await this.userService.ReplaceByEmailAsync(userEmail, updatedUser, this.GetUserEmailFromContext());
-            return user;
         }
 
         /// <summary>
