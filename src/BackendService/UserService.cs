@@ -8,7 +8,6 @@
 namespace WahineKai.Backend.Service
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
@@ -22,7 +21,7 @@ namespace WahineKai.Backend.Service
     /// <inheritdoc/>
     public class UserService : ServiceBase, IUserService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository<AdminUser> userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -37,13 +36,13 @@ namespace WahineKai.Backend.Service
             // Build cosmos configuration
             var cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(this.Configuration);
 
-            this.userRepository = new CosmosUserRepository(cosmosConfiguration, loggerFactory);
+            this.userRepository = new CosmosUserRepository<AdminUser>(cosmosConfiguration, loggerFactory);
 
             this.Logger.LogTrace("Construction of User Service complete");
         }
 
         /// <inheritdoc/>
-        public async Task<User> GetByEmailAsync(string userEmail, string? callingUserEmail = null)
+        public async Task<AdminUser> GetByEmailAsync(string userEmail, string? callingUserEmail = null)
         {
             // Sanity check input
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
@@ -63,7 +62,7 @@ namespace WahineKai.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task<User> GetByIdAsync(Guid id, string? callingUserEmail)
+        public async Task<AdminUser> GetByIdAsync(Guid id, string? callingUserEmail)
         {
             // Sanity check input
             id = Ensure.IsNotNull(() => id);
@@ -80,7 +79,7 @@ namespace WahineKai.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task<User> CreateAsync(User user, string callingUserEmail)
+        public async Task<AdminUser> CreateAsync(AdminUser user, string callingUserEmail)
         {
             await this.EnsureCallingUserPermissions(callingUserEmail);
 
@@ -103,7 +102,7 @@ namespace WahineKai.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task<User> ReplaceByEmailAsync(string userEmail, User updatedUser, string? callingUserEmail = null)
+        public async Task<AdminUser> ReplaceByEmailAsync(string userEmail, AdminUser updatedUser, string? callingUserEmail = null)
         {
             // Sanity check input
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
@@ -121,7 +120,7 @@ namespace WahineKai.Backend.Service
             // Update user and return it
             this.Logger.LogTrace($"Replacing user with email {userEmail} with new values");
 
-            var replacedUser = User.Replace(oldUser, updatedUser);
+            var replacedUser = AdminUser.Replace(oldUser, updatedUser);
             var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
 
             // Sanity check output
@@ -134,7 +133,7 @@ namespace WahineKai.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task<User> ReplaceByIdAsync(Guid id, User updatedUser, string? callingUserEmail)
+        public async Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string? callingUserEmail)
         {
             // Sanity check input
             id = Ensure.IsNotNull(() => id);
@@ -149,7 +148,7 @@ namespace WahineKai.Backend.Service
             // Update user and return it
             this.Logger.LogTrace($"Replacing user with id {id} with new values");
 
-            var replacedUser = User.Replace(oldUser, updatedUser);
+            var replacedUser = AdminUser.Replace(oldUser, updatedUser);
             var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
 
             // Sanity check output
@@ -159,22 +158,6 @@ namespace WahineKai.Backend.Service
             this.Logger.LogDebug("Updated 1 user in the database");
 
             return userFromDatabase;
-        }
-
-        /// <summary>
-        /// Ensure that the calling user exists and is an admin user
-        /// </summary>
-        /// <param name="callingUserEmail">The calling user's email address</param>
-        /// <returns>A <see cref="Task"/></returns>
-        private async Task EnsureCallingUserPermissions(string? callingUserEmail)
-        {
-            // Sanity check input
-            callingUserEmail = Ensure.IsNotNullOrWhitespace(() => callingUserEmail);
-
-            this.Logger.LogTrace($"Checkeing that user with email {callingUserEmail} exists is an administrator");
-
-            var user = await this.userRepository.GetUserByEmailAsync(callingUserEmail);
-            Ensure.IsTrue(() => user.Admin);
         }
     }
 }

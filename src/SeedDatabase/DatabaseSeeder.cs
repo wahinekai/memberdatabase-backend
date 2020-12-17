@@ -27,9 +27,9 @@ namespace WahineKai.Backend.SeedDatabase
     {
         private static readonly string[] Boards = { "5'10\" custom", "8'2\" funboard" };
 
-        private static readonly User[] UsersArray =
+        private static readonly AdminUser[] UsersArray =
             {
-                new User
+                new AdminUser
                 {
                     Admin = false,
                     FirstName = "Test",
@@ -59,7 +59,7 @@ namespace WahineKai.Backend.SeedDatabase
                     WonSurfboard = true,
                     DateSurfboardWon = new DateTime(2019, 12, 25),
                 },
-                new User
+                new AdminUser
                 {
                     Admin = true,
                     FirstName = "Admin",
@@ -90,7 +90,7 @@ namespace WahineKai.Backend.SeedDatabase
                 },
             };
 
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository<AdminUser> userRepository;
         private readonly ILogger logger;
 
         private bool databaseCleared;
@@ -114,7 +114,7 @@ namespace WahineKai.Backend.SeedDatabase
             this.logger = loggerFactory.CreateLogger<DatabaseSeeder>();
 
             // Set user repository
-            this.userRepository = new CosmosUserRepository(cosmosConfiguration, loggerFactory);
+            this.userRepository = new CosmosUserRepository<AdminUser>(cosmosConfiguration, loggerFactory);
 
             this.logger.LogDebug("Database seeder construction complete");
         }
@@ -122,7 +122,7 @@ namespace WahineKai.Backend.SeedDatabase
         /// <summary>
         /// Gets public collection of users to be seeded into the database
         /// </summary>
-        public static ICollection<User> Users { get => UsersArray.ToList(); }
+        public static ICollection<AdminUser> Users { get => UsersArray.ToList(); }
 
         /// <inheritdoc/>
         public async Task SeedAsync()

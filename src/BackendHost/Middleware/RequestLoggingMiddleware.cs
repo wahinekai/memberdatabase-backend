@@ -10,6 +10,7 @@ namespace WahineKai.Backend.Host.Middleware
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
+    using WahineKai.Backend.Common;
 
     /// <summary>
     /// Middleware for logging requests

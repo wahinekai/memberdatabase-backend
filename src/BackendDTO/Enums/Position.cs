@@ -34,7 +34,7 @@ namespace WahineKai.Backend.DTO.Enums
         /// <summary>
         /// Vice President of finance of the club
         /// </summary>
-        [EnumMember(Value = "Vice President of Events")]
+        [EnumMember(Value = "Vice President of Finance")]
         VicePresidentOfFinance,
 
         /// <summary>

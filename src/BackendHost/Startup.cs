@@ -78,6 +78,7 @@ namespace WahineKai.Backend.Host
                {
                    // Enums are serialized to strings with custom names
                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumMemberConverter());
+                   options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                });
 
             services.AddSwaggerGen(c =>

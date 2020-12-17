@@ -45,11 +45,24 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>The user's profile</returns>
         [HttpGet]
         [ActionName("Me")]
-        public async Task<User> GetMeAsync()
+        public async Task<AdminUser> GetMeAsync()
         {
             this.Logger.LogDebug("Getting the user associated with this request");
             var user = await this.userService.GetByEmailAsync(this.GetUserEmailFromContext());
             return user;
+        }
+
+        /// <summary>
+        /// Gets whether the user sending this request is an admin user
+        /// </summary>
+        /// <returns>Whether the user sending this request is an admin user</returns>
+        [HttpGet]
+        [ActionName("IsAdmin/Me")]
+        public async Task<bool> AmIAdminAsync()
+        {
+            this.Logger.LogDebug("Getting the user associated with this request");
+            var user = await this.userService.GetByEmailAsync(this.GetUserEmailFromContext());
+            return user.Admin ?? false;
         }
 
         /// <summary>
@@ -59,7 +72,7 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>A valuserIdated user</returns>
         [HttpGet]
         [ActionName("Id")]
-        public async Task<User> GetByIdAsync(Guid userId)
+        public async Task<AdminUser> GetByIdAsync(Guid userId)
         {
             this.Logger.LogDebug($"Getting the user with userId {userId}");
             var user = await this.userService.GetByIdAsync(userId, this.GetUserEmailFromContext());
@@ -73,7 +86,7 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         [HttpPost]
         [ActionName("Create")]
-        public async Task<IActionResult> CreateUserAsync([FromBody] User user)
+        public async Task<IActionResult> CreateUserAsync([FromBody] AdminUser user)
         {
             this.Logger.LogDebug("Creating a user");
 
@@ -93,7 +106,7 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>The newly updated user from the database</returns>
         [HttpPut]
         [ActionName("Me")]
-        public async Task<User> ReplaceMe([FromBody] User updatedUser)
+        public async Task<AdminUser> ReplaceMe([FromBody] AdminUser updatedUser)
         {
             this.Logger.LogDebug("Replacing a user");
 
@@ -110,7 +123,7 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>The newly updated user from the database</returns>
         [HttpPut]
         [ActionName("Id")]
-        public async Task<User> ReplaceByIdAsync(Guid userId, [FromBody] User updatedUser)
+        public async Task<AdminUser> ReplaceByIdAsync(Guid userId, [FromBody] AdminUser updatedUser)
         {
             this.Logger.LogDebug($"Getting the user with userId {userId}");
             var user = await this.userService.ReplaceByIdAsync(userId, updatedUser, this.GetUserEmailFromContext());

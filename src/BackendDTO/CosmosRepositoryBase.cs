@@ -7,7 +7,11 @@
 
 namespace WahineKai.Backend.DTO
 {
+    using Microsoft.Azure.Cosmos;
     using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Newtonsoft.Json.Serialization;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.DTO.Properties;
 
@@ -29,7 +33,15 @@ namespace WahineKai.Backend.DTO
             this.CosmosConfiguration = Ensure.IsNotNull(() => cosmosConfiguration);
             this.CosmosConfiguration.Validate();
 
-            this.CosmosClient = new Microsoft.Azure.Cosmos.CosmosClient(this.CosmosConfiguration.EndpointUrl, this.CosmosConfiguration.PrimaryKey);
+            var jsonSerializationSettings = new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+            };
+            jsonSerializationSettings.Converters.Add(new StringEnumConverter());
+
+            var cosmosOptions = new CosmosClientOptions() { Serializer = new CosmosJsonSerializer(jsonSerializationSettings) };
+
+            this.CosmosClient = new CosmosClient(this.CosmosConfiguration.EndpointUrl, this.CosmosConfiguration.PrimaryKey, cosmosOptions);
 
             this.Logger.LogTrace("Construction of Cosmos Repository Base complete");
         }
@@ -42,6 +54,6 @@ namespace WahineKai.Backend.DTO
         /// <summary>
         /// Gets client for interacting with Cosmos DB
         /// </summary>
-        protected Microsoft.Azure.Cosmos.CosmosClient CosmosClient { get; }
+        protected CosmosClient CosmosClient { get; }
     }
 }
