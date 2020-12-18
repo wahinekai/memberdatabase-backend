@@ -42,25 +42,11 @@ namespace WahineKai.Backend.Host.Controllers
         /// </summary>
         /// <returns>The URL to the uploaded profile photo</returns>
         [HttpPost]
-        [ActionName("ProfilePhoto/Me")]
+        [ActionName("ProfilePhoto")]
         public async Task<string> UploadProfilePhotoAsync()
         {
             var pictureStream = this.Request.Body;
             var url = await this.uploadService.UploadProfilePhotoAsync(pictureStream, this.GetUserEmailFromContext());
-            return url;
-        }
-
-        /// <summary>
-        /// Endpoint for uploading a profile photo for another user from the body of a request
-        /// </summary>
-        /// <param name="userId">The user who this profile photo is for</param>
-        /// <returns>The URL of the uploaded profile photo</returns>
-        [HttpPost]
-        [ActionName("ProfilePhoto/Id")]
-        public async Task<string> UploadProfilePhotoAsync(Guid userId)
-        {
-            var pictureStream = this.Request.Body;
-            var url = await this.uploadService.UploadProfilePhotoAsync(pictureStream, userId, this.GetUserEmailFromContext());
             return url;
         }
     }

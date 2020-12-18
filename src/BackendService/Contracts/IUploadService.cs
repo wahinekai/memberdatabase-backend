@@ -23,14 +23,5 @@ namespace WahineKai.Backend.Service.Contracts
         /// <param name="userEmail">The email of the user making this request</param>
         /// <returns>The URL of the uploaded photo</returns>
         public Task<string> UploadProfilePhotoAsync(Stream pictureStream, string userEmail);
-
-        /// <summary>
-        /// Uploads the file stream (interpreted as a user profile photo) to the user's profile photo section in the repository
-        /// </summary>
-        /// <param name="pictureStream">The file stream to send</param>
-        /// <param name="id">The id of the user to upload this photo as their profile photo</param>
-        /// <param name="userEmail">The email of the user making this request</param>
-        /// <returns>The URL of the uploaded photo</returns>
-        public Task<string> UploadProfilePhotoAsync(Stream pictureStream, Guid id, string userEmail);
     }
 }
