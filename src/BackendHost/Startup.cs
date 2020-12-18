@@ -17,8 +17,10 @@ namespace WahineKai.Backend.Host
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Identity.Web;
+    using Microsoft.Net.Http.Headers;
     using Microsoft.OpenApi.Models;
     using WahineKai.Backend.Host.Middleware;
+    using WebApiContrib.Core.Formatter.Csv;
 
     /// <summary>
     /// Startup configuration
@@ -68,11 +70,19 @@ namespace WahineKai.Backend.Host
             // Require authentication on all controllers
             services.AddControllers(options =>
             {
+                // Require authentication
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .RequireClaim("emails")
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
+
+                var csvFormatterOptions = new CsvFormatterOptions() { CsvDelimiter = "," };
+
+                // Allow CSV Input & Output Formatter
+                options.InputFormatters.Add(new CsvInputFormatter(csvFormatterOptions));
+                options.OutputFormatters.Add(new CsvOutputFormatter(csvFormatterOptions));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("csv", MediaTypeHeaderValue.Parse("text/csv"));
             })
                .AddJsonOptions(options =>
                {

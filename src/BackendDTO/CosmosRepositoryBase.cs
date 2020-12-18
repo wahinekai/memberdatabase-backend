@@ -11,7 +11,6 @@ namespace WahineKai.Backend.DTO
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using Newtonsoft.Json.Serialization;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.DTO.Properties;
 

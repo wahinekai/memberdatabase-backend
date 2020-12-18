@@ -58,17 +58,37 @@ namespace WahineKai.Backend.Service
         /// </summary>
         /// <param name="callingUserEmail">The calling user's email address</param>
         /// <returns>A <see cref="Task"/></returns>
-        protected async Task EnsureCallingUserPermissions(string? callingUserEmail)
+        protected async Task EnsureCallingUserPermissionsAsync(string? callingUserEmail)
+        {
+            var user = await this.GetCallingUser(callingUserEmail);
+            this.EnsureCallingUserPermissions(user);
+        }
+
+        /// <summary>
+        /// Ensures that the calling user exists and is an active admin user
+        /// </summary>
+        /// <param name="user">The calling user</param>
+        protected void EnsureCallingUserPermissions(AdminUser user)
+        {
+            this.Logger.LogTrace($"Ensuring that user with id {user.Id} is an active administrator");
+
+            Ensure.IsNotNull(() => user);
+            Ensure.IsTrue(() => user.Admin);
+            Ensure.IsTrue(() => user.Active);
+        }
+
+        /// <summary>
+        /// Get the user calling the requset
+        /// </summary>
+        /// <param name="callingUserEmail">The email of the calling user</param>
+        /// <returns>The user calling the request</returns>
+        protected async Task<AdminUser> GetCallingUser(string? callingUserEmail)
         {
             // Sanity check input
             callingUserEmail = Ensure.IsNotNullOrWhitespace(() => callingUserEmail);
 
-            this.Logger.LogTrace($"Checkeing that user with email {callingUserEmail} exists is an administrator");
-
             var user = await this.userRepository.GetUserByEmailAsync(callingUserEmail);
-            Ensure.IsNotNull(() => user);
-            Ensure.IsTrue(() => user.Admin);
-            Ensure.IsTrue(() => user.Active);
+            return user;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace WahineKai.Backend.Service
             // Sanity check input
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
 
-            await this.EnsureCallingUserPermissions(userEmail);
+            await this.EnsureCallingUserPermissionsAsync(userEmail);
 
             this.Logger.LogDebug("Getting all users from repository");
 
@@ -67,7 +67,7 @@ namespace WahineKai.Backend.Service
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
             query = Ensure.IsNotNullOrWhitespace(() => query);
 
-            await this.EnsureCallingUserPermissions(userEmail);
+            await this.EnsureCallingUserPermissionsAsync(userEmail);
 
             this.Logger.LogDebug($"Getting users matching query \"{query}\" from repository");
 

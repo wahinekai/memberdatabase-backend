@@ -8,6 +8,7 @@
 namespace WahineKai.Backend.Service
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
@@ -42,6 +43,23 @@ namespace WahineKai.Backend.Service
         }
 
         /// <inheritdoc/>
+        public async Task<ICollection<AdminUser>> GetAllUsersAsync(string userEmail)
+        {
+            // Sanity check input
+            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
+
+            await this.EnsureCallingUserPermissionsAsync(userEmail);
+
+            this.Logger.LogDebug("Getting all users from repository");
+
+            var users = await this.userRepository.GetAllUsersAsync();
+
+            this.Logger.LogTrace($"Got {users.Count} users from the user repository");
+
+            return users;
+        }
+
+        /// <inheritdoc/>
         public async Task<AdminUser> GetByEmailAsync(string userEmail, string? callingUserEmail = null)
         {
             // Sanity check input
@@ -50,7 +68,7 @@ namespace WahineKai.Backend.Service
             // Calling user is user to get
             callingUserEmail ??= userEmail;
 
-            await this.EnsureCallingUserPermissions(callingUserEmail);
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
 
             this.Logger.LogDebug($"Getting user with email {userEmail} from repository");
 
@@ -67,7 +85,7 @@ namespace WahineKai.Backend.Service
             // Sanity check input
             id = Ensure.IsNotNull(() => id);
 
-            await this.EnsureCallingUserPermissions(callingUserEmail);
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
 
             this.Logger.LogDebug($"Getting user with id {id} from repository");
 
@@ -81,7 +99,7 @@ namespace WahineKai.Backend.Service
         /// <inheritdoc/>
         public async Task<AdminUser> CreateAsync(AdminUser user, string callingUserEmail)
         {
-            await this.EnsureCallingUserPermissions(callingUserEmail);
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
 
             this.Logger.LogDebug("Creating a user in the repository");
 
@@ -112,7 +130,7 @@ namespace WahineKai.Backend.Service
             callingUserEmail ??= userEmail;
 
             // Ensure user who making this request has the permissions to perform this action
-            await this.EnsureCallingUserPermissions(callingUserEmail);
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
 
             // Get old user
             var oldUser = await this.userRepository.GetUserByEmailAsync(userEmail);
@@ -140,7 +158,7 @@ namespace WahineKai.Backend.Service
             updatedUser = Ensure.IsNotNull(() => updatedUser);
 
             // Ensure user who making this request has the permissions to perform this action
-            await this.EnsureCallingUserPermissions(callingUserEmail);
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
 
             // Get old user
             var oldUser = await this.userRepository.GetUserByIdAsync(id);

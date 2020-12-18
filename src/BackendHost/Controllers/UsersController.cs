@@ -8,6 +8,7 @@
 namespace WahineKai.Backend.Host.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -37,6 +38,20 @@ namespace WahineKai.Backend.Host.Controllers
             this.userService = new UserService(loggerFactory, this.Configuration);
 
             this.Logger.LogTrace("Construction of Users Controller complete");
+        }
+
+        /// <summary>
+        /// Returns a CSV file of all users
+        /// </summary>
+        /// <returns>A CSV file</returns>
+        [HttpGet]
+        [ActionName("AllUsers.csv")]
+        [Produces("text/csv")]
+        public async Task<ICollection<AdminUser>> DownloadCsvAsync()
+        {
+            this.Logger.LogDebug("Getting all users in a CSV");
+            var users = await this.userService.GetAllUsersAsync(this.GetUserEmailFromContext());
+            return users;
         }
 
         /// <summary>

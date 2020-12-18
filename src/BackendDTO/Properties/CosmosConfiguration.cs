@@ -9,11 +9,12 @@ namespace WahineKai.Backend.DTO.Properties
 {
     using Microsoft.Extensions.Configuration;
     using WahineKai.Backend.Common;
+    using WahineKai.Backend.Common.Contracts;
 
     /// <summary>
     /// Configuration needed to connect to Azure Cosmos DB
     /// </summary>
-    public class CosmosConfiguration
+    public class CosmosConfiguration : IValidatable
     {
         /// <summary>
         /// Gets the url of the Cosmos DB endpoint
@@ -40,9 +41,9 @@ namespace WahineKai.Backend.DTO.Properties
             // Build CosmosConfiguration
             var cosmosConfiguration = new CosmosConfiguration
             {
-                EndpointUrl = configuration["CosmosConfiguration:EndpointUrl"],
-                PrimaryKey = configuration["CosmosConfiguration:PrimaryKey"],
-                DatabaseId = configuration["CosmosConfiguration:DatabaseId"],
+                EndpointUrl = configuration["Cosmos:EndpointUrl"],
+                PrimaryKey = configuration["Cosmos:PrimaryKey"],
+                DatabaseId = configuration["Cosmos:DatabaseId"],
             };
 
             // Validate Cosmos Configuration
@@ -51,9 +52,7 @@ namespace WahineKai.Backend.DTO.Properties
             return cosmosConfiguration;
         }
 
-        /// <summary>
-        /// Ensures that this is a complete and correct configuration
-        /// </summary>
+        /// <inheritdoc/>
         public void Validate()
         {
             Ensure.IsNotNullOrWhitespace(() => this.EndpointUrl);

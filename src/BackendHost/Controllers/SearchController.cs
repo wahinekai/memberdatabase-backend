@@ -44,7 +44,7 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>A Collection of users</returns>
         [HttpGet]
         [ActionName("All")]
-        public async Task<ICollection<ReadByAllUser>> GetAllUsers()
+        public async Task<ICollection<ReadByAllUser>> GetAllUsersAsync()
         {
             this.Logger.LogDebug("Getting the user associated with this request");
             var users = await this.searchService.GetAllUsersAsync(this.GetUserEmailFromContext());
@@ -58,7 +58,7 @@ namespace WahineKai.Backend.Host.Controllers
         /// <returns>A Collection of users</returns>
         [HttpGet]
         [ActionName("Query")]
-        public async Task<ICollection<ReadByAllUser>> Search([FromQuery] string query)
+        public async Task<ICollection<ReadByAllUser>> SearchAsync([FromQuery] string query)
         {
             this.Logger.LogDebug("Getting the user associated with this request");
             var users = await this.searchService.GetByQueryAsync(this.GetUserEmailFromContext(), query);
