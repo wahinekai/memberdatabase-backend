@@ -77,7 +77,7 @@ namespace WahineKai.Backend.Host.Controllers
         {
             this.Logger.LogDebug("Getting the user associated with this request");
             var user = await this.userService.GetByEmailAsync(this.GetUserEmailFromContext());
-            return user.Admin ?? false;
+            return user.Admin;
         }
 
         /// <summary>

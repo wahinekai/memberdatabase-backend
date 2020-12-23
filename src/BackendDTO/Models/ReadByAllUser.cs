@@ -7,10 +7,9 @@
 
 namespace WahineKai.Backend.DTO.Models
 {
-    using System;
+    using System.Collections.Generic;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.Common.Contracts;
-    using WahineKai.Backend.DTO.Enums;
 
     /// <summary>
     /// Extension of users that can be read by all
@@ -18,25 +17,26 @@ namespace WahineKai.Backend.DTO.Models
     public class ReadByAllUser : ReadByAllWriteByUser, IValidatable
     {
         /// <summary>
-        /// Gets or sets the leadership position of the user.  Null means no leadership position
+        /// Gets or sets list of user positions
         /// </summary>
-        public Position? Position { get; set; }
-
-        /// <summary>
-        /// Gets or sets the date the user started their particular position
-        /// </summary>
-        public DateTime? DateStartedPosition { get; set; }
+        public IList<Position> Positions { get; set; } = new List<Position>();
 
         /// <summary>
         /// Gets or sets the user's chapter, required.  Must belong to set of supported chapters in settings
         /// </summary>
-        public Chapter? Chapter { get; set; }
+        public Enums.Chapter? Chapter { get; set; }
 
         /// <inheritdoc/>
         public new void Validate()
         {
             // Validate base
             base.Validate();
+
+            // Validate positions
+            foreach (var position in this.Positions)
+            {
+                position.Validate();
+            }
 
             // Every user belongs to a chapter
             this.Chapter = Ensure.IsNotNull(() => this.Chapter);

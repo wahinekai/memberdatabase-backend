@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <AdditionalFiles Include="StyleCop.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AdditionalFiles>
   </ItemGroup>
 

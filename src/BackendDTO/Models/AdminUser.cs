@@ -8,8 +8,7 @@
 namespace WahineKai.Backend.DTO.Models
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
+    using Newtonsoft.Json;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.Common.Contracts;
     using WahineKai.Backend.DTO.Enums;
@@ -22,12 +21,12 @@ namespace WahineKai.Backend.DTO.Models
         /// <summary>
         /// Gets or sets a value indicating whether a user is an admin user
         /// </summary>
-        public bool? Admin { get; set; }
+        public bool Admin { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether a member is active, required, defaults to false
         /// </summary>
-        public bool? Active { get; set; }
+        public bool Active { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a member's PayPal Name, not required
@@ -55,16 +54,6 @@ namespace WahineKai.Backend.DTO.Models
         public int? Age { get => this.CalculateAge(); }
 
         /// <summary>
-        /// Gets or sets the date a member started surfing
-        /// </summary>
-        public DateTime? StartedSurfing { get; set; }
-
-        /// <summary>
-        /// Gets or sets a member's boards
-        /// </summary>
-        public ICollection<string> Boards { get; set; } = new Collection<string>();
-
-        /// <summary>
         /// Gets or sets the date the user joined the Wahine Kais, required
         /// </summary>
         public DateTime? JoinedDate { get; set; }
@@ -82,27 +71,43 @@ namespace WahineKai.Backend.DTO.Models
         /// <summary>
         /// Gets or sets a value indicating whether the user has been entered in the facebook chapter group
         /// </summary>
-        public EnteredStatus? EnteredInFacebookChapter { get; set; }
+        public EnteredStatus EnteredInFacebookChapter { get; set; } = EnteredStatus.NotEntered;
 
         /// <summary>
         /// Gets or sets a value indicating whether the user has been entered in facebook WKI
         /// </summary>
-        public EnteredStatus? EnteredInFacebookWki { get; set; }
+        public EnteredStatus EnteredInFacebookWki { get; set; } = EnteredStatus.NotEntered;
 
         /// <summary>
         /// Gets or sets a value indicating whether a user needs a new member bag
         /// </summary>
-        public bool? NeedsNewMemberBag { get; set; }
+        public bool NeedsNewMemberBag { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether a user has won a surfboard
         /// </summary>
-        public bool? WonSurfboard { get; set; }
+        public bool WonSurfboard { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the date a user has won a surfboard - null if the user hasn't won
         /// </summary>
         public DateTime? DateSurfboardWon { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a member is a lifetime member of Wahine Kai
+        /// </summary>
+        public bool LifetimeMember { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a member has opted out of social media
+        /// </summary>
+        public bool SocialMediaOptOut { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets TimeStamp Property from Cosmos DB
+        /// </summary>
+        [JsonProperty(PropertyName = "_ts")]
+        public long? TimeStamp { get; set; }
 
         /// <summary>
         /// Clone the old user, and replace it with the parameters of the updated user
@@ -116,10 +121,10 @@ namespace WahineKai.Backend.DTO.Models
             var replacedUser = oldUser.Clone();
 
             // Update updatable parameters
-            replacedUser.Admin = updatedUser.Admin ?? oldUser.Admin;
+            replacedUser.Admin = updatedUser.Admin;
             replacedUser.FirstName = updatedUser.FirstName ?? oldUser.FirstName;
             replacedUser.LastName = updatedUser.LastName ?? oldUser.LastName;
-            replacedUser.Active = updatedUser.Active ?? oldUser.Active;
+            replacedUser.Active = updatedUser.Active;
             replacedUser.FacebookName = updatedUser.FacebookName ?? oldUser.FacebookName;
             replacedUser.PayPalName = updatedUser.PayPalName ?? oldUser.PayPalName;
             replacedUser.PhoneNumber = updatedUser.PhoneNumber ?? oldUser.PhoneNumber;
@@ -133,18 +138,21 @@ namespace WahineKai.Backend.DTO.Models
             replacedUser.Level = updatedUser.Level ?? oldUser.Level;
             replacedUser.StartedSurfing = updatedUser.StartedSurfing ?? oldUser.StartedSurfing;
             replacedUser.Boards = updatedUser.Boards ?? oldUser.Boards;
+            replacedUser.SurfSpots = updatedUser.SurfSpots ?? oldUser.SurfSpots;
             replacedUser.PhotoUrl = updatedUser.PhotoUrl ?? oldUser.PhotoUrl;
             replacedUser.Biography = updatedUser.Biography ?? oldUser.Biography;
             replacedUser.JoinedDate = updatedUser.JoinedDate ?? oldUser.JoinedDate;
             replacedUser.RenewalDate = updatedUser.RenewalDate ?? oldUser.RenewalDate;
             replacedUser.TerminatedDate = updatedUser.TerminatedDate ?? oldUser.TerminatedDate;
-            replacedUser.Position = updatedUser.Position ?? oldUser.Position;
-            replacedUser.DateStartedPosition = updatedUser.DateStartedPosition ?? oldUser.DateStartedPosition;
-            replacedUser.EnteredInFacebookChapter = updatedUser.EnteredInFacebookChapter ?? oldUser.EnteredInFacebookChapter;
-            replacedUser.EnteredInFacebookWki = updatedUser.EnteredInFacebookWki ?? oldUser.EnteredInFacebookWki;
-            replacedUser.NeedsNewMemberBag = updatedUser.NeedsNewMemberBag ?? oldUser.NeedsNewMemberBag;
-            replacedUser.WonSurfboard = updatedUser.WonSurfboard ?? oldUser.WonSurfboard;
+            replacedUser.Positions = updatedUser.Positions ?? oldUser.Positions;
+            replacedUser.EnteredInFacebookChapter = updatedUser.EnteredInFacebookChapter;
+            replacedUser.EnteredInFacebookWki = updatedUser.EnteredInFacebookWki;
+            replacedUser.NeedsNewMemberBag = updatedUser.NeedsNewMemberBag;
+            replacedUser.WonSurfboard = updatedUser.WonSurfboard;
             replacedUser.DateSurfboardWon = updatedUser.DateSurfboardWon ?? oldUser.DateSurfboardWon;
+            replacedUser.PostalCode = updatedUser.PostalCode ?? oldUser.PostalCode;
+            replacedUser.LifetimeMember = updatedUser.LifetimeMember;
+            replacedUser.SocialMediaOptOut = updatedUser.SocialMediaOptOut;
 
             // Validate and return replaced user
             replacedUser.Validate();
@@ -159,16 +167,23 @@ namespace WahineKai.Backend.DTO.Models
             // Every user must have a joined date
             this.JoinedDate = Ensure.IsNotNull(() => this.JoinedDate);
 
-            // User must be either terminated or have a renewal date
-            if (this.TerminatedDate == null)
+            // Renewal/Termination Date Validation
+            if (this.Active)
             {
-                Ensure.IsNotNull(() => this.RenewalDate);
-            }
+                // Active user, must be lifetime member or have renewal date, no terminated date
+                if (!this.LifetimeMember)
+                {
+                    this.RenewalDate = Ensure.IsNotNull(() => this.RenewalDate);
+                }
 
-            // If user has a leadership position, they must also have a date started
-            if (this.Position != null)
+                this.TerminatedDate = null;
+            }
+            else
             {
-                Ensure.IsNotNull(() => this.DateStartedPosition);
+                // Inactive user, must have terminated date, no renewal date
+                this.TerminatedDate = Ensure.IsNotNull(() => this.TerminatedDate);
+
+                this.RenewalDate = null;
             }
 
             // If user has won a surfboard, must have the date won
@@ -205,18 +220,21 @@ namespace WahineKai.Backend.DTO.Models
                 Level = this.Level,
                 StartedSurfing = this.StartedSurfing,
                 Boards = this.Boards,
+                SurfSpots = this.SurfSpots,
                 PhotoUrl = this.PhotoUrl,
                 Biography = this.Biography,
                 JoinedDate = this.JoinedDate,
                 RenewalDate = this.RenewalDate,
                 TerminatedDate = this.TerminatedDate,
-                Position = this.Position,
-                DateStartedPosition = this.DateStartedPosition,
+                Positions = this.Positions,
                 EnteredInFacebookChapter = this.EnteredInFacebookChapter,
                 EnteredInFacebookWki = this.EnteredInFacebookWki,
                 NeedsNewMemberBag = this.NeedsNewMemberBag,
                 WonSurfboard = this.WonSurfboard,
                 DateSurfboardWon = this.DateSurfboardWon,
+                PostalCode = this.PostalCode,
+                LifetimeMember = this.LifetimeMember,
+                SocialMediaOptOut = this.SocialMediaOptOut,
             };
         }
 

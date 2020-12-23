@@ -8,6 +8,8 @@
 namespace WahineKai.Backend.DTO.Models
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using StatesAndProvinces;
     using WahineKai.Backend.Common;
@@ -45,6 +47,11 @@ namespace WahineKai.Backend.DTO.Models
         public string? Region { get; set; }
 
         /// <summary>
+        /// Gets or sets the user's postal code, not required
+        /// </summary>
+        public int? PostalCode { get; set; }
+
+        /// <summary>
         /// Gets or sets the user's country, not required.  Must belong to set of supported countries in settings.
         /// </summary>
         public Country? Country { get; set; }
@@ -68,6 +75,21 @@ namespace WahineKai.Backend.DTO.Models
         /// Gets or sets a user's biography
         /// </summary>
         public string? Biography { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date a member started surfing
+        /// </summary>
+        public DateTime? StartedSurfing { get; set; }
+
+        /// <summary>
+        /// Gets or sets a member's boards
+        /// </summary>
+        public ICollection<string> Boards { get; set; } = new Collection<string>();
+
+        /// <summary>
+        /// Gets or sets a member's usual surf spots
+        /// </summary>
+        public ICollection<string> SurfSpots { get; set; } = new Collection<string>();
 
         /// <inheritdoc/>
         public new void Validate()

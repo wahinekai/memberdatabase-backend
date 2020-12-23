@@ -7,6 +7,7 @@
 
 namespace WahineKai.Backend.DTO.Properties
 {
+    using System;
     using Microsoft.Extensions.Configuration;
     using WahineKai.Backend.Common;
     using WahineKai.Backend.Common.Contracts;

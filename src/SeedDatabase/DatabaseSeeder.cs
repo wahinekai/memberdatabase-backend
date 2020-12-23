@@ -27,6 +27,23 @@ namespace WahineKai.Backend.SeedDatabase
     {
         private static readonly string[] Boards = { "5'10\" custom", "8'2\" funboard" };
 
+        private static readonly string[] SurfSpots = { "Bolsa Chica", "Blackies" };
+
+        private static readonly DTO.Models.Position[] Positions =
+        {
+            new DTO.Models.Position()
+            {
+                Name = DTO.Enums.Position.DirectorOfCommunityServices,
+                Started = new DateTime(2014, 01, 01),
+                Ended = new DateTime(2015, 12, 31),
+            },
+            new DTO.Models.Position()
+            {
+                Name = DTO.Enums.Position.ChapterDirector,
+                Started = new DateTime(2016, 01, 01),
+            },
+        };
+
         private static readonly AdminUser[] UsersArray =
             {
                 new AdminUser
@@ -48,6 +65,7 @@ namespace WahineKai.Backend.SeedDatabase
                     Birthdate = new DateTime(1982, 09, 05),
                     Level = Level.Intermediate,
                     Boards = Boards.ToList(),
+                    SurfSpots = SurfSpots.ToList(),
                     PhotoUrl = string.Empty,
                     Biography = "I am a test user",
                     StartedSurfing = new DateTime(1989, 05, 01),
@@ -58,6 +76,7 @@ namespace WahineKai.Backend.SeedDatabase
                     NeedsNewMemberBag = true,
                     WonSurfboard = true,
                     DateSurfboardWon = new DateTime(2019, 12, 25),
+                    PostalCode = 92804,
                 },
                 new AdminUser
                 {
@@ -74,10 +93,11 @@ namespace WahineKai.Backend.SeedDatabase
                     Region = "British Columbia",
                     Country = Country.Canada,
                     Occupation = "Hardware Administration",
-                    Chapter = Chapter.Canada,
+                    Chapter = Chapter.Washington,
                     Birthdate = new DateTime(1964, 02, 18),
                     Level = Level.Expert,
                     Boards = Boards.ToList(),
+                    SurfSpots = SurfSpots.ToList(),
                     PhotoUrl = string.Empty,
                     Biography = "I am an administrator",
                     StartedSurfing = new DateTime(1977, 11, 01),
@@ -85,8 +105,8 @@ namespace WahineKai.Backend.SeedDatabase
                     RenewalDate = new DateTime(2021, 01, 22),
                     EnteredInFacebookChapter = EnteredStatus.Accepted,
                     EnteredInFacebookWki = EnteredStatus.Accepted,
-                    Position = Position.ChapterDirector,
-                    DateStartedPosition = new DateTime(2016, 01, 01),
+                    Positions = Positions.ToList(),
+                    PostalCode = 98607,
                 },
             };
 

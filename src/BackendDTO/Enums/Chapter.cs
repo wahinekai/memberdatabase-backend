@@ -15,9 +15,10 @@ namespace WahineKai.Backend.DTO.Enums
     public enum Chapter
     {
         /// <summary>
-        /// Canada chapter of Wahine Kai
+        /// San Diego chapter of Wahine Kai
         /// </summary>
-        Canada,
+        [EnumMember(Value = "San Diego")]
+        SanDiego,
 
         /// <summary>
         /// Orange County & Los Angeles chapter
