@@ -18,7 +18,7 @@ def dotnetRestore():
 
 def dotnetBuild():
     print("Building Docker container")
-    system("docker build . -t wahinekai/memberdatabase/backend")
+    system("docker build . -t wahinekai/memberdatabase/backend --build-arg ASPNETCORE_ENVIRONMENT=Development --build-arg ASPNETCORE_URLS=http://localhost:5000;https://localhost:5001")
 
 def dotnetRunProduction():
     system("docker run --rm -it -p 5000:5000 -p 5001:5001 wahinekai/memberdatabase/backend")

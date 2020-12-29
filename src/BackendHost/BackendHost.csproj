@@ -7,13 +7,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'LocalDevelopment' " />
   <ItemGroup>
     <Content Remove="StyleCop.json" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="StyleCop.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AdditionalFiles>
   </ItemGroup>
 

@@ -11,7 +11,7 @@
     "DatabaseId":  "wahine-kai-member-database"
   },
   "AzureBlob": {
-    "ConnectionString": "<Out Azure Cosmos account Connection String (set in user secrets, do not att here!!!)>",
+    "ConnectionString": "<Out Azure Cosmos account Connection String (set in user secrets, do not add here!!!)>",
     "ProfilePhotosContainer":  "profile-photos"
   },
   "Logging": {

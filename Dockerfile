@@ -10,12 +10,11 @@ RUN dotnet publish -c Release ./src/BackendHost/BackendHost.csproj --output ./ou
 FROM mcr.microsoft.com/dotnet/sdk:5.0
 
 # Set Runtime environment variables
-ENV ASPNETCORE_ENVIRONMENT="Production"
-ENV ASPNETCORE_URLS="http://0.0.0.0:5000;https://0.0.0.0:5001"
+ARG ASPNETCORE_ENVIRONMENT
+ARG ASPNETCORE_URLS
 
-# Expose Ports
-EXPOSE 5000 
-EXPOSE 5001
+ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+ENV ASPNETCORE_URLS=${ASPNETCORE_URLS}
 
 # Copy over production dll
 WORKDIR /app
