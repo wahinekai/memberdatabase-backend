@@ -19,7 +19,7 @@ namespace WahineKai.Backend.Host.Controllers
     /// <summary>
     /// Search Controller
     /// </summary>
-    public class SearchController : ApiCommon.Controllers.ControllerBase
+    public class SearchController : Common.Api.Controllers.ControllerBase
     {
         private readonly ISearchService searchService;
 

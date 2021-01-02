@@ -17,7 +17,7 @@ namespace WahineKai.Backend.Host.Controllers
     /// <summary>
     /// Controller for upload endpoints
     /// </summary>
-    public class UploadController : ApiCommon.Controllers.ControllerBase
+    public class UploadController : Common.Api.Controllers.ControllerBase
     {
         private readonly IUploadService uploadService;
 

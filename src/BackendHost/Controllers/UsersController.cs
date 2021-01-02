@@ -21,7 +21,7 @@ namespace WahineKai.Backend.Host.Controllers
     /// <summary>
     /// User controller class
     /// </summary>
-    public sealed class UsersController : ApiCommon.Controllers.ControllerBase
+    public sealed class UsersController : Common.Api.Controllers.ControllerBase
     {
         private readonly IUserService userService;
 

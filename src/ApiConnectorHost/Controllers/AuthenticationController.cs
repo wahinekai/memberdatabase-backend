@@ -19,7 +19,7 @@ namespace WahineKai.ApiConnector.Host.Controllers
     /// <summary>
     /// Controller for API Connector
     /// </summary>
-    public class AuthenticationController : ApiCommon.Controllers.ControllerBase
+    public class AuthenticationController : Common.Api.Controllers.ControllerBase
     {
         private readonly IApiConnectorService apiConnectorService;
 
