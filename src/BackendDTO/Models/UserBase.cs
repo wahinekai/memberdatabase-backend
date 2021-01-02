@@ -5,13 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Models
+namespace WahineKai.DTO.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.Common.Contracts;
+    using WahineKai.Common;
+    using WahineKai.Common.Contracts;
 
     /// <summary>
     /// Base class - includes requried information for all user types
@@ -26,7 +26,7 @@ namespace WahineKai.Backend.DTO.Models
         /// <summary>
         /// Partion key for this container
         /// </summary>
-        public const string PartitionKey = "/Email";
+        public const string PartitionKey = "/id";
 
         /// <summary>
         /// Gets Azure Cosmos DB id for this user
@@ -35,16 +35,16 @@ namespace WahineKai.Backend.DTO.Models
         public virtual Guid Id { get; init; } = Guid.NewGuid();
 
         /// <summary>
-        /// Gets user email address, required
+        /// Gets or sets user email address, required
         /// </summary>
         [EmailAddress]
-        public string? Email { get; init; }
+        public string? Email { get; set; }
 
         /// <inheritdoc/>
         public void Validate()
         {
-            // Email is primary key, required, can't be changed
-            Ensure.IsNotNullOrWhitespace(() => this.Email);
+            // Email is required
+            this.Email = Ensure.IsNotNullOrWhitespace(() => this.Email);
         }
     }
 }

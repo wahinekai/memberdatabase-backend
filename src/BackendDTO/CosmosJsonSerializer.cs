@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.DTO
 {
     using System.IO;
     using System.Text;

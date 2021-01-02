@@ -7,13 +7,11 @@
 
 namespace WahineKai.Backend.SeedDatabase.Host
 {
-    using System;
-    using System.IO;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common.Contracts;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common.Contracts;
+    using WahineKai.DTO.Properties;
 
     /// <summary>
     /// Entrypoint for SeedDatabaseHost console application

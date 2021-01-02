@@ -7,7 +7,6 @@
 
 namespace WahineKai.Backend.Host.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -18,7 +17,7 @@ namespace WahineKai.Backend.Host.Controllers
     /// <summary>
     /// Controller for upload endpoints
     /// </summary>
-    public class UploadController : ControllerBase
+    public class UploadController : ApiCommon.Controllers.ControllerBase
     {
         private readonly IUploadService uploadService;
 

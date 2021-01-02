@@ -5,13 +5,19 @@
     "Domain": "wahinekaidevelopment.onmicrosoft.com",
     "SignUpSignInPolicyId": "B2C_1_signup_signin"
   },
+  "AzureAd": {
+    "AppId": "950273dd-9f56-459d-92b3-6a0db9cb2fd6",
+    "ClientSecret": "<Our Azure Active Directory account Client Secret (set in user secrets, do not add here!!!)>",
+    "TenantId": "6237fbcb-17ce-4f30-999b-407b782e481d",
+    "Domain": "wahinekaidevelopment.onmicrosoft.com"
+  },
   "Cosmos": {
     "EndpointUrl": "https://wahine-kai-member-database.documents.azure.com:443/",
     "PrimaryKey": "<Our Azure Cosmos account Primary Key (set in user secrets, do not add here!!!)>",
     "DatabaseId":  "wahine-kai-member-database"
   },
   "AzureBlob": {
-    "ConnectionString": "<Out Azure Cosmos account Connection String (set in user secrets, do not add here!!!)>",
+    "ConnectionString": "<Our Azure Blob account Connection String (set in user secrets, do not add here!!!)>",
     "ProfilePhotosContainer":  "profile-photos"
   },
   "Logging": {

@@ -12,12 +12,12 @@ namespace WahineKai.Backend.SeedDatabase
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Enums;
-    using WahineKai.Backend.DTO.Models;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common;
+    using WahineKai.DTO;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Enums;
+    using WahineKai.DTO.Models;
+    using WahineKai.DTO.Properties;
     using WahineKai.Backend.SeedDatabase.Contracts;
 
     /// <summary>

@@ -10,7 +10,7 @@ namespace WahineKai.Backend.Host
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
-    using WahineKai.Backend.Common.Contracts;
+    using WahineKai.Common.Contracts;
 
     /// <summary>
     /// Entrypoint to Backend API

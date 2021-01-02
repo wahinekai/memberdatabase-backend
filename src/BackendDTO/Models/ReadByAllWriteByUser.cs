@@ -5,16 +5,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Models
+namespace WahineKai.DTO.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using StatesAndProvinces;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.Common.Contracts;
-    using WahineKai.Backend.DTO.Enums;
+    using WahineKai.Common;
+    using WahineKai.Common.Contracts;
+    using WahineKai.DTO.Enums;
 
     /// <summary>
     /// User type with widest permissions (read by all, write by user, all by admin).

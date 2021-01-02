@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Common.Contracts
+namespace WahineKai.Common.Contracts
 {
     /// <summary>
     /// Interface indicating that an object implementing this interface can be validated to ensure correctness.

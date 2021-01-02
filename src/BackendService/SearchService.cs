@@ -11,11 +11,12 @@ namespace WahineKai.Backend.Service
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Models;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common.Api.Services;
+    using WahineKai.Common;
+    using WahineKai.DTO;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Models;
+    using WahineKai.DTO.Properties;
     using WahineKai.Backend.Service.Contracts;
 
     /// <summary>
@@ -41,23 +42,6 @@ namespace WahineKai.Backend.Service
             this.userRepository = new CosmosUserRepository<ReadByAllUser>(cosmosConfiguration, loggerFactory);
 
             this.Logger.LogTrace("Construction of Search Service complete");
-        }
-
-        /// <inheritdoc/>
-        public async Task<ICollection<ReadByAllUser>> GetAllUsersAsync(string userEmail)
-        {
-            // Sanity check input
-            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
-
-            await this.EnsureCallingUserPermissionsAsync(userEmail);
-
-            this.Logger.LogDebug("Getting all users from repository");
-
-            var users = await this.userRepository.GetAllUsersAsync();
-
-            this.Logger.LogTrace($"Got {users.Count} users from the user repository");
-
-            return users;
         }
 
         /// <inheritdoc/>

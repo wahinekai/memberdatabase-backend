@@ -12,10 +12,11 @@ namespace WahineKai.Backend.Service
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common.Api.Services;
+    using WahineKai.Common;
+    using WahineKai.DTO;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Properties;
     using WahineKai.Backend.Service.Contracts;
 
     /// <summary>

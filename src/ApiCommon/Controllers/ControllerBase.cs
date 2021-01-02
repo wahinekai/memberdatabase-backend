@@ -5,13 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Host.Controllers
+namespace WahineKai.Common.Api.Controllers
 {
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
+    using WahineKai.Common;
 
     /// <summary>
     /// Base class for all controllers

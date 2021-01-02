@@ -5,12 +5,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Contracts
+namespace WahineKai.DTO.Contracts
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using WahineKai.Backend.DTO.Models;
+    using WahineKai.DTO.Models;
 
     /// <summary>
     /// Interface for actions connecting Users with User store

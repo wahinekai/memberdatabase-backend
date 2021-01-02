@@ -12,14 +12,14 @@ namespace WahineKai.Backend.Host.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.DTO.Models;
+    using WahineKai.DTO.Models;
     using WahineKai.Backend.Service;
     using WahineKai.Backend.Service.Contracts;
 
     /// <summary>
     /// Search Controller
     /// </summary>
-    public class SearchController : ControllerBase
+    public class SearchController : ApiCommon.Controllers.ControllerBase
     {
         private readonly ISearchService searchService;
 
@@ -36,19 +36,6 @@ namespace WahineKai.Backend.Host.Controllers
             this.searchService = new SearchService(loggerFactory, this.Configuration);
 
             this.Logger.LogTrace("Construction of Search Controller complete");
-        }
-
-        /// <summary>
-        /// Gets all users from the database
-        /// </summary>
-        /// <returns>A Collection of users</returns>
-        [HttpGet]
-        [ActionName("All")]
-        public async Task<ICollection<ReadByAllUser>> GetAllUsersAsync()
-        {
-            this.Logger.LogDebug("Getting the user associated with this request");
-            var users = await this.searchService.GetAllUsersAsync(this.GetUserEmailFromContext());
-            return users;
         }
 
         /// <summary>

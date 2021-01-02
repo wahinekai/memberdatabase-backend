@@ -5,16 +5,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Service
+namespace WahineKai.Common.Api.Services
 {
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Models;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common;
+    using WahineKai.DTO;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Models;
+    using WahineKai.DTO.Properties;
 
     /// <summary>
     /// Base class for all services
@@ -27,10 +27,10 @@ namespace WahineKai.Backend.Service
         /// Initializes a new instance of the <see cref="ServiceBase"/> class.
         /// </summary>
         /// <param name="loggerFactory">Logger factory for this service</param>
-        /// <param name="configuration">Application configuration</param>
-        public ServiceBase(ILoggerFactory loggerFactory, IConfiguration configuration)
+        /// <param name="configurationMaybeNull">Application configuration</param>
+        public ServiceBase(ILoggerFactory loggerFactory, IConfiguration? configurationMaybeNull)
         {
-            this.Configuration = Ensure.IsNotNull(() => configuration);
+            this.Configuration = Ensure.IsNotNull(() => configurationMaybeNull);
 
             loggerFactory = Ensure.IsNotNull(() => loggerFactory);
             this.Logger = loggerFactory.CreateLogger<ServiceBase>();

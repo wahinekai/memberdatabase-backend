@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Models
+namespace WahineKai.DTO.Models
 {
     using System;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.Common.Contracts;
+    using WahineKai.Common;
+    using WahineKai.Common.Contracts;
 
     /// <summary>
     /// Object representing a position a user can hold

@@ -5,12 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Host.Middleware
+namespace WahineKai.Common.Api.Middleware
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
 
     /// <summary>
     /// Middleware for logging requests

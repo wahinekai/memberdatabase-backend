@@ -5,10 +5,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.DTO
 {
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
+    using WahineKai.Common;
 
     /// <summary>
     /// Base class for all interaction with an outside data source

@@ -13,15 +13,15 @@ namespace WahineKai.Backend.Host.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO.Models;
+    using WahineKai.Common;
+    using WahineKai.DTO.Models;
     using WahineKai.Backend.Service;
     using WahineKai.Backend.Service.Contracts;
 
     /// <summary>
     /// User controller class
     /// </summary>
-    public sealed class UsersController : ControllerBase
+    public sealed class UsersController : ApiCommon.Controllers.ControllerBase
     {
         private readonly IUserService userService;
 
@@ -50,6 +50,19 @@ namespace WahineKai.Backend.Host.Controllers
         public async Task<ICollection<AdminUser>> DownloadCsvAsync()
         {
             this.Logger.LogDebug("Getting all users in a CSV");
+            var users = await this.userService.GetAllUsersAsync(this.GetUserEmailFromContext());
+            return users;
+        }
+
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns>All users</returns>
+        [HttpGet]
+        [ActionName("All")]
+        public async Task<ICollection<AdminUser>> GetAllUsersAsync()
+        {
+            this.Logger.LogDebug("Getting all users");
             var users = await this.userService.GetAllUsersAsync(this.GetUserEmailFromContext());
             return users;
         }

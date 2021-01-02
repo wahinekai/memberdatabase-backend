@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.DTO
 {
     using System;
     using System.Collections.Generic;
@@ -15,10 +15,10 @@ namespace WahineKai.Backend.DTO
     using LinqKit;
     using Microsoft.Azure.Cosmos.Linq;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Models;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Models;
+    using WahineKai.DTO.Properties;
 
     /// <summary>
     /// Implementaion of IUserRepository
@@ -39,7 +39,7 @@ namespace WahineKai.Backend.DTO
         {
             this.Logger.LogTrace("Beginning construction of Cosmos User Repository");
 
-            this.container = this.CosmosClient.GetContainer(this.CosmosConfiguration.DatabaseId, UserBase.ContainerId);
+            this.container = this.CosmosClient.GetContainer(this.DatabaseId, UserBase.ContainerId);
 
             this.Logger.LogTrace("Construction of Cosmos User Repository complete");
         }

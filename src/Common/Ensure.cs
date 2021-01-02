@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Common
+namespace WahineKai.Common
 {
     using System;
     using System.Collections.Generic;

@@ -5,14 +5,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.DTO
 {
     using Microsoft.Azure.Cosmos;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common;
+    using WahineKai.DTO.Properties;
 
     /// <summary>
     /// Base class for repositories interfacing with Cosmos DB
@@ -29,18 +29,23 @@ namespace WahineKai.Backend.DTO
         {
             this.Logger.LogTrace("Construction of Cosmos Repository Base starting");
 
-            this.CosmosConfiguration = Ensure.IsNotNull(() => cosmosConfiguration);
-            this.CosmosConfiguration.Validate();
+            // Validate input arguments
+            cosmosConfiguration = Ensure.IsNotNull(() => cosmosConfiguration);
+            cosmosConfiguration.Validate();
 
+            // Set database id
+            this.DatabaseId = Ensure.IsNotNullOrWhitespace(() => cosmosConfiguration.DatabaseId);
+
+            // Create custom JSON serializer for enums
             var jsonSerializationSettings = new JsonSerializerSettings()
             {
                 NullValueHandling = NullValueHandling.Ignore,
             };
             jsonSerializationSettings.Converters.Add(new StringEnumConverter());
 
+            // Create cosmos client
             var cosmosOptions = new CosmosClientOptions() { Serializer = new CosmosJsonSerializer(jsonSerializationSettings) };
-
-            this.CosmosClient = new CosmosClient(this.CosmosConfiguration.EndpointUrl, this.CosmosConfiguration.PrimaryKey, cosmosOptions);
+            this.CosmosClient = new CosmosClient(cosmosConfiguration.EndpointUrl, cosmosConfiguration.PrimaryKey, cosmosOptions);
 
             this.Logger.LogTrace("Construction of Cosmos Repository Base complete");
         }
@@ -48,7 +53,7 @@ namespace WahineKai.Backend.DTO
         /// <summary>
         /// Gets Cosmos DB Configuration
         /// </summary>
-        protected CosmosConfiguration CosmosConfiguration { get; }
+        protected string DatabaseId { get; }
 
         /// <summary>
         /// Gets client for interacting with Cosmos DB

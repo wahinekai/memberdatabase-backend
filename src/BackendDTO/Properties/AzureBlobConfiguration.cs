@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Properties
+namespace WahineKai.DTO.Properties
 {
     using Microsoft.Extensions.Configuration;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.Common.Contracts;
+    using WahineKai.Common;
+    using WahineKai.Common.Contracts;
 
     /// <summary>
     /// Configuration for connection to Azure Blob Storage

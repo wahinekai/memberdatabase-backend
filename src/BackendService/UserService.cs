@@ -12,17 +12,19 @@ namespace WahineKai.Backend.Service
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Models;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common.Api.Services;
+    using WahineKai.Common;
+    using WahineKai.DTO;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Models;
+    using WahineKai.DTO.Properties;
     using WahineKai.Backend.Service.Contracts;
 
     /// <inheritdoc/>
     public class UserService : ServiceBase, IUserService
     {
         private readonly IUserRepository<AdminUser> userRepository;
+        private readonly IAzureActiveDirectoryRepository azureActiveDirectoryRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -34,10 +36,13 @@ namespace WahineKai.Backend.Service
         {
             this.Logger.LogTrace("Construction of User Service beginning");
 
-            // Build cosmos configuration
+            // Build user repository
             var cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(this.Configuration);
-
             this.userRepository = new CosmosUserRepository<AdminUser>(cosmosConfiguration, loggerFactory);
+
+            // Build AAD Repository
+            var azureActiveDirectoryConfiguration = AzureActiveDirectoryConfiguration.BuildFromConfiguration(this.Configuration);
+            this.azureActiveDirectoryRepository = new AzureActiveDirectoryRepository(loggerFactory, azureActiveDirectoryConfiguration);
 
             this.Logger.LogTrace("Construction of User Service complete");
         }
@@ -124,7 +129,6 @@ namespace WahineKai.Backend.Service
         {
             // Sanity check input
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
-            updatedUser = Ensure.IsNotNull(() => updatedUser);
 
             // CallingUserEmail is userEmail by default
             callingUserEmail ??= userEmail;
@@ -138,35 +142,51 @@ namespace WahineKai.Backend.Service
             // Update user and return it
             this.Logger.LogTrace($"Replacing user with email {userEmail} with new values");
 
-            var replacedUser = AdminUser.Replace(oldUser, updatedUser);
-            var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
-
-            // Sanity check output
-            userFromDatabase = Ensure.IsNotNull(() => userFromDatabase);
-            userFromDatabase.Validate();
-
-            this.Logger.LogDebug("Updated 1 user in the database");
-
-            return userFromDatabase;
+            return await this.ReplaceUserAsync(oldUser, updatedUser);
         }
 
         /// <inheritdoc/>
-        public async Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string? callingUserEmail)
+        public async Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail)
         {
             // Sanity check input
             id = Ensure.IsNotNull(() => id);
-            updatedUser = Ensure.IsNotNull(() => updatedUser);
+            callingUserEmail = Ensure.IsNotNullOrWhitespace(() => callingUserEmail);
 
             // Ensure user who making this request has the permissions to perform this action
             await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
 
-            // Get old user
-            var oldUser = await this.userRepository.GetUserByIdAsync(id);
-
             // Update user and return it
             this.Logger.LogTrace($"Replacing user with id {id} with new values");
 
+            var oldUser = await this.userRepository.GetUserByIdAsync(id);
+            return await this.ReplaceUserAsync(oldUser, updatedUser);
+        }
+
+        /// <summary>
+        /// Replaces the user in the database and updates Azure Active Directory if properties have changed
+        /// </summary>
+        /// <param name="oldUser">The user to change</param>
+        /// <param name="updatedUser">The parameters to update the user with</param>
+        /// <returns>The updated user from the database</returns>
+        private async Task<AdminUser> ReplaceUserAsync(AdminUser oldUser, AdminUser updatedUser)
+        {
+            // Sanity check input
+            oldUser = Ensure.IsNotNull(() => oldUser);
+            updatedUser = Ensure.IsNotNull(() => updatedUser);
+
+            // Create replaced user
             var replacedUser = AdminUser.Replace(oldUser, updatedUser);
+
+            // Update email in AAD B2C if needed
+            if (oldUser.Email != replacedUser.Email)
+            {
+                var oldEmail = Ensure.IsNotNullOrWhitespace(() => oldUser.Email);
+                var newEmail = Ensure.IsNotNullOrWhitespace(() => replacedUser.Email);
+
+                await this.azureActiveDirectoryRepository.UpdateUserEmailAsync(oldEmail, newEmail);
+            }
+
+            // Replace user in database
             var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
 
             // Sanity check output

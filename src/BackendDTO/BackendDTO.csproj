@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>WahineKai.Backend.DTO</RootNamespace>
+    <RootNamespace>WahineKai.DTO</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -30,6 +30,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="LinqKit" Version="1.1.21" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0-beta.1" />
+    <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.6" />
+    <PackageReference Include="Microsoft.Graph" Version="3.21.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.24.0" />
   </ItemGroup>
 
   <ItemGroup>

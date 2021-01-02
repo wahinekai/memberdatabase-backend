@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Common.Contracts
+namespace WahineKai.Common.Contracts
 {
     /// <summary>
     /// Interface for an application entrypoint

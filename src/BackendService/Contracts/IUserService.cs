@@ -10,7 +10,7 @@ namespace WahineKai.Backend.Service.Contracts
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using WahineKai.Backend.DTO.Models;
+    using WahineKai.DTO.Models;
 
     /// <summary>
     /// Service for interaction with users

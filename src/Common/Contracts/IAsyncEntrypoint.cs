@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Common.Contracts
+namespace WahineKai.Common.Contracts
 {
     using System.Threading.Tasks;
 

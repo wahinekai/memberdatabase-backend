@@ -37,9 +37,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\ApiCommon\ApiCommon.csproj" />
     <ProjectReference Include="..\BackendDTO\BackendDTO.csproj" />
     <ProjectReference Include="..\BackendService\BackendService.csproj" />
-    <ProjectReference Include="..\SeedDatabase\SeedDatabase.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,13 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Models
+namespace WahineKai.DTO.Models
 {
     using System;
     using Newtonsoft.Json;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.Common.Contracts;
-    using WahineKai.Backend.DTO.Enums;
+    using WahineKai.Common;
+    using WahineKai.Common.Contracts;
+    using WahineKai.DTO.Enums;
 
     /// <summary>
     /// Model of a user with all fields - to be worked on by admin
@@ -122,6 +122,7 @@ namespace WahineKai.Backend.DTO.Models
 
             // Update updatable parameters
             replacedUser.Admin = updatedUser.Admin;
+            replacedUser.Email = updatedUser.Email;
             replacedUser.FirstName = updatedUser.FirstName ?? oldUser.FirstName;
             replacedUser.LastName = updatedUser.LastName ?? oldUser.LastName;
             replacedUser.Active = updatedUser.Active;

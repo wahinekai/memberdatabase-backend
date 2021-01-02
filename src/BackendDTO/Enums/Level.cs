@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO.Enums
+namespace WahineKai.DTO.Enums
 {
     /// <summary>
     /// Various skill levels

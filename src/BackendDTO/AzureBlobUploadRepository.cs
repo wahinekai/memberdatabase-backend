@@ -5,14 +5,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.DTO
+namespace WahineKai.DTO
 {
     using System.IO;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Backend.Common;
-    using WahineKai.Backend.DTO.Contracts;
-    using WahineKai.Backend.DTO.Properties;
+    using WahineKai.Common;
+    using WahineKai.DTO.Contracts;
+    using WahineKai.DTO.Properties;
 
     /// <summary>
     /// Repository to upload profile picutres
