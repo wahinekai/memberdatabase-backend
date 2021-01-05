@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="StyleCop.json">
     </AdditionalFiles>
   </ItemGroup>

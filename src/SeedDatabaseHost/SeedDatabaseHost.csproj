@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Properties\appsettings.json" />
     <None Remove="StyleCop.json" />
   </ItemGroup>
