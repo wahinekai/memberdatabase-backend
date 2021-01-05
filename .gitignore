@@ -5,6 +5,7 @@
 
 # Custom files
 out/
+.vscode/
 
 # User-specific files
 *.rsuser
