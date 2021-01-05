@@ -5,12 +5,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Service.Contracts
+namespace WahineKai.MemberDatabase.Backend.Service.Contracts
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using WahineKai.DTO.Models;
+    using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
     /// Service for interaction with users

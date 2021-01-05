@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.SeedDatabase.Contracts
+namespace WahineKai.MemberDatabase.SeedDatabase.Contracts
 {
     using System.Threading.Tasks;
 

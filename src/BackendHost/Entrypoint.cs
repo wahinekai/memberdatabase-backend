@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Host
+namespace WahineKai.MemberDatabase.Backend.Host
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;

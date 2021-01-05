@@ -5,12 +5,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO
+namespace WahineKai.MemberDatabase.Dto
 {
     using Azure.Storage.Blobs;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Base class for all respositories related to Azure Blob Storage

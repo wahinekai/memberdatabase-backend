@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.SeedDatabase
+namespace WahineKai.MemberDatabase.SeedDatabase
 {
     using System;
     using System.Collections.Generic;
@@ -13,12 +13,12 @@ namespace WahineKai.Backend.SeedDatabase
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common;
-    using WahineKai.DTO;
-    using WahineKai.DTO.Contracts;
-    using WahineKai.DTO.Enums;
-    using WahineKai.DTO.Models;
-    using WahineKai.DTO.Properties;
-    using WahineKai.Backend.SeedDatabase.Contracts;
+    using WahineKai.MemberDatabase.Dto;
+    using WahineKai.MemberDatabase.Dto.Contracts;
+    using WahineKai.MemberDatabase.Dto.Enums;
+    using WahineKai.MemberDatabase.Dto.Models;
+    using WahineKai.MemberDatabase.Dto.Properties;
+    using WahineKai.MemberDatabase.SeedDatabase.Contracts;
 
     /// <summary>
     /// Project for seeding the development database with data

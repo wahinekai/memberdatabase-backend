@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.ApiConnector.Host
+namespace WahineKai.MemberDatabase.AzureAdConnector.Host
 {
     using System;
     using System.Security.Claims;
@@ -16,7 +16,7 @@ namespace WahineKai.ApiConnector.Host
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using WahineKai.ApiConnector.Host.Properties;
+    using WahineKai.MemberDatabase.AzureAdConnector.Host.Properties;
     using WahineKai.Common;
 
     /// <summary>

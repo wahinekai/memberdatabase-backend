@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>WahineKai.DTO</RootNamespace>
+    <RootNamespace>WahineKai.MemberDatabase.Dto</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

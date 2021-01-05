@@ -11,10 +11,10 @@ namespace WahineKai.Common.Api.Services
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common;
-    using WahineKai.DTO;
-    using WahineKai.DTO.Contracts;
-    using WahineKai.DTO.Models;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto;
+    using WahineKai.MemberDatabase.Dto.Contracts;
+    using WahineKai.MemberDatabase.Dto.Models;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Base class for all services

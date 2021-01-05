@@ -5,13 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.SeedDatabase.Host
+namespace WahineKai.MemberDatabase.SeedDatabase.Host
 {
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common.Contracts;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Entrypoint for SeedDatabaseHost console application

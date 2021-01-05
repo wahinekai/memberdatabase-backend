@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO
+namespace WahineKai.MemberDatabase.Dto
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +16,9 @@ namespace WahineKai.DTO
     using Microsoft.Azure.Cosmos.Linq;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common;
-    using WahineKai.DTO.Contracts;
-    using WahineKai.DTO.Models;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto.Contracts;
+    using WahineKai.MemberDatabase.Dto.Models;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Implementaion of IUserRepository

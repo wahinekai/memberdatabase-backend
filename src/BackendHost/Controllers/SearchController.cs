@@ -5,16 +5,16 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Host.Controllers
+namespace WahineKai.MemberDatabase.Backend.Host.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.DTO.Models;
-    using WahineKai.Backend.Service;
-    using WahineKai.Backend.Service.Contracts;
+    using WahineKai.MemberDatabase.Dto.Models;
+    using WahineKai.MemberDatabase.Backend.Service;
+    using WahineKai.MemberDatabase.Backend.Service.Contracts;
 
     /// <summary>
     /// Search Controller

@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Service
+namespace WahineKai.MemberDatabase.Backend.Service
 {
     using System;
     using System.IO;
@@ -14,10 +14,10 @@ namespace WahineKai.Backend.Service
     using Microsoft.Extensions.Logging;
     using WahineKai.Common.Api.Services;
     using WahineKai.Common;
-    using WahineKai.DTO;
-    using WahineKai.DTO.Contracts;
-    using WahineKai.DTO.Properties;
-    using WahineKai.Backend.Service.Contracts;
+    using WahineKai.MemberDatabase.Dto;
+    using WahineKai.MemberDatabase.Dto.Contracts;
+    using WahineKai.MemberDatabase.Dto.Properties;
+    using WahineKai.MemberDatabase.Backend.Service.Contracts;
 
     /// <summary>
     /// Service for uploading to an upload repository

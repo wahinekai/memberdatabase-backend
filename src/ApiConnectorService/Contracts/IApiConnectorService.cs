@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.ApiConnector.Service.Contracts
+namespace WahineKai.MemberDatabase.AzureAdConnector.Service.Contracts
 {
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;

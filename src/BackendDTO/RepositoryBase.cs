@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO
+namespace WahineKai.MemberDatabase.Dto
 {
     using Microsoft.Extensions.Logging;
     using WahineKai.Common;

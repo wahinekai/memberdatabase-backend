@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO.Enums
+namespace WahineKai.MemberDatabase.Dto.Enums
 {
     using System.Runtime.Serialization;
     using StatesAndProvinces;

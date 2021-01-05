@@ -5,15 +5,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.ApiConnector.Host.Controllers
+namespace WahineKai.MemberDatabase.AzureAdConnector.Host.Controllers
 {
     using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.ApiConnector.Service;
-    using WahineKai.ApiConnector.Service.Contracts;
+    using WahineKai.MemberDatabase.AzureAdConnector.Service;
+    using WahineKai.MemberDatabase.AzureAdConnector.Service.Contracts;
     using WahineKai.Common;
 
     /// <summary>

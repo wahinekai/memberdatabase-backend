@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO.Models
+namespace WahineKai.MemberDatabase.Dto.Models
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace WahineKai.DTO.Models
     using StatesAndProvinces;
     using WahineKai.Common;
     using WahineKai.Common.Contracts;
-    using WahineKai.DTO.Enums;
+    using WahineKai.MemberDatabase.Dto.Enums;
 
     /// <summary>
     /// User type with widest permissions (read by all, write by user, all by admin).

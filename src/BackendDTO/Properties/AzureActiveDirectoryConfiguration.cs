@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO.Properties
+namespace WahineKai.MemberDatabase.Dto.Properties
 {
     using Microsoft.Extensions.Configuration;
     using WahineKai.Common;

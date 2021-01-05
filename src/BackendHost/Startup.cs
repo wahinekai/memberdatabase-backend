@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Host
+namespace WahineKai.MemberDatabase.Backend.Host
 {
     using System.Text.Json.Serialization;
     using Microsoft.AspNetCore.Authentication.JwtBearer;

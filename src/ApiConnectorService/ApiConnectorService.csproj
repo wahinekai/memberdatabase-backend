@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>WahineKai.ApiConnector.Service</RootNamespace>
+    <RootNamespace>WahineKai.MemberDatabase.AzureAdConnector.Service</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

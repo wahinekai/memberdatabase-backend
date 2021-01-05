@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO.Contracts
+namespace WahineKai.MemberDatabase.Dto.Contracts
 {
     using System.Threading.Tasks;
 

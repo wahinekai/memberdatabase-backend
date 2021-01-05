@@ -5,14 +5,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO
+namespace WahineKai.MemberDatabase.Dto
 {
     using Microsoft.Azure.Cosmos;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using WahineKai.Common;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Base class for repositories interfacing with Cosmos DB

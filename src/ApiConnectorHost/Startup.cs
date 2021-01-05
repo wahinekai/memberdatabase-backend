@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.ApiConnector.Host
+namespace WahineKai.MemberDatabase.AzureAdConnector.Host
 {
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;

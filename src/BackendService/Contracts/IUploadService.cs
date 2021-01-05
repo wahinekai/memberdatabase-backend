@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Service.Contracts
+namespace WahineKai.MemberDatabase.Backend.Service.Contracts
 {
     using System;
     using System.IO;

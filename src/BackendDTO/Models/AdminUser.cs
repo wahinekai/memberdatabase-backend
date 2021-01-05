@@ -5,13 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO.Models
+namespace WahineKai.MemberDatabase.Dto.Models
 {
     using System;
     using Newtonsoft.Json;
     using WahineKai.Common;
     using WahineKai.Common.Contracts;
-    using WahineKai.DTO.Enums;
+    using WahineKai.MemberDatabase.Dto.Enums;
 
     /// <summary>
     /// Model of a user with all fields - to be worked on by admin

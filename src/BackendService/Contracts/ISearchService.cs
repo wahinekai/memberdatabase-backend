@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.Backend.Service.Contracts
+namespace WahineKai.MemberDatabase.Backend.Service.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using WahineKai.DTO.Models;
+    using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
     /// Interface describing the API of the search service

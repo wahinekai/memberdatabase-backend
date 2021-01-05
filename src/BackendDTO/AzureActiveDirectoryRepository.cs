@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO
+namespace WahineKai.MemberDatabase.Dto
 {
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
@@ -13,8 +13,8 @@ namespace WahineKai.DTO
     using Microsoft.Graph.Auth;
     using Microsoft.Identity.Client;
     using WahineKai.Common;
-    using WahineKai.DTO.Contracts;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto.Contracts;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Implementation of Azure Active Directory Repository

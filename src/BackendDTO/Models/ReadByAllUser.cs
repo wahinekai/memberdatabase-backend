@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.DTO.Models
+namespace WahineKai.MemberDatabase.Dto.Models
 {
     using System.Collections.Generic;
     using WahineKai.Common;

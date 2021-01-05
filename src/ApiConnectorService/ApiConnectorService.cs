@@ -5,19 +5,19 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.ApiConnector.Service
+namespace WahineKai.MemberDatabase.AzureAdConnector.Service
 {
     using System;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common.Api.Services;
-    using WahineKai.ApiConnector.Service.Contracts;
+    using WahineKai.MemberDatabase.AzureAdConnector.Service.Contracts;
     using WahineKai.Common;
-    using WahineKai.DTO;
-    using WahineKai.DTO.Contracts;
-    using WahineKai.DTO.Models;
-    using WahineKai.DTO.Properties;
+    using WahineKai.MemberDatabase.Dto;
+    using WahineKai.MemberDatabase.Dto.Contracts;
+    using WahineKai.MemberDatabase.Dto.Models;
+    using WahineKai.MemberDatabase.Dto.Properties;
 
     /// <summary>
     /// Implementation of API Connector Service

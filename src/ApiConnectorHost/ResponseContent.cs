@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace WahineKai.ApiConnector.Host
+namespace WahineKai.MemberDatabase.AzureAdConnector.Host
 {
     /// <summary>
     /// Definition of Response Content class for AD B2C Response
