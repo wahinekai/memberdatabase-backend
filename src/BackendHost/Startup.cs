@@ -113,7 +113,6 @@ namespace WahineKai.MemberDatabase.Backend.Host
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
             app.UseRouting();
 
             // Allow all authenticated requests

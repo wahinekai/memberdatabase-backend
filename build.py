@@ -1,62 +1,80 @@
 #!/usr/bin/env python3
 
 from optparse import OptionParser
-from os import system
+from os import system, getenv
+
+# Globals
+sln = "./src/Backend.sln"
+
+# For dotnet watch run, needs to be relative to sln
+project = "./BackendHost/BackendHost.csproj"
 
 def parse_command_line_arguments():
     parser = OptionParser()
+    parser.add_option("-c", "--clean", action="store_true", dest="clean", default=False, help="Clean the project")
     parser.add_option("-r", "--restore", action="store_true", dest="restore", default=False, help="Restore project dependencies")
+    parser.add_option("-b", "--build", action="store_true", dest="build", default=False, help="Build Project")
+    parser.add_option("-t", "--test", action="store_true", dest="test", default=False, help="Test Project")
     parser.add_option("-d", "--run-development", action="store_true", dest="run_development", default=False, help="Run dotnet watch run to build/run a hot reloading development version of the backend")
-    parser.add_option("-a", "--run-api-connector", action="store_true", dest="run_api_connector", default=False, help="Run dotnet watch run to build/run a hot reloading development version of the api connector")
-    parser.add_option("-b", "--build", action="store_true", dest="build", default=False, help="Run dotnet build to build production Docker Container")
-    parser.add_option("-p", "--run-production", action="store_true", dest="run_production", default=False, help="Run Production Docker Container")
-    parser.add_option("-s", "--seed-database", action="store_true", dest="seed_database", default=False, help="Seed development database")
+    parser.add_option("-B", "--build-docker-container", action="store_true", dest="build_docker", default=False, help="Build production Docker Container")
+    parser.add_option("-P", "--run-production", action="store_true", dest="run_production", default=False, help="Run Production Docker Container")
+    parser.add_option("-o", "--output", dest="output", default="./out", help="Project output directory, defaults to ./out")
+    parser.add_option("-C", "--configuration", dest="configuration", default="Debug", help="Project configuration type, defaults to Debug")
     return parser.parse_args()
 
 def dotnetRestore():
     print("Restoring Project Dependencies")
-    system("dotnet restore ./src/Backend.sln")
+    system(f"dotnet restore {sln}")
 
-def dotnetBuild():
+def dotnetBuild(configuration, output):
+    print("Building project")
+    system(f"dotnet build {sln} --no-restore --configuration {configuration} -o {output}")
+
+def dotnetClean(output):
+    print("Cleaning project")
+    system(f"rm -rf {output}")
+    system(f"dotnet clean {sln}")
+
+def dotnetTest(configuration, output):
+    print("Testing project")
+    system(f"dotnet test {sln} --no-build --configuration {configuration} /p:OutputPath={output}")
+
+def dockerBuild():
     print("Building Docker container")
-    system("docker build . -t wahinekai/memberdatabase/backend --build-arg ASPNETCORE_ENVIRONMENT=Development --build-arg ASPNETCORE_URLS=http://localhost:5000;https://localhost:5001")
+    packages_token = getenv('GITHUB_PACKAGES_TOKEN')
+    system(f"docker build . -t wahinekai/memberdatabase-backend --build-arg ASPNETCORE_ENVIRONMENT=Development --build-arg PACKAGES_TOKEN={packages_token}")
 
-def dotnetRunProduction():
-    system("docker run --rm -it -p 5000:5000 -p 5001:5001 wahinekai/memberdatabase/backend")
+def dockerRun():
+    system("docker run --rm -it -p 80:80 wahinekai/memberdatabase-backend")
 
-def dotnetWatchRunBackend():
-    print("Running development version of backend")
-    system("dotnet watch --project ./src/Backend.sln run --project ./BackendHost/BackendHost.csproj")
-
-def dotnetWatchRunApiConnector():
-    print("Running development version of api connector")
-    system("dotnet watch --project ./src/Backend.sln run --project ./ApiConnectorHost/ApiConnectorHost.csproj")
-
-def dotnetRunSeedDatabase():
-    print("Seeding the database")
-    system("dotnet run --project ./src/SeedDatabaseHost/SeedDatabaseHost.csproj")
+def dotnetWatchRun(configuration):
+    print("Running development version")
+    system(f"dotnet watch --project {sln} run --project {project} --configuration {configuration}")
 
 def main():
     print("Parsing command-line arguments")
     (options, _args) = parse_command_line_arguments()
 
+    if options.clean:
+        dotnetClean(options.output)
+
     if options.restore:
         dotnetRestore()
 
     if options.build:
-        dotnetBuild()
+        dotnetBuild(options.configuration, options.output)
 
-    if options.seed_database:
-        dotnetRunSeedDatabase()
+    if options.test:
+        dotnetTest(options.configuration, options.output)
 
     if options.run_development:
-        dotnetWatchRunBackend()
+        dotnetWatchRun(options.configuration)
 
-    if options.run_api_connector:
-        dotnetWatchRunApiConnector()
+    if options.build_docker:
+        dockerBuild()
 
     if options.run_production:
-        dotnetRunProduction()
+        dockerRun()
 
 if __name__ == "__main__":
     main()

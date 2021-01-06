@@ -7,7 +7,7 @@ Contained in this repository is code for the backend of the application.
 
 ### Prerequisites
 
-There are a few prerequisites required to develop this backend.  These prerequisites are below.
+There are a few prerequisites required to develop this backend. These prerequisites are below.
 Please download and install the prerequisites below to work with the code.
 
 1.  [.NET 5](https://dotnet.microsoft.com/download/dotnet/5.0) is required to build and test the code.
@@ -17,16 +17,17 @@ Please download and install the prerequisites below to work with the code.
 ### Development
 
 To build a development version, run the following command from the root of this repository: `./build.py -d`.
-This will build a development version of the application for testing.  The application has hot reloading - meaning
+This will build a development version of the application for testing. The application has hot reloading - meaning
 any changes will be re-compiled without user intervention.
 
 ### Release
 
 To test a release candidate locally, build the release Docker container with `./build.py -b`.
-It is possible to then test that release version with `./build.py -p`.  
+It is possible to then test that release version with `./build.py -p`.
 
 ## TO-DO
 
 1.  Create documentation & build script for pushing to Github Packages.
 2.  Create & integrate Docker Compose for development & release full-stack testing.
 3.  Add local Cosmos DB emulator to script.
+4.  Documentation on environment variable adding

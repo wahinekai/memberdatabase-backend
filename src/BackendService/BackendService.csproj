@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <AdditionalFiles Include="StyleCop.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AdditionalFiles>
   </ItemGroup>
 
@@ -22,12 +21,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\ApiCommon\ApiCommon.csproj" />
-    <ProjectReference Include="..\BackendDTO\BackendDTO.csproj" />
+    <PackageReference Include="WahineKai.Common" Version="1.*" />
+    <PackageReference Include="WahineKai.Common.Api" Version="1.*" />
+    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="1.*" />
   </ItemGroup>
 
 </Project>
