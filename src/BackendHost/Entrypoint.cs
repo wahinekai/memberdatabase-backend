@@ -7,6 +7,10 @@
 
 namespace WahineKai.MemberDatabase.Backend.Host
 {
+    using System;
+    using Azure.Extensions.AspNetCore.Configuration.Secrets;
+    using Azure.Identity;
+    using Azure.Security.KeyVault.Secrets;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
@@ -64,7 +68,16 @@ namespace WahineKai.MemberDatabase.Backend.Host
                     config.AddEnvironmentVariables();
 
                     // Add user secrets
-                    config.AddUserSecrets<Entrypoint>();
+                    if (env.IsDevelopment())
+                    {
+                        config.AddUserSecrets<Entrypoint>(optional: true, reloadOnChange: true);
+                    }
+                    else
+                    {
+                        var builtConfig = config.Build();
+                        var secretClient = new SecretClient(new Uri(builtConfig["KeyVault:Url"]), new DefaultAzureCredential());
+                        config.AddAzureKeyVault(secretClient, new KeyVaultSecretManager());
+                    }
 
                     if (args != null)
                     {

@@ -14,9 +14,9 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using WahineKai.Common;
-    using WahineKai.MemberDatabase.Dto.Models;
     using WahineKai.MemberDatabase.Backend.Service;
     using WahineKai.MemberDatabase.Backend.Service.Contracts;
+    using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
     /// User controller class
@@ -60,10 +60,11 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         /// <returns>Hello</returns>
         [HttpGet]
         [ActionName("Test")]
-        public async Task<string> Test()
+        public string Test()
         {
             return "Hello";
         }
+
         /// <summary>
         /// Get all users
         /// </summary>
