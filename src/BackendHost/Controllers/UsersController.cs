@@ -55,6 +55,16 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         }
 
         /// <summary>
+        /// Test endpoint
+        /// </summary>
+        /// <returns>Hello</returns>
+        [HttpGet]
+        [ActionName("Test")]
+        public async Task<string> Test()
+        {
+            return "Hello";
+        }
+        /// <summary>
         /// Get all users
         /// </summary>
         /// <returns>All users</returns>
