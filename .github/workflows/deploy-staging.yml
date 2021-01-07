@@ -8,10 +8,12 @@ on:
 jobs:
   Build-Deploy:
     runs-on: ubuntu-latest
+
     env:
       REGISTRY: ghcr.io
       ASPNETCORE_ENV: Staging
       AZURE_APP: backend-development-wahinekaimemberdatabase
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
