@@ -69,7 +69,7 @@ namespace WahineKai.MemberDatabase.Backend.Host
 
                     Console.WriteLine(env.EnvironmentName);
 
-                    // Add user secrets
+                    // Add secrets
                     if (env.IsDevelopment())
                     {
                         config.AddUserSecrets<Entrypoint>(optional: true, reloadOnChange: true);

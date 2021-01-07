@@ -5,6 +5,7 @@ from os import system, getenv
 
 # Globals
 sln = "./src/Backend.sln"
+dockerContainerName = "wahinekai/memberdatabase-backend"
 
 # For dotnet watch run, needs to be relative to sln
 project = "./BackendHost/BackendHost.csproj"
@@ -42,10 +43,10 @@ def dotnetTest(configuration, output):
 def dockerBuild():
     print("Building Docker container")
     packages_token = getenv('GITHUB_PACKAGES_TOKEN')
-    system(f"docker build . -t wahinekai/memberdatabase-backend --build-arg ASPNETCORE_ENVIRONMENT=Development --build-arg PACKAGES_TOKEN={packages_token}")
+    system(f"docker build . -t {dockerContainerName} --build-arg ASPNETCORE_ENVIRONMENT=Development --build-arg PACKAGES_TOKEN={packages_token}")
 
 def dockerRun():
-    system("docker run --rm -it -p 80:80 wahinekai/memberdatabase-backend")
+    system(f"docker run --rm -it -p 80:80 {dockerContainerName}")
 
 def dotnetWatchRun(configuration):
     print("Running development version")
