@@ -1,15 +1,15 @@
 {
   "AzureAdB2C": {
-    "Instance": "https://wahinekaidevelopment.b2clogin.com",
-    "ClientId": "030a0045-7db3-4eb6-952a-95ab954a83cf",
-    "Domain": "wahinekaidevelopment.onmicrosoft.com",
+    "Instance": "https://devwahinekaimemberdbauth.b2clogin.com",
+    "ClientId": "e486cafd-64dd-497b-a396-615cb902e456",
+    "Domain": "devwahinekaimemberdbauth.onmicrosoft.com",
     "SignUpSignInPolicyId": "B2C_1_signup_signin_api"
   },
   "AzureAd": {
-    "AppId": "950273dd-9f56-459d-92b3-6a0db9cb2fd6",
+    "AppId": "ea9a07b8-7ef1-4d4e-b79b-d772b9943682",
     "ClientSecret": "<Our Azure Active Directory account Client Secret (set in Azure KeyVault, do not add here!!!)>",
-    "TenantId": "6237fbcb-17ce-4f30-999b-407b782e481d",
-    "Domain": "wahinekaidevelopment.onmicrosoft.com"
+    "TenantId": "0952edc7-b6ab-4d05-bf4d-980cbd97bd63",
+    "Domain": "devwahinekaimemberdbauth.onmicrosoft.com"
   },
   "Cosmos": {
     "EndpointUrl": "https://wahine-kai-member-database.documents.azure.com:443/",
