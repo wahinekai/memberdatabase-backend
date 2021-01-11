@@ -32,9 +32,9 @@
     <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
     <PackageReference Include="WebApiContrib.Core.Formatter.Csv" Version="3.0.2" />
 
-    <PackageReference Include="WahineKai.Common" Version="1.*" />
-    <PackageReference Include="WahineKai.Common.Api" Version="1.*" />
-    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="1.*" />
+    <PackageReference Include="WahineKai.Common" Version="1.1.*" />
+    <PackageReference Include="WahineKai.Common.Api" Version="1.1.*" />
+    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="1.1.*" />
   </ItemGroup>
 
 

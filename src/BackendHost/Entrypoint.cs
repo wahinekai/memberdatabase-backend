@@ -67,8 +67,6 @@ namespace WahineKai.MemberDatabase.Backend.Host
 
                     config.AddEnvironmentVariables();
 
-                    Console.WriteLine(env.EnvironmentName);
-
                     // Add secrets
                     if (env.IsDevelopment())
                     {
