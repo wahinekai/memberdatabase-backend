@@ -21,7 +21,7 @@
     "ProfilePhotosContainer": "profile-photos"
   },
   "KeyVault": {
-    "Url": "https://wahine-kai-dev-secrets.vault.azure.net/"
+    "Url": "https://dev-wahinekai-keyvault.vault.azure.net/"
   },
   "Logging": {
     "LogLevel": {

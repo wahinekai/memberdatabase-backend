@@ -12,7 +12,7 @@ jobs:
     env:
       REGISTRY: ghcr.io
       ASPNETCORE_ENV: Staging
-      AZURE_APP: backend-development-wahinekaimemberdatabase
+      AZURE_APP: dev-api-wahinekai-memberdatabase
       TAG: dev
 
     steps:
