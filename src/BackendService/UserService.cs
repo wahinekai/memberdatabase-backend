@@ -9,16 +9,23 @@ namespace WahineKai.MemberDatabase.Backend.Service
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
+    using CsvHelper;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.Common.Api.Services;
     using WahineKai.Common;
+    using WahineKai.Common.Api.Services;
+    using WahineKai.MemberDatabase.Backend.Service.Contracts;
+    using WahineKai.MemberDatabase.Backend.Service.CsvConverters;
+    using WahineKai.MemberDatabase.Backend.Service.Extensions;
+    using WahineKai.MemberDatabase.Backend.Service.Models;
     using WahineKai.MemberDatabase.Dto;
     using WahineKai.MemberDatabase.Dto.Contracts;
     using WahineKai.MemberDatabase.Dto.Models;
     using WahineKai.MemberDatabase.Dto.Properties;
-    using WahineKai.MemberDatabase.Backend.Service.Contracts;
 
     /// <inheritdoc/>
     public class UserService : ServiceBase, IUserService
@@ -45,6 +52,50 @@ namespace WahineKai.MemberDatabase.Backend.Service
             this.azureActiveDirectoryRepository = new AzureActiveDirectoryRepository(loggerFactory, azureActiveDirectoryConfiguration);
 
             this.Logger.LogTrace("Construction of User Service complete");
+        }
+
+        /// <inheritdoc/>
+        public async Task<ImportReturn> UploadUsersFromCsvAsync(Stream usersStream, string callingUserEmail)
+        {
+            // Sanity check input
+            callingUserEmail = Ensure.IsNotNullOrWhitespace(() => callingUserEmail);
+
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
+
+            using var csvReader = new CsvReader(new StreamReader(usersStream), CultureInfo.InvariantCulture).Configure();
+
+            var users = await csvReader.GetRecordsAsync<AdminUser>().ToListAsync();
+
+            var validUsers = new List<AdminUser>();
+            var invalidUsers = new List<AdminUser>();
+
+            foreach (var user in users)
+            {
+                try
+                {
+                    user.Validate();
+                    validUsers.Add(user);
+                }
+                catch (Exception)
+                {
+                    invalidUsers.Add(user);
+                }
+            }
+
+            var duplicateUsers = new List<AdminUser>();
+
+            // TODO: Try to import users into database and get duplicates
+            var importedUsers = validUsers;
+
+            // Log results
+            this.Logger.LogInformation($"{validUsers.Count} valid, {invalidUsers.Count} invalid, and {duplicateUsers.Count} duplicate users out of {users.Count} total users");
+
+            return new ImportReturn()
+            {
+                ImportedUsers = importedUsers,
+                DuplicateUsers = duplicateUsers,
+                InvalidUsers = invalidUsers,
+            };
         }
 
         /// <inheritdoc/>

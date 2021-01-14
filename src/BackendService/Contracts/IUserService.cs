@@ -9,7 +9,9 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading.Tasks;
+    using WahineKai.MemberDatabase.Backend.Service.Models;
     using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
@@ -65,5 +67,13 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         /// <param name="callingUserEmail">E-mail address of the calling user</param>
         /// <returns>The updated user</returns>
         public Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail);
+
+        /// <summary>
+        /// Upload users from a CSV stream
+        /// </summary>
+        /// <param name="usersStream">The stream (in CSV format) of users to upload</param>
+        /// <param name="callingUserEmail">The user making the request</param>
+        /// <returns>TBD</returns>
+        public Task<ImportReturn> UploadUsersFromCsvAsync(Stream usersStream, string callingUserEmail);
     }
 }

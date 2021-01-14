@@ -9,6 +9,8 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -16,6 +18,7 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
     using WahineKai.Common;
     using WahineKai.MemberDatabase.Backend.Service;
     using WahineKai.MemberDatabase.Backend.Service.Contracts;
+    using WahineKai.MemberDatabase.Backend.Service.Models;
     using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
@@ -55,14 +58,16 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         }
 
         /// <summary>
-        /// Test endpoint
+        /// Imports CSV file
         /// </summary>
-        /// <returns>Hello</returns>
-        [HttpGet]
-        [ActionName("Test")]
-        public string Test()
+        /// <param name="users">Users parsed from the CSV file</param>
+        /// <returns>Not sure yet</returns>
+        [HttpPost]
+        [ActionName("Import/Csv")]
+        public async Task<IActionResult> CsvImportAsync()
         {
-            return "Hello";
+            var importReturn = await this.userService.UploadUsersFromCsvAsync(this.Request.Body, this.GetUserEmailFromContext());
+            return this.CreatedAtAction("Import/Csv", importReturn);
         }
 
         /// <summary>
