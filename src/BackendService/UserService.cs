@@ -83,9 +83,21 @@ namespace WahineKai.MemberDatabase.Backend.Service
             }
 
             var duplicateUsers = new List<AdminUser>();
+            var importedUsers = new List<AdminUser>();
 
             // TODO: Try to import users into database and get duplicates
-            var importedUsers = validUsers;
+            foreach (var user in validUsers)
+            {
+                try
+                {
+                    var userFromDatabase = await this.userRepository.CreateUserAsync(user);
+                    importedUsers.Add(userFromDatabase);
+                }
+                catch (Exception)
+                {
+                    duplicateUsers.Add(user);
+                }
+            }
 
             // Log results
             this.Logger.LogInformation($"{validUsers.Count} valid, {invalidUsers.Count} invalid, and {duplicateUsers.Count} duplicate users out of {users.Count} total users");
@@ -228,17 +240,17 @@ namespace WahineKai.MemberDatabase.Backend.Service
             // Create replaced user
             var replacedUser = AdminUser.Replace(oldUser, updatedUser);
 
+            // Replace user in database
+            var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
+
             // Update email in AAD B2C if needed
             if (oldUser.Email != replacedUser.Email)
             {
                 var oldEmail = Ensure.IsNotNullOrWhitespace(() => oldUser.Email);
-                var newEmail = Ensure.IsNotNullOrWhitespace(() => replacedUser.Email);
+                var newEmail = Ensure.IsNotNullOrWhitespace(() => userFromDatabase.Email);
 
                 await this.azureActiveDirectoryRepository.UpdateUserEmailAsync(oldEmail, newEmail);
             }
-
-            // Replace user in database
-            var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
 
             // Sanity check output
             userFromDatabase = Ensure.IsNotNull(() => userFromDatabase);
