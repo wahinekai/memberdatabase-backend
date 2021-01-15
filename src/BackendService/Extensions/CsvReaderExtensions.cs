@@ -37,9 +37,17 @@ namespace WahineKai.MemberDatabase.Backend.Service.Extensions
             csvReader.Configuration.TypeConverterCache.RemoveConverter<ICollection<string>>();
             csvReader.Configuration.TypeConverterCache.AddConverter<ICollection<string>>(new StringArrayConverter());
 
-            // EnteredStatus handling
-            csvReader.Configuration.TypeConverterCache.RemoveConverter<EnteredStatus>();
-            csvReader.Configuration.TypeConverterCache.AddConverter<EnteredStatus>(new EnteredStatusEnumConverter());
+            // WkiEnteredStatus handling
+            csvReader.Configuration.TypeConverterCache.RemoveConverter<WkiEnteredStatus>();
+            csvReader.Configuration.TypeConverterCache.AddConverter<WkiEnteredStatus>(new WkiEnteredStatusEnumConverter());
+
+            // ChapterEnteredStatus handling
+            csvReader.Configuration.TypeConverterCache.RemoveConverter<ChapterEnteredStatus>();
+            csvReader.Configuration.TypeConverterCache.AddConverter<ChapterEnteredStatus>(new ChapterEnteredStatusEnumConverter());
+
+            // MemberStatus handling
+            csvReader.Configuration.TypeConverterCache.RemoveConverter<MemberStatus>();
+            csvReader.Configuration.TypeConverterCache.AddConverter<MemberStatus>(new MemberStatusEnumConverter());
 
             // Level handling
             csvReader.Configuration.TypeConverterCache.RemoveConverter<Level>();

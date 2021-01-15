@@ -26,23 +26,15 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
         /// <returns>The boolean value that corresponds to the string</returns>
         public override object? ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            switch (text)
+            switch (text.ToLower())
             {
-                case "Beginner":
+                case "beginner" or "beg":
                     return Level.Beginner;
-                case "Beg":
-                    return Level.Beginner;
-                case "Intermediate":
+                case "intermediate" or "int":
                     return Level.Intermediate;
-                case "Int":
-                    return Level.Intermediate;
-                case "Advanced":
+                case "advanced" or "adv":
                     return Level.Advanced;
-                case "Adv":
-                    return Level.Advanced;
-                case "Expert":
-                    return Level.Expert;
-                case "Exp":
+                case "expert" or "exp":
                     return Level.Expert;
             }
 

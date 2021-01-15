@@ -43,10 +43,14 @@ namespace WahineKai.MemberDatabase.Backend.Service
             this.Map(member => member.Occupation).Name("Occupation", "Profession").Optional();
             this.Map(member => member.PhotoUrl).Name("PhotoUrl", "Photo Url", "Photo URL").Optional();
             this.Map(member => member.Biography).Name("Bio", "Biography").Optional();
-            this.Map(member => member.Active).Name("Active", "Active?").Optional().Default(true);
             this.Map(member => member.Boards).Name("Boards", "Board(s)").Optional();
             this.Map(member => member.Level).Name("Level").Optional();
             this.Map(member => member.Birthdate).Name("Birthdate", "Birthday", "bday").Optional();
+
+            this.Map(member => member.Status)
+                .Name("Status", "Member Status")
+                .Optional()
+                .Default(MemberStatus.ActivePaying);
 
             this.Map(member => member.NeedsNewMemberBag)
                 .Name("NeedsNewMemberBag", "Needs New Member Bag", "Needs A New Member Bag", "Needs A New Member Bag?")
@@ -67,17 +71,15 @@ namespace WahineKai.MemberDatabase.Backend.Service
                 .Name("SurfSpots", "Where", "Surf Spots", "Favorite Surf Spots")
                 .Optional();
 
-            // Her spreadsheet didn't have this - so I put the default as accepted - but I'm not sure on this - ask her
             this.Map(member => member.EnteredInFacebookChapter)
                 .Name("EnteredInFacebookChapter", "FacebookChapter", "Facebook Chapter", "Entered In Facebook Chapter?", "Entered In Facebook Chapter")
-                .Optional()
-                .Default(EnteredStatus.Accepted);
+                .Optional();
 
             this.Map(member => member.EnteredInFacebookWki)
                 .Name("EnteredInFacebookWki", "FacebookWki", "Facebook Wki", "Entered In Facebook Wki", "Entered In Facebook Wki?", "Entered In Facebook WKI", "Entered In Facebook WKI?", "WKI")
                 .Optional();
 
-            // Her spreadsheet didn't have this - so I put default as OCLA
+            // TODO: Update to new chapters, WKI should be default - but shouldn't need a default
             this.Map(member => member.Chapter)
                 .Name("Chapter")
                 .Optional()
@@ -102,11 +104,6 @@ namespace WahineKai.MemberDatabase.Backend.Service
                 .Name("Renewal Date", "RenewalDate", "Renewal")
                 .Optional();
 
-            this.Map(member => member.LifetimeMember)
-                .Name("LifetimeMember", "LifetimeMember?", "Lifetime Member", "Lifetime Member?")
-                .Optional()
-                .Default(false);
-
             this.Map(member => member.Country)
                 .Name("Country")
                 .Optional()
@@ -120,33 +117,33 @@ namespace WahineKai.MemberDatabase.Backend.Service
 
             // Region is complicated in spreadsheet
             // Option 1 - region from town
-            this.Map(member => member.City)
-               .Name("Town")
-               .Optional()
-               .TypeConverter<CityFromTownConverter>();
-
-            this.Map(member => member.Region)
-               .Name("Town")
-               .Optional()
-               .TypeConverter<RegionFromTownConverter>();
-
-            this.Map(member => member.PostalCode)
-               .Name("Town")
-               .Optional()
-               .TypeConverter<PostalCodeFromTownConverter>();
-
-            // Option 2 - Region in all seperate containers
-            // this.Map(member => member.City).Name("City").Optional();
+            // this.Map(member => member.City)
+            //   .Name("Town")
+            //   .Optional()
+            //   .TypeConverter<CityFromTownConverter>();
 
             // this.Map(member => member.Region)
-            //  .Name("Region", "State", "Province", "State or Province")
-            //  .Optional()
-            //  .TypeConverter<RegionConverter>();
+            //   .Name("Town")
+            //   .Optional()
+            //   .TypeConverter<RegionFromTownConverter>();
 
             // this.Map(member => member.PostalCode)
-            //   .Name("PostalCode", "Postal Code", "Post Code", "ZIP Code")
+            //   .Name("Town")
             //   .Optional()
-            //   .TypeConverter<PostalCodeConverter>();
+            //   .TypeConverter<PostalCodeFromTownConverter>();
+
+            // Option 2 - Region in all seperate containers
+            this.Map(member => member.City).Name("City").Optional();
+
+            this.Map(member => member.Region)
+             .Name("Region", "State", "Province", "State or Province")
+             .Optional()
+             .TypeConverter<RegionConverter>();
+
+            this.Map(member => member.PostalCode)
+              .Name("PostalCode", "Postal Code", "Post Code", "ZIP Code")
+              .Optional()
+              .TypeConverter<PostalCodeConverter>();
         }
     }
 }

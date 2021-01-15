@@ -26,8 +26,8 @@
     <PackageReference Include="StatesAndProvinces" Version="1.0.0" />
 
     <PackageReference Include="WahineKai.Common" Version="1.1.*" />
-    <PackageReference Include="WahineKai.Common.Api" Version="1.1.*" />
-    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="1.2.*" />
+    <PackageReference Include="WahineKai.Common.Api" Version="3.0.*" />
+    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="3.0.*" />
   </ItemGroup>
 
   <ItemGroup>

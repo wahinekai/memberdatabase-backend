@@ -26,61 +26,29 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
         /// <returns>The boolean value that corresponds to the string</returns>
         public override object? ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            switch (text)
+            switch (text.ToLower())
             {
-                case "San Diego":
+                case "san diego" or "sandiego" or "sd":
                     return Chapter.SanDiego;
-                case "SanDiego":
-                    return Chapter.SanDiego;
-                case "SD":
-                    return Chapter.SanDiego;
-                case "Orange County":
+                case "orange county" or "orangecounty" or "oc" or "orangecountylosangeles"
+                    or "orange county/los angeles" or "ocla" or "la" or "losangeles" or "los angeles":
                     return Chapter.OrangeCountyLosAngeles;
-                case "OrangeCounty":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "OC":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "OrangeCountyLosAngeles":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "Orange County/Los Angeles":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "OCLA":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "LA":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "LosAngeles":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "Los Angeles":
-                    return Chapter.OrangeCountyLosAngeles;
-                case "Ventura":
+                case "ventura":
                     return Chapter.Ventura;
-                case "SantaCruz":
+                case "santacruz" or "santa cruz" or "sc" or "sf" or "santa cruz/san francisco"
+                    or "santacruzsanfransisco" or "scsf" or "san fran" or "san francisco" or "sanfrancisco":
                     return Chapter.SantaCruzSanFrancisco;
-                case "Santa Cruz":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "SC":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "Santa Cruz/San Francisco":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "SantaCruzSanFrancisco":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "SCSF":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "SanFrancisco":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "San Francisco":
-                    return Chapter.SantaCruzSanFrancisco;
-                case "Oregon":
+                case "oregon":
                     return Chapter.Oregon;
-                case "Washington":
+                case "washington" or "wa state":
                     return Chapter.Washington;
-                case "Hawaii":
+                case "hawaii":
                     return Chapter.Hawaii;
-                case "Maine":
-                    return Chapter.Maine;
+                case "maine" or "ne" or "new england" or "newengland":
+                    return Chapter.NewEngland;
             }
 
-            return null;
+            return Chapter.WahineKaiInternational;
         }
     }
 }

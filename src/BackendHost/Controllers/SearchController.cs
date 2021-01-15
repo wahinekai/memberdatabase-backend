@@ -12,9 +12,9 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using WahineKai.MemberDatabase.Dto.Models;
     using WahineKai.MemberDatabase.Backend.Service;
     using WahineKai.MemberDatabase.Backend.Service.Contracts;
+    using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
     /// Search Controller
