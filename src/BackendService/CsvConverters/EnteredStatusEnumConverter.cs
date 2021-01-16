@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ChapterEnteredStatusEnumConverter.cs" company="Wahine Kai">
+// <copyright file="EnteredStatusEnumConverter.cs" company="Wahine Kai">
 // Copyright (c) Wahine Kai. All rights reserved.
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -16,7 +16,7 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
     /// <summary>
     /// Helper for boolean conversions
     /// </summary>
-    public class ChapterEnteredStatusEnumConverter : DefaultTypeConverter
+    public class EnteredStatusEnumConverter : DefaultTypeConverter
     {
         /// <summary>
         /// Converts a boolean type object from the CSV's text string
@@ -37,14 +37,15 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
 
                 switch (valueWeCare)
                 {
-                    case "no":
-                        return ChapterEnteredStatus.NotAccepted;
-                    case "invited" or "sent" or "pending":
-                        return ChapterEnteredStatus.Pending;
+                    case "pending":
+                        return EnteredStatus.Pending;
+                    case "notaccepted" or "sent" or "not accepted":
+                        return EnteredStatus.NotAccepted;
                 }
             }
 
-            return ChapterEnteredStatus.Entered;
+            // Entered is default
+            return EnteredStatus.Entered;
         }
     }
 }
