@@ -72,11 +72,11 @@ namespace WahineKai.MemberDatabase.Backend.Service
                 .Optional();
 
             this.Map(member => member.EnteredInFacebookChapter)
-                .Name("EnteredInFacebookChapter", "FacebookChapter", "Facebook Chapter", "Entered In Facebook Chapter?", "Entered In Facebook Chapter")
+                .Name("EnteredInLocalChapter", "LocalChapter", "Local Chapter", "Entered in Local Facebook Chapter?", "Entered in Local Chapter")
                 .Optional();
 
             this.Map(member => member.EnteredInFacebookWki)
-                .Name("EnteredInFacebookWki", "FacebookWki", "Facebook Wki", "Entered In Facebook Wki", "Entered In Facebook Wki?", "Entered In Facebook WKI", "Entered In Facebook WKI?", "WKI")
+                .Name("EnteredInFacebookWki", "FacebookWki", "Facebook Wki", "Entered in Facebook Wki", "Entered in Facebook Wki?", "Entered in Facebook WKI", "Entered in Facebook WKI?", "WKI", "Entered in WKI")
                 .Optional();
 
             // TODO: Update to new chapters, WKI should be default - but shouldn't need a default
