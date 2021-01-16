@@ -85,7 +85,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
             var duplicateUsers = new List<AdminUser>();
             var importedUsers = new List<AdminUser>();
 
-            // TODO: Try to import users into database and get duplicates
+            // Try to import users into database and get duplicates
             foreach (var user in validUsers)
             {
                 try

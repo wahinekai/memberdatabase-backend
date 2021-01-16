@@ -28,7 +28,7 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
         public override object? ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
             // Split string into strings
-            var splitters = new string[] { "also enjoy", "but have also surfed in", ";", ",", "&", "-", "and", "to", "and a", "and now have a", ", and", "or" };
+            var splitters = new string[] { "also enjoy", "but have also surfed in", ";", ",", "&", "-", " and ", "to", "and a", "and now have a", ", and", " or " };
             var options = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
             var substrings = text.Split(splitters, options).ToList();
 
