@@ -164,12 +164,20 @@ namespace WahineKai.MemberDatabase.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task DeleteByIdAsync(Guid id, string? callingUserEmail)
+        public async Task DeleteByIdAsync(Guid id, string callingUserEmail)
         {
             // Sanity check input
             id = Ensure.IsNotNull(() => id);
 
-            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
+            var me = await this.userRepository.GetUserByEmailAsync(callingUserEmail);
+
+            this.EnsureCallingUserPermissions(me);
+
+            // Cannot delete yourself
+            if (me.Id == id)
+            {
+                throw new ArgumentException("You cannot delete yourself!");
+            }
 
             this.Logger.LogDebug($"Deleting user with id {id} from repository");
 
