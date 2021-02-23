@@ -9,8 +9,6 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -18,7 +16,6 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
     using WahineKai.Common;
     using WahineKai.MemberDatabase.Backend.Service;
     using WahineKai.MemberDatabase.Backend.Service.Contracts;
-    using WahineKai.MemberDatabase.Backend.Service.Models;
     using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
@@ -61,7 +58,7 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         /// Imports CSV file
         /// </summary>
         /// <param name="users">Users parsed from the CSV file</param>
-        /// <returns>Not sure yet</returns>
+        /// <returns>Import Return</returns>
         [HttpPost]
         [ActionName("Import/Csv")]
         public async Task<IActionResult> CsvImportAsync()
@@ -121,6 +118,21 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
             this.Logger.LogDebug($"Getting the user with userId {userId}");
             var user = await this.userService.GetByIdAsync(userId, this.GetUserEmailFromContext());
             return user;
+        }
+
+        /// <summary>
+        /// Deletes a user by userId
+        /// </summary>
+        /// <param name="userId">The userId of the user to delete</param>
+        /// <returns>A Task</returns>
+        [HttpDelete]
+        [ActionName("Id")]
+        public async Task<IActionResult> DeleteByIdAsync(Guid userId)
+        {
+            this.Logger.LogDebug($"Deleting the user with userId {userId}");
+            await this.userService.DeleteByIdAsync(userId, this.GetUserEmailFromContext());
+
+            return this.NoContent();
         }
 
         /// <summary>

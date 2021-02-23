@@ -19,7 +19,6 @@ namespace WahineKai.MemberDatabase.Backend.Service
     using WahineKai.Common;
     using WahineKai.Common.Api.Services;
     using WahineKai.MemberDatabase.Backend.Service.Contracts;
-    using WahineKai.MemberDatabase.Backend.Service.CsvConverters;
     using WahineKai.MemberDatabase.Backend.Service.Extensions;
     using WahineKai.MemberDatabase.Backend.Service.Models;
     using WahineKai.MemberDatabase.Dto;
@@ -162,6 +161,21 @@ namespace WahineKai.MemberDatabase.Backend.Service
             this.Logger.LogTrace($"Got user with email {user.Email} and id {user.Id} from the user repository");
 
             return user;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteByIdAsync(Guid id, string? callingUserEmail)
+        {
+            // Sanity check input
+            id = Ensure.IsNotNull(() => id);
+
+            await this.EnsureCallingUserPermissionsAsync(callingUserEmail);
+
+            this.Logger.LogDebug($"Deleting user with id {id} from repository");
+
+            await this.userRepository.DeleteUserByIdAsync(id);
+
+            this.Logger.LogTrace($"Deleted user with and id {id} from the user repository");
         }
 
         /// <inheritdoc/>

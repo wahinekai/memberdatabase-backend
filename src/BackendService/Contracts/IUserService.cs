@@ -69,6 +69,14 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         public Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail);
 
         /// <summary>
+        /// Delete the user with the specified id
+        /// </summary>
+        /// <param name="id">The id of the user to delete</param>
+        /// <param name="callingUserEmail">E-mail address of the calling user</param>
+        /// <returns>A <see cref="Task"></returns>
+        public Task DeleteByIdAsync(Guid id, string callingUserEmail);
+
+        /// <summary>
         /// Upload users from a CSV stream
         /// </summary>
         /// <param name="usersStream">The stream (in CSV format) of users to upload</param>
