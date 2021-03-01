@@ -98,6 +98,19 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         /// </summary>
         /// <returns>Whether the user sending this request is an admin user</returns>
         [HttpGet]
+        [ActionName("UserId/Me")]
+        public async Task<Guid> GetMyUserIdAsync()
+        {
+            this.Logger.LogDebug("Getting the user associated with this request");
+            var user = await this.userService.GetByEmailAsync(this.GetUserEmailFromContext());
+            return user.Id;
+        }
+
+        /// <summary>
+        /// Gets whether the user sending this request is an admin user
+        /// </summary>
+        /// <returns>Whether the user sending this request is an admin user</returns>
+        [HttpGet]
         [ActionName("IsAdmin/Me")]
         public async Task<bool> AmIAdminAsync()
         {
