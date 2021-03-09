@@ -175,12 +175,12 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         /// <returns>The newly updated user from the database</returns>
         [HttpPut]
         [ActionName("Me")]
-        public async Task<AdminUser> ReplaceMe([FromBody] AdminUser updatedUser)
+        public async Task<AdminUser> UpdateMe([FromBody] AdminUser updatedUser)
         {
             this.Logger.LogDebug("Replacing a user");
 
             // User service to replace in repository
-            var userFromService = await this.userService.ReplaceByEmailAsync(this.GetUserEmailFromContext(), updatedUser);
+            var userFromService = await this.userService.UpdateByEmailAsync(this.GetUserEmailFromContext(), updatedUser);
             return userFromService;
         }
 
@@ -192,10 +192,10 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         /// <returns>The newly updated user from the database</returns>
         [HttpPut]
         [ActionName("Id")]
-        public async Task<AdminUser> ReplaceByIdAsync(Guid userId, [FromBody] AdminUser updatedUser)
+        public async Task<AdminUser> UpdateByIdAsync(Guid userId, [FromBody] AdminUser updatedUser)
         {
             this.Logger.LogDebug($"Getting the user with userId {userId}");
-            var user = await this.userService.ReplaceByIdAsync(userId, updatedUser, this.GetUserEmailFromContext());
+            var user = await this.userService.UpdateByIdAsync(userId, updatedUser, this.GetUserEmailFromContext());
             return user;
         }
     }

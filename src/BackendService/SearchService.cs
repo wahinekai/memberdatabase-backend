@@ -24,7 +24,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
     /// </summary>
     public class SearchService : ServiceBase, ISearchService
     {
-        private readonly IUserRepository<ReadByAllUser> userRepository;
+        private readonly IUserRepository userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchService"/> class.
@@ -39,7 +39,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
             // Build cosmos configuration
             var cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(this.Configuration);
 
-            this.userRepository = new CosmosUserRepository<ReadByAllUser>(cosmosConfiguration, loggerFactory);
+            this.userRepository = new CosmosUserRepository(cosmosConfiguration, loggerFactory);
 
             this.Logger.LogTrace("Construction of Search Service complete");
         }
@@ -59,7 +59,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
 
             this.Logger.LogTrace($"Got {users.Count} users from the user repository");
 
-            return users;
+            return (ICollection<ReadByAllUser>)users;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         /// <param name="updatedUser">The updated user to replace it with</param>
         /// <param name="callingUserEmail">E-mail address of the calling user, defaults to the email to replace</param>
         /// <returns>The updated user</returns>
-        public Task<AdminUser> ReplaceByEmailAsync(string userEmail, AdminUser updatedUser, string? callingUserEmail = null);
+        public Task<AdminUser> UpdateByEmailAsync(string userEmail, AdminUser updatedUser, string? callingUserEmail = null);
 
         /// <summary>
         /// Replace the user with the specified id with the new user
@@ -66,7 +66,7 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         /// <param name="updatedUser">The updated user to replace it with</param>
         /// <param name="callingUserEmail">E-mail address of the calling user</param>
         /// <returns>The updated user</returns>
-        public Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail);
+        public Task<AdminUser> UpdateByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail);
 
         /// <summary>
         /// Delete the user with the specified id

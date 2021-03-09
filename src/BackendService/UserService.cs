@@ -29,7 +29,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
     /// <inheritdoc/>
     public class UserService : ServiceBase, IUserService
     {
-        private readonly IUserRepository<AdminUser> userRepository;
+        private readonly IUserRepository userRepository;
         private readonly IAzureActiveDirectoryRepository azureActiveDirectoryRepository;
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
 
             // Build user repository
             var cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(this.Configuration);
-            this.userRepository = new CosmosUserRepository<AdminUser>(cosmosConfiguration, loggerFactory);
+            this.userRepository = new CosmosUserRepository(cosmosConfiguration, loggerFactory);
 
             // Build AAD Repository
             var azureActiveDirectoryConfiguration = AzureActiveDirectoryConfiguration.BuildFromConfiguration(this.Configuration);
@@ -210,7 +210,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
         }
 
         /// <inheritdoc/>
-        public async Task<AdminUser> ReplaceByEmailAsync(string userEmail, AdminUser updatedUser, string? callingUserEmail = null)
+        public async Task<AdminUser> UpdateByEmailAsync(string userEmail, AdminUser updatedUser, string? callingUserEmail = null)
         {
             // Sanity check input
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
@@ -225,13 +225,13 @@ namespace WahineKai.MemberDatabase.Backend.Service
             var oldUser = await this.userRepository.GetUserByEmailAsync(userEmail);
 
             // Update user and return it
-            this.Logger.LogTrace($"Replacing user with email {userEmail} with new values");
+            this.Logger.LogTrace($"Updating user with email {userEmail} with new values");
 
-            return await this.ReplaceUserAsync(oldUser, updatedUser);
+            return await this.UpdateUserAsync(oldUser, updatedUser);
         }
 
         /// <inheritdoc/>
-        public async Task<AdminUser> ReplaceByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail)
+        public async Task<AdminUser> UpdateByIdAsync(Guid id, AdminUser updatedUser, string callingUserEmail)
         {
             // Sanity check input
             id = Ensure.IsNotNull(() => id);
@@ -244,7 +244,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
             this.Logger.LogTrace($"Replacing user with id {id} with new values");
 
             var oldUser = await this.userRepository.GetUserByIdAsync(id);
-            return await this.ReplaceUserAsync(oldUser, updatedUser);
+            return await this.UpdateUserAsync(oldUser, updatedUser);
         }
 
         /// <summary>
@@ -253,20 +253,17 @@ namespace WahineKai.MemberDatabase.Backend.Service
         /// <param name="oldUser">The user to change</param>
         /// <param name="updatedUser">The parameters to update the user with</param>
         /// <returns>The updated user from the database</returns>
-        private async Task<AdminUser> ReplaceUserAsync(AdminUser oldUser, AdminUser updatedUser)
+        private async Task<AdminUser> UpdateUserAsync(AdminUser oldUser, AdminUser updatedUser)
         {
             // Sanity check input
             oldUser = Ensure.IsNotNull(() => oldUser);
             updatedUser = Ensure.IsNotNull(() => updatedUser);
 
-            // Create replaced user
-            var replacedUser = AdminUser.Replace(oldUser, updatedUser);
-
             // Replace user in database
-            var userFromDatabase = await this.userRepository.ReplaceUserAsync(replacedUser, replacedUser.Id);
+            var userFromDatabase = await this.userRepository.UpdateUserAsync(updatedUser);
 
             // Update email in AAD B2C if needed
-            if (oldUser.Email != replacedUser.Email)
+            if (oldUser.Email != updatedUser.Email)
             {
                 var oldEmail = Ensure.IsNotNullOrWhitespace(() => oldUser.Email);
                 var newEmail = Ensure.IsNotNullOrWhitespace(() => userFromDatabase.Email);
