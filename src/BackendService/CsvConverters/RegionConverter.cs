@@ -9,10 +9,10 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
 {
     using System;
     using System.Linq;
+    using CountryData.Standard;
     using CsvHelper;
     using CsvHelper.Configuration;
     using CsvHelper.TypeConversion;
-    using StatesAndProvinces;
 
     /// <summary>
     /// Helper for boolean conversions
@@ -20,21 +20,25 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
     public class RegionConverter : DefaultTypeConverter
     {
         /// <summary>
+        /// Country Helper from CountryData.Standard for Country and State Validation
+        /// </summary>
+        protected static readonly CountryHelper CountryHelper = new CountryHelper();
+
+        /// <summary>
         /// Transfers what could be a full name, abbreviation, or alternate abbreviation to a full region name
         /// </summary>
         /// <param name="text">The input string</param>
         /// <returns>The name of the region specified (null if not possible)</returns>
         public static string? NameOrAbbreviationToString(string text)
         {
-            var usStates = StatesAndProvinces.Factory.Make(CountrySelection.UnitedStates);
-            var canadianProvinces = StatesAndProvinces.Factory.Make(CountrySelection.Canada);
-            var regions = usStates.Concat(canadianProvinces);
-
-            foreach (var region in regions)
+            foreach (var country in CountryHelper.GetCountryData())
             {
-                if (text == region.Name || text == region.Abbreviation || text == region.AlternateAbbreviation)
+                foreach (var region in country.Regions)
                 {
-                    return region.Name;
+                    if (text.ToLower() == region.Name.ToLower() || text.ToLower() == region.ShortCode.ToLower())
+                    {
+                        return region.Name;
+                    }
                 }
             }
 

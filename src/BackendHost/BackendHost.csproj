@@ -5,6 +5,7 @@
     <UserSecretsId>520bbe04-948e-4a44-bd92-0567bfa57c79</UserSecretsId>
     <RootNamespace>WahineKai.MemberDatabase.Backend.Host</RootNamespace>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Development' " />
@@ -32,9 +33,9 @@
     <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
     <PackageReference Include="WebApiContrib.Core.Formatter.Csv" Version="3.0.2" />
 
-    <PackageReference Include="WahineKai.Common" Version="1.1.*" />
-    <PackageReference Include="WahineKai.Common.Api" Version="5.0.*" />
-    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="5.0.*" />
+    <PackageReference Include="WahineKai.Common" Version="1.2.*" />
+    <PackageReference Include="WahineKai.Common.Api" Version="10.0.*" />
+    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="10.0.*" />
   </ItemGroup>
 
 

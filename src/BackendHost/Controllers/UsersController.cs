@@ -57,7 +57,6 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         /// <summary>
         /// Imports CSV file
         /// </summary>
-        /// <param name="users">Users parsed from the CSV file</param>
         /// <returns>Import Return</returns>
         [HttpPost]
         [ActionName("Import/Csv")]

@@ -107,7 +107,8 @@ namespace WahineKai.MemberDatabase.Backend.Service
             this.Map(member => member.Country)
                 .Name("Country")
                 .Optional()
-                .Default(Country.UnitedStates);
+                .Default("United States")
+                .TypeConverter<CountryConverter>();
 
             // Phone number needs to go into our database - so we need a specific converter type
             this.Map(member => member.PhoneNumber)

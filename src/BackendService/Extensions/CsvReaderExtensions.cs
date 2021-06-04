@@ -53,10 +53,6 @@ namespace WahineKai.MemberDatabase.Backend.Service.Extensions
             csvReader.Configuration.TypeConverterCache.RemoveConverter<Chapter>();
             csvReader.Configuration.TypeConverterCache.AddConverter<Chapter>(new ChapterEnumConverter());
 
-            // Country handling
-            csvReader.Configuration.TypeConverterCache.RemoveConverter<Country>();
-            csvReader.Configuration.TypeConverterCache.AddConverter<Country>(new CountryEnumConverter());
-
             // Add class map
             csvReader.Configuration.RegisterClassMap<AdminUserCsvMap>();
 

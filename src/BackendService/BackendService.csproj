@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>WahineKai.MemberDatabase.Backend.Service</RootNamespace>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,11 +24,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="CsvHelper" Version="19.0.0" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="StatesAndProvinces" Version="1.0.0" />
+    <PackageReference Include="CountryData.Standard" Version="1.0.1" />
 
-    <PackageReference Include="WahineKai.Common" Version="1.1.*" />
-    <PackageReference Include="WahineKai.Common.Api" Version="5.0.*" />
-    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="5.0.*" />
+    <PackageReference Include="WahineKai.Common" Version="1.2.*" />
+    <PackageReference Include="WahineKai.Common.Api" Version="10.0.*" />
+    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="10.0.*" />
   </ItemGroup>
 
   <ItemGroup>

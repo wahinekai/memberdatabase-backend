@@ -73,7 +73,7 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         /// </summary>
         /// <param name="id">The id of the user to delete</param>
         /// <param name="callingUserEmail">E-mail address of the calling user</param>
-        /// <returns>A <see cref="Task"></returns>
+        /// <returns>A <see cref="Task" /></returns>
         public Task DeleteByIdAsync(Guid id, string callingUserEmail);
 
         /// <summary>
