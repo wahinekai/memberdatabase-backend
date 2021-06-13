@@ -19,6 +19,12 @@
     "ConnectionString": "<Our Azure Blob account Connection String (set in Azure KeyVault, do not add here!!!)>",
     "ProfilePhotosContainer": "profile-photos"
   },
+  "AzureSearch": {
+    "Endpoint": "https://wahinekai-memberdatabase.search.windows.net",
+    "IndexName": "wahinekai-memberdatabase",
+    "ServiceKey": "<Our Azure Search API Key (set in Azure KeyVault, do not add here!!!)>",
+    "SuggesterName": "wahinekai-memberdatabase"
+  },
   "KeyVault": {
     "Url": "https://wahinekai-keyvault.vault.azure.net/"
   },

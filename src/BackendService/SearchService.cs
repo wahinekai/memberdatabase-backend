@@ -25,6 +25,7 @@ namespace WahineKai.MemberDatabase.Backend.Service
     public class SearchService : ServiceBase, ISearchService
     {
         private readonly IUserRepository<ReadByAllUser> userRepository;
+        private readonly ISearchRepository searchRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchService"/> class.
@@ -36,16 +37,18 @@ namespace WahineKai.MemberDatabase.Backend.Service
         {
             this.Logger.LogTrace("Construction of Search Service beginning");
 
-            // Build cosmos configuration
+            // Build configurations
             var cosmosConfiguration = CosmosConfiguration.BuildFromConfiguration(this.Configuration);
+            var searchConfiguration = AzureSearchConfiguration.BuildFromConfiguration(this.Configuration);
 
             this.userRepository = new CosmosUserRepository<ReadByAllUser>(cosmosConfiguration, loggerFactory);
+            this.searchRepository = new AzureSearchRepository(searchConfiguration, loggerFactory);
 
             this.Logger.LogTrace("Construction of Search Service complete");
         }
 
         /// <inheritdoc/>
-        public async Task<ICollection<ReadByAllUser>> GetByQueryAsync(string userEmail, string query)
+        public async Task<IList<ReadByAllUser>> SearchAsync(string userEmail, string query)
         {
             // Sanity check input
             userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
@@ -55,11 +58,55 @@ namespace WahineKai.MemberDatabase.Backend.Service
 
             this.Logger.LogDebug($"Getting users matching query \"{query}\" from repository");
 
-            var users = await this.userRepository.GetUsersByQueryAsync(query);
+            var idList = await this.searchRepository.SearchAsync(query);
+            this.Logger.LogDebug($"Search returned {idList.Count}");
+
+            var allUsers = await this.userRepository.GetAllUsersAsync();
+
+            var users = await this.userRepository.GetUsersByIdCollectionAsync(idList);
 
             this.Logger.LogTrace($"Got {users.Count} users from the user repository");
 
             return users;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IList<ReadByAllUser>> SuggestAsync(string userEmail, string partialQuery)
+        {
+            // Sanity check input
+            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
+            partialQuery = Ensure.IsNotNullOrWhitespace(() => partialQuery);
+
+            await this.EnsureCallingUserPermissionsAsync(userEmail);
+
+            this.Logger.LogDebug($"Suggesting users matching query \"{partialQuery}\" from repository");
+
+            var idList = await this.searchRepository.SuggestAsync(partialQuery);
+            this.Logger.LogDebug($"Search returned {idList.Count}");
+
+            var allUsers = await this.userRepository.GetAllUsersAsync();
+
+            var users = await this.userRepository.GetUsersByIdCollectionAsync(idList);
+
+            this.Logger.LogTrace($"Got {users.Count} users from the user repository");
+
+            return users;
+        }
+
+        /// <inheritdoc/>
+        public async Task<string> AutocompleteAsync(string userEmail, string partialQuery)
+        {
+            // Sanity check input
+            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
+            partialQuery = Ensure.IsNotNullOrWhitespace(() => partialQuery);
+
+            await this.EnsureCallingUserPermissionsAsync(userEmail);
+
+            this.Logger.LogDebug($"Autocompeting query \"{partialQuery}\"");
+
+            var fullQuery = await this.searchRepository.AutoCompleteAsync(partialQuery);
+
+            return fullQuery.Substring(partialQuery.Length);
         }
     }
 }

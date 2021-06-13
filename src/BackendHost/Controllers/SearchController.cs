@@ -12,6 +12,7 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
+    using WahineKai.MemberDatabase.Backend.Host.Models;
     using WahineKai.MemberDatabase.Backend.Service;
     using WahineKai.MemberDatabase.Backend.Service.Contracts;
     using WahineKai.MemberDatabase.Dto.Models;
@@ -48,8 +49,34 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         public async Task<ICollection<ReadByAllUser>> SearchAsync([FromQuery] string query)
         {
             this.Logger.LogDebug("Getting the user associated with this request");
-            var users = await this.searchService.GetByQueryAsync(this.GetUserEmailFromContext(), query);
+            var users = await this.searchService.SearchAsync(this.GetUserEmailFromContext(), query);
             return users;
+        }
+
+        /// <summary>
+        /// Returns a Complex Object Indicating the top five suggestions
+        /// from the given partial query and the top suggested autocompletion
+        /// of the query
+        /// </summary>
+        /// <param name="partialQuery">The partial query string to check against the database</param>
+        /// <returns>A Collection of users and the top object</returns>
+        [HttpGet]
+        [ActionName("SuggestAndAutocomplete")]
+        public async Task<SuggestAndAutocompleteReturn> SuggestAndAutocompleteAsync([FromQuery] string partialQuery)
+        {
+            this.Logger.LogDebug("Getting the user associated with this request");
+            var suggestions = await this.searchService.SuggestAsync(this.GetUserEmailFromContext(), partialQuery);
+            var autocomplete = await this.searchService.AutocompleteAsync(this.GetUserEmailFromContext(), partialQuery);
+
+            var returnObject = new SuggestAndAutocompleteReturn
+            {
+                Suggestions = suggestions,
+                Autocomplete = autocomplete,
+            };
+
+            returnObject.Validate();
+
+            return returnObject;
         }
     }
 }

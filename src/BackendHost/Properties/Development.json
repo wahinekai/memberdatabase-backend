@@ -19,6 +19,12 @@
     "ConnectionString": "<Our Azure Blob account Connection String (set in user secrets, do not add here!!!)>",
     "ProfilePhotosContainer": "profile-photos"
   },
+  "AzureSearch": {
+    "Endpoint": "https://wahinekai-memberdatabase.search.windows.net",
+    "IndexName": "dev-wahinekai-memberdatabase",
+    "ServiceKey": "<Our Azure Search API Key (set in user secrets, do not add here!!!)>",
+    "SuggesterName": "dev-wahinekai-memberdatabase"
+  },
   "Logging": {
     "LogLevel": {
       "Default": "Debug",

@@ -22,6 +22,22 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         /// <param name="userEmail">Email of the calling user</param>
         /// <param name="query">The search query to give the user repository</param>
         /// <returns>A Collection of users</returns>
-        public Task<ICollection<ReadByAllUser>> GetByQueryAsync(string userEmail, string query);
+        public Task<IList<ReadByAllUser>> SearchAsync(string userEmail, string query);
+
+        /// <summary>
+        /// Suggests the top 5 users matching a specific partial query
+        /// </summary>
+        /// <param name="userEmail">Email of the calling user</param>
+        /// <param name="partialQuery">The partial search query to give the user repository</param>
+        /// <returns>A Collection of users</returns>
+        public Task<IList<ReadByAllUser>> SuggestAsync(string userEmail, string partialQuery);
+
+        /// <summary>
+        /// Suggests the top autocompletion for a specific partial query
+        /// </summary>
+        /// <param name="userEmail">Email of the calling user</param>
+        /// <param name="partialQuery">The partial search query to give the user repository</param>
+        /// <returns>The top autocompletion</returns>
+        public Task<string> AutocompleteAsync(string userEmail, string partialQuery);
     }
 }

@@ -34,8 +34,8 @@
     <PackageReference Include="WebApiContrib.Core.Formatter.Csv" Version="3.0.2" />
 
     <PackageReference Include="WahineKai.Common" Version="1.2.*" />
-    <PackageReference Include="WahineKai.Common.Api" Version="10.0.*" />
-    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="10.0.*" />
+    <PackageReference Include="WahineKai.Common.Api" Version="11.0.4" />
+    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="11.0.4" />
   </ItemGroup>
 
 
@@ -43,4 +43,10 @@
     <ProjectReference Include="..\BackendService\BackendService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>
