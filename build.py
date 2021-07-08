@@ -8,7 +8,7 @@ sln = "./src/Backend.sln"
 dockerContainerName = "wahinekai/memberdatabase-backend"
 
 # For dotnet watch run, needs to be relative to sln
-project = "./src/BackendHost/BackendHost.csproj"
+project = "./BackendHost/BackendHost.csproj"
 
 def parse_command_line_arguments():
     parser = OptionParser()
@@ -40,7 +40,7 @@ def dotnetTest(configuration, output):
 
 def dotnetWatchRun(configuration):
     print("Running development version")
-    system(f"dotnet watch run --project {project} --configuration {configuration}")
+    system(f"dotnet watch --project {sln} run --project {project} --configuration {configuration}")
 
 def main():
     print("Parsing command-line arguments")
