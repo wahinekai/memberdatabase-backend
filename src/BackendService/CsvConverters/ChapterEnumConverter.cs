@@ -33,8 +33,8 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
                 case "orange county" or "orangecounty" or "oc" or "orangecountylosangeles"
                     or "orange county/los angeles" or "ocla" or "la" or "losangeles" or "los angeles":
                     return Chapter.OrangeCountyLosAngeles;
-                case "ventura":
-                    return Chapter.Ventura;
+                case "ventura" or "santabarbara" or "venturasantabarbara" or "ventura/santa barbara":
+                    return Chapter.VenturaSantaBarbara;
                 case "santacruz" or "santa cruz" or "sc" or "sf" or "santa cruz/san francisco"
                     or "santacruzsanfransisco" or "scsf" or "san fran" or "san francisco" or "sanfrancisco":
                     return Chapter.SantaCruzSanFrancisco;
