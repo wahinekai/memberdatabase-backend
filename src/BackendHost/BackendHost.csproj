@@ -32,15 +32,13 @@
     <PackageReference Include="Microsoft.Identity.Web" Version="1.3.0" />
     <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
     <PackageReference Include="WebApiContrib.Core.Formatter.Csv" Version="3.0.2" />
-
-    <PackageReference Include="WahineKai.Common" Version="1.2.*" />
-    <PackageReference Include="WahineKai.Common.Api" Version="12.0.2" />
-    <PackageReference Include="WahineKai.MemberDatabase.Dto" Version="12.1.0" />
   </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\BackendService\BackendService.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\ApiCommon\ApiCommon.csproj" />
+    <ProjectReference Include="..\MemberDatabaseDTO\MemberDatabaseDTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>
