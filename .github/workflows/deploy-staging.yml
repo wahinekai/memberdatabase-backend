@@ -15,8 +15,8 @@ jobs:
       ASPNETCORE_ENV: Staging
       BACKEND_AZURE_APP: dev-api-wahinekai-memberdatabase
       AZUREADCONNECTOR_AZURE_APP: dev-azureadconnector-wahinekai-memberdatabase
-      BACKEND_IMAGE: memberdatabase-backend
-      AZUREADCONNECTOR_IMAGE: memberdatabase-azureadconnector
+      BACKEND_IMAGE: wahinekai/memberdatabase-backend
+      AZUREADCONNECTOR_IMAGE: wahinekai/memberdatabase-azureadconnector
       TAG: dev
 
     steps:
