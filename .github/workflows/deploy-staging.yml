@@ -14,9 +14,9 @@ jobs:
       REGISTRY: ghcr.io
       ASPNETCORE_ENV: Staging
       BACKEND_AZURE_APP: dev-api-wahinekai-memberdatabase
-      ADCONNECTOR_AZURE_APP: dev-azureadconnector-wahinekai-memberdatabase
-      BACKEND_IMAGE: wahinekai-backend
-      AZUREADCONNECTOR_IMAGE: wahinekai-azureadconnector
+      AZUREADCONNECTOR_AZURE_APP: dev-azureadconnector-wahinekai-memberdatabase
+      BACKEND_IMAGE: memberdatabase-backend
+      AZUREADCONNECTOR_IMAGE: memberdatabase-azureadconnector
       TAG: dev
 
     steps:
