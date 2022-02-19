@@ -1,0 +1,29 @@
+# Build Environment
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /app
+
+# Restore and build
+COPY ./src ./src
+RUN dotnet restore ./src/MemberDatabase.sln
+RUN dotnet build ./src/MemberDatabase.sln --no-restore --configuration Release --output ./out
+
+# Remove all Unneeded files
+RUN rm ./out/Backend*
+RUN rm ./out/SeedDatabase*
+
+# Build production runtime image
+FROM mcr.microsoft.com/dotnet/sdk:5.0
+
+# Set Runtime environment variables
+ARG ASPNETCORE_ENVIRONMENT
+
+ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+
+# Copy over production dll
+WORKDIR /app
+COPY --from=build /app/out .
+
+EXPOSE 80
+
+# Set Entrypoint
+ENTRYPOINT dotnet AzureAdConnectorHost.dll --urls http://*

@@ -1,5 +1,5 @@
 # deploy-staging.yml
-name: Deploy Staging on Push to Main
+name: Deploy Staging on Push to Main and Consolidate Repos
 on:
   push:
     branches:
@@ -12,7 +12,10 @@ jobs:
     env:
       REGISTRY: ghcr.io
       ASPNETCORE_ENV: Staging
-      AZURE_APP: dev-api-wahinekai-memberdatabase
+      BACKEND_AZURE_APP: dev-api-wahinekai-memberdatabase
+      AZUREADCONNECTOR_AZURE_APP: dev-azureadconnector-wahinekai-memberdatabase
+      BACKEND_IMAGE: wahinekai/memberdatabase-backend
+      AZUREADCONNECTOR_IMAGE: wahinekai/memberdatabase-azureadconnector
       TAG: dev
 
     steps:
@@ -29,26 +32,42 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.PACKAGES_TOKEN }}
 
-      - name: Build and Push Docker Image
+      - name: Build and Push Backend Docker Image
         uses: docker/build-push-action@v2
         with:
           push: true # Will only build if this is not here
+          file: Dockerfile.backend
           tags: |
-            ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.TAG }}
+            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ env.TAG }}
           build-args: |
             ASPNETCORE_ENV=${{ env.ASPNETCORE_ENV }}
-            PACKAGES_TOKEN=${{ secrets.PACKAGES_TOKEN }}
+
+      - name: Build and Push Azure AD Connector Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          push: true # Will only build if this is not here
+          file: Dockerfile.azureadconnector
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.AZUREADCONNECTOR_IMAGE }}:${{ env.TAG }}
+          build-args: |
+            ASPNETCORE_ENV=${{ env.ASPNETCORE_ENV }}
 
       - name: Login via Azure CLI
         uses: azure/login@v1
         with:
           creds: ${{ secrets.DEVELOPMENT_AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure App Service
+      - name: Deploy Backend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_APP }}
-          images: ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.TAG }}
+          app-name: ${{ env.BACKEND_AZURE_APP }}
+          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ env.TAG }}
+
+      - name: Deploy Azure AD Connector to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZUREADCONNECTOR_AZURE_APP }}
+          images: ${{ env.REGISTRY }}/${{ env.AZUREADCONNECTOR_IMAGE }}:${{ env.TAG }}
 
       - name: Azure logout
         run: |

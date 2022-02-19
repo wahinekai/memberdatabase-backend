@@ -1,9 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>WahineKai.MemberDatabase.Backend.Service</RootNamespace>
+    <RootNamespace>WahineKai.Common.Api</RootNamespace>
     <Nullable>enable</Nullable>
+    <PackageId>WahineKai.Common.Api</PackageId>
+    <Company>Wahine Kai</Company>
+    <PackageDescription>Common helper classes related to APIs</PackageDescription>
+    <RepositoryUrl>https://github.com/wahinekai/common-api</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -12,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="StyleCop.json">
-    </AdditionalFiles>
+    <AdditionalFiles Include="StyleCop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,21 +24,20 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="CsvHelper" Version="19.0.0" />
-    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="CountryData.Standard" Version="1.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\ApiCommon\ApiCommon.csproj" />
     <ProjectReference Include="..\MemberDatabaseDTO\MemberDatabaseDTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CsvConverters\" />
-    <Folder Include="Models\" />
-    <Folder Include="Extensions\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
+
 </Project>

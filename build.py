@@ -4,11 +4,12 @@ from optparse import OptionParser
 from os import system, getenv
 
 # Globals
-sln = "./src/Backend.sln"
+sln = "./src/MemberDatabase.sln"
 dockerContainerName = "wahinekai/memberdatabase-backend"
 
 # For dotnet watch run, needs to be relative to sln
-project = "./src/BackendHost/BackendHost.csproj"
+backendProject = "./src/BackendHost/BackendHost.csproj"
+azureAdConnectorProject = "./src/AzureAdConnectorHost/AzureAdConnectorHost.csproj"
 
 def parse_command_line_arguments():
     parser = OptionParser()
@@ -17,6 +18,7 @@ def parse_command_line_arguments():
     parser.add_option("-b", "--build", action="store_true", dest="build", default=False, help="Build Project")
     parser.add_option("-t", "--test", action="store_true", dest="test", default=False, help="Test Project")
     parser.add_option("-d", "--run-development", action="store_true", dest="run_development", default=False, help="Run dotnet watch run to build/run a hot reloading development version of the backend")
+    parser.add_option("-a", "--run-azureadconnector", action="store_true", dest="run_azureadconnector", default=False, help="Run dotnet watch run to build/run a hot reloading development version of the Azure AD Connector.")
     parser.add_option("-o", "--output", dest="output", default="./out", help="Project output directory, defaults to ./out")
     parser.add_option("-C", "--configuration", dest="configuration", default="Debug", help="Project configuration type, defaults to Debug")
     return parser.parse_args()
@@ -38,7 +40,7 @@ def dotnetTest(configuration, output):
     print("Testing project")
     system(f"dotnet test {sln} --no-build --configuration {configuration} /p:OutputPath={output}")
 
-def dotnetWatchRun(configuration):
+def dotnetWatchRun(configuration, project):
     print("Running development version")
     system(f"dotnet watch run --project {project} --configuration {configuration}")
 
@@ -59,7 +61,10 @@ def main():
         dotnetTest(options.configuration, options.output)
 
     if options.run_development:
-        dotnetWatchRun(options.configuration)
+        dotnetWatchRun(options.configuration, backendProject)
+
+    if options.run_azureadconnector:
+        dotnetWatchRun(options.configuration, azureAdConnectorProject)
 
 if __name__ == "__main__":
     main()

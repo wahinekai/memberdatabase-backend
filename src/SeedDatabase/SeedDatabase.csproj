@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>WahineKai.MemberDatabase.Backend.Service</RootNamespace>
+    <RootNamespace>WahineKai.MemberDatabase.SeedDatabase</RootNamespace>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <AdditionalFiles Include="StyleCop.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AdditionalFiles>
   </ItemGroup>
 
@@ -21,21 +22,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="CsvHelper" Version="19.0.0" />
-    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="CountryData.Standard" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\ApiCommon\ApiCommon.csproj" />
     <ProjectReference Include="..\MemberDatabaseDTO\MemberDatabaseDTO.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CsvConverters\" />
-    <Folder Include="Models\" />
-    <Folder Include="Extensions\" />
-  </ItemGroup>
 </Project>
