@@ -57,14 +57,9 @@ namespace WahineKai.MemberDatabase.Backend.Host
             // This flag ensures that the ClaimsIdentity claims collection will be built from the claims in the token
             // JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            // Adds Microsoft Identity platform (AAD v2.0) support to protect this Api
+            // Add new authentication type
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(
-                    options =>
-                {
-                    this.Configuration.Bind("AzureAdB2C", options);
-                },
-                    options => { this.Configuration.Bind("AzureAdB2C", options); });
+                .AddMicrosoftIdentityWebApi(this.Configuration, configSectionName: "AzureAdB2C");
 
             // Require authentication on all controllers
             services.AddControllers(options =>
