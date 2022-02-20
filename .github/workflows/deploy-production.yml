@@ -10,7 +10,7 @@ jobs:
 
     env:
       REGISTRY: ghcr.io
-      ASPNETCORE_ENV: Production
+      ASPNETCORE_ENVIRONMENT: Production
       BACKEND_AZURE_APP: api-wahinekai-memberdatabase
       AZUREADCONNECTOR_AZURE_APP: azureadconnector-wahinekai-memberdatabase
       BACKEND_IMAGE: wahinekai/memberdatabase-backend
@@ -42,7 +42,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ env.RELEASE_VERSION }}
             ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
           build-args: |
-            ASPNETCORE_ENV=${{ env.ASPNETCORE_ENV }}
+            ASPNETCORE_ENVIRONMENT=${{ env.ASPNETCORE_ENVIRONMENT }}
 
       - name: Build and Push Azure AD Connector Docker Image
         uses: docker/build-push-action@v2
@@ -53,7 +53,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.AZUREADCONNECTOR_IMAGE }}:${{ env.RELEASE_VERSION }}
             ${{ env.REGISTRY }}/${{ env.AZUREADCONNECTOR_IMAGE }}:latest
           build-args: |
-            ASPNETCORE_ENV=${{ env.ASPNETCORE_ENV }}
+            ASPNETCORE_ENVIRONMENT=${{ env.ASPNETCORE_ENVIRONMENT }}
 
       - name: Login via Azure CLI
         uses: azure/login@v1
