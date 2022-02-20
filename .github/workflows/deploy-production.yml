@@ -39,8 +39,8 @@ jobs:
           push: true # Will only build if this is not here
           file: Dockerfile.backend
           tags: |
-            ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.RELEASE_VERSION }}
-            ${{ env.REGISTRY }}/${{ github.repository }}:latest
+            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ env.RELEASE_VERSION }}
+            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
           build-args: |
             ASPNETCORE_ENV=${{ env.ASPNETCORE_ENV }}
 
@@ -50,8 +50,8 @@ jobs:
           push: true # Will only build if this is not here
           file: Dockerfile.azureadconnector
           tags: |
-            ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.RELEASE_VERSION }}
-            ${{ env.REGISTRY }}/${{ github.repository }}:latest
+            ${{ env.REGISTRY }}/${{ env.AZUREADCONNECTOR_IMAGE }}:${{ env.RELEASE_VERSION }}
+            ${{ env.REGISTRY }}/${{ env.AZUREADCONNECTOR_IMAGE }}:latest
           build-args: |
             ASPNETCORE_ENV=${{ env.ASPNETCORE_ENV }}
 
