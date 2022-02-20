@@ -7,7 +7,9 @@
 
 namespace WahineKai.MemberDatabase.SeedDatabase.Contracts
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using WahineKai.MemberDatabase.Dto.Models;
 
     /// <summary>
     /// Contract for a database seeder
@@ -25,5 +27,11 @@ namespace WahineKai.MemberDatabase.SeedDatabase.Contracts
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task ClearAsync();
+
+        /// <summary>
+        /// Gets all users from the database.
+        /// </summary>
+        /// <returns>All of the users.</returns>
+        public Task<ICollection<AdminUser>> GetAllUsersAsync();
     }
 }

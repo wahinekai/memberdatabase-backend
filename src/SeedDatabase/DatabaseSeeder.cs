@@ -76,7 +76,7 @@ namespace WahineKai.MemberDatabase.SeedDatabase
                     NeedsNewMemberBag = true,
                     WonSurfboard = true,
                     DateSurfboardWon = new DateTime(2019, 12, 25),
-                    PostalCode = 92804,
+                    PostalCode = "92804",
                 },
                 new AdminUser
                 {
@@ -105,7 +105,7 @@ namespace WahineKai.MemberDatabase.SeedDatabase
                     EnteredInFacebookChapter = EnteredStatus.Entered,
                     EnteredInFacebookWki = EnteredStatus.Entered,
                     Positions = Positions.ToList(),
-                    PostalCode = 98607,
+                    PostalCode = "98607",
                 },
             };
 
@@ -184,5 +184,9 @@ namespace WahineKai.MemberDatabase.SeedDatabase
 
             this.logger.LogInformation($"Database clearing complete");
         }
+
+        /// <inheritdoc/>
+        public async Task<ICollection<AdminUser>> GetAllUsersAsync()
+            => await this.userRepository.GetAllUsersAsync();
     }
 }

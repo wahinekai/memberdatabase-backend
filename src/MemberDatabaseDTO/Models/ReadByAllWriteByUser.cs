@@ -55,7 +55,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
         /// <summary>
         /// Gets or sets the user's postal code, not required
         /// </summary>
-        public int? PostalCode { get; set; }
+        public string? PostalCode { get; set; }
 
         /// <summary>
         /// Gets or sets the user's country, not required.  Must belong to set of supported countries in settings.

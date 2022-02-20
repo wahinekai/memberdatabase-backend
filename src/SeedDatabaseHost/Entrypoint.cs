@@ -55,9 +55,19 @@ namespace WahineKai.MemberDatabase.SeedDatabase.Host
         {
             using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
             var seeder = new DatabaseSeeder(this.cosmosConfiguration, loggerFactory);
+            var logger = loggerFactory.CreateLogger("Seed Database");
 
-            await seeder.ClearAsync();
-            await seeder.SeedAsync();
+            // await seeder.ClearAsync();
+            // await seeder.SeedAsync();
+            var users = await seeder.GetAllUsersAsync();
+
+            foreach (var user in users)
+            {
+                if (!(user.PostalCode is null))
+                {
+                    logger.LogInformation(user.PostalCode);
+                }
+            }
         }
     }
 }
