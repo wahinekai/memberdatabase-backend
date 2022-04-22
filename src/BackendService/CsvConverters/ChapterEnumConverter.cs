@@ -46,6 +46,8 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
                     return Chapter.Hawaii;
                 case "maine" or "ne" or "new england" or "newengland":
                     return Chapter.NewEngland;
+                case "new jersey" or "nj" or "newjersey":
+                    return Chapter.NewJersey;
             }
 
             return Chapter.WahineKaiInternational;

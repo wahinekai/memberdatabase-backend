@@ -60,6 +60,12 @@ namespace WahineKai.MemberDatabase.Dto.Enums
         NewEngland,
 
         /// <summary>
+        /// New Jersey chapter
+        /// </summary>
+        [EnumMember(Value = "New Jersey")]
+        NewJersey,
+
+        /// <summary>
         /// Wahine Kai International member, no chapter
         /// </summary>
         [EnumMember(Value = "Wahine Kai International")]
