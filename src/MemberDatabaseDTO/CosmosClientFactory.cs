@@ -7,12 +7,9 @@
 
 namespace WahineKai.MemberDatabase.Dto
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.Azure.Cosmos;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using WahineKai.Common;
     using WahineKai.MemberDatabase.Dto.Contracts;
 
     /// <summary>
@@ -24,11 +21,6 @@ namespace WahineKai.MemberDatabase.Dto
         /// The options to be used when creating clients in this factory.
         /// </summary>
         private readonly CosmosClientOptions cosmosOptions;
-
-        /// <summary>
-        /// Dictionary of existing clients and their connection strings.
-        /// </summary>
-        private readonly IDictionary<string, CosmosClient> existingClients = new Dictionary<string, CosmosClient>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CosmosClientFactory"/> class.
@@ -48,18 +40,6 @@ namespace WahineKai.MemberDatabase.Dto
 
         /// <inheritdoc/>
         public CosmosClient GetCosmosClient(string connectionString)
-        {
-            connectionString = Ensure.IsNotNullOrWhitespace(() => connectionString);
-
-            // Return existing cosmos client if it exists
-            if (this.existingClients.ContainsKey(connectionString))
-            {
-                return this.existingClients[connectionString];
-            }
-
-            var newCosmosClient = new CosmosClient(connectionString, this.cosmosOptions);
-            this.existingClients.Add(connectionString, newCosmosClient);
-            return newCosmosClient;
-        }
+            => new (connectionString, this.cosmosOptions);
     }
 }
