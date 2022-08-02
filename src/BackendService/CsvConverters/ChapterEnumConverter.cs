@@ -40,6 +40,8 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
                     return Chapter.SantaCruzSanFrancisco;
                 case "oregon":
                     return Chapter.Oregon;
+                case "delnorteoregon" or "del norte oregon":
+                    return Chapter.DelNorteOregon;
                 case "washington" or "wa state":
                     return Chapter.Washington;
                 case "hawaii":

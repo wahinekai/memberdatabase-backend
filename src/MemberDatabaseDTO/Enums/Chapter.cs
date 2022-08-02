@@ -39,6 +39,12 @@ namespace WahineKai.MemberDatabase.Dto.Enums
         SantaCruzSanFrancisco,
 
         /// <summary>
+        /// Del Norte Oregon chapter
+        /// </summary>
+        [EnumMember(Value = "Del Norte Oregon")]
+        DelNorteOregon,
+
+        /// <summary>
         /// Oregon chapter
         /// </summary>
         Oregon,
