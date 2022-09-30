@@ -50,6 +50,15 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
                     return Chapter.NewEngland;
                 case "new jersey" or "nj" or "newjersey":
                     return Chapter.NewJersey;
+                case "staugustine" or "augustine" or "st augustine" or "st. augustine"
+                    or "st.augustine" or "florida" or "staugustineflorida" or "st augustine florida"
+                    or "augustineflorida" or "augustine florida" or "st. augustine florida"
+                    or "st.augustineflorida" or "fl":
+                    return Chapter.StAugustineFlorida;
+                case "new york" or "ny" or "newyork" or "rockawaybeach" or "rockaway beach"
+                    or "rockawaybeachnewyork" or "rockaway beach new york" or "rockaway"
+                    or "rockawaynewyork" or "rockaway new york":
+                    return Chapter.RockawayBeachNewYork;
             }
 
             return Chapter.WahineKaiInternational;

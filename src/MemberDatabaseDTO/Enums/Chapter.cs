@@ -72,6 +72,18 @@ namespace WahineKai.MemberDatabase.Dto.Enums
         NewJersey,
 
         /// <summary>
+        /// St. Augustine Florida chapter
+        /// </summary>
+        [EnumMember(Value = "St. Augustine Florida")]
+        StAugustineFlorida,
+
+        /// <summary>
+        /// Rockaway Beach New York chapter
+        /// </summary>
+        [EnumMember(Value = "Rockaway Beach New York")]
+        RockawayBeachNewYork,
+
+        /// <summary>
         /// Wahine Kai International member, no chapter
         /// </summary>
         [EnumMember(Value = "Wahine Kai International")]
