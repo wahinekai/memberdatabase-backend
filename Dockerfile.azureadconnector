@@ -13,7 +13,8 @@ RUN rm ./out/SeedDatabase*
 
 # Copy Over Correct JSON file set
 RUN rm -rf ./out/Properties*
-COPY ./src/AzureAdConnectorHost/Properties/*.json ./out/Properties
+RUN mkdir ./out/Properties
+COPY ./src/AzureAdConnectorHost/Properties/*.json ./out/Properties/
 
 # Build production runtime image
 FROM mcr.microsoft.com/dotnet/sdk:6.0
