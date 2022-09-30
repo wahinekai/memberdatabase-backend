@@ -113,8 +113,6 @@ namespace WahineKai.MemberDatabase.Backend.Host
             // Allow all authenticated requests
             app.UseCors(Startup.CorsPolicy);
 
-            app.UseMiddleware<RequestLoggingMiddleware>();
-
             // Allow authentication & authorization for endpoints
             app.UseAuthentication();
             app.UseAuthorization();
@@ -123,6 +121,8 @@ namespace WahineKai.MemberDatabase.Backend.Host
             {
                 endpoints.MapControllers();
             });
+
+            app.UseMiddleware<RequestLoggingMiddleware>();
         }
     }
 }
