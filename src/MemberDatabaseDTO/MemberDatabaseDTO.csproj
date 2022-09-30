@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>WahineKai.MemberDatabase.Dto</RootNamespace>
     <Nullable>enable</Nullable>
     <PackageId>WahineKai.MemberDatabase.Dto</PackageId>
@@ -24,22 +24,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.21.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="CountryData.Standard" Version="1.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="LinqKit" Version="1.1.21" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0-beta.1" />
-    <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.6" />
-    <PackageReference Include="Microsoft.Graph" Version="3.21.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.24.0" />
-    <PackageReference Include="Azure.Search.Documents" Version="11.3.0" />
-    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="Polly" Version="7.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.30.1" />
+    <PackageReference Include="CountryData.Standard" Version="1.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.1" />
+    <PackageReference Include="Azure.Identity" Version="1.7.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.42.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.47.1" />
+    <PackageReference Include="Azure.Search.Documents" Version="11.4.0" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    <PackageReference Include="Polly" Version="7.2.3" />
   </ItemGroup>
 
   <ItemGroup>

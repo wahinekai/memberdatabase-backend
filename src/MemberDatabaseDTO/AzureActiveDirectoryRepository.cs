@@ -8,9 +8,9 @@
 namespace WahineKai.MemberDatabase.Dto
 {
     using System.Threading.Tasks;
+    using Azure.Identity;
     using Microsoft.Extensions.Logging;
     using Microsoft.Graph;
-    using Microsoft.Graph.Auth;
     using Microsoft.Identity.Client;
     using WahineKai.Common;
     using WahineKai.MemberDatabase.Dto.Contracts;
@@ -41,15 +41,21 @@ namespace WahineKai.MemberDatabase.Dto
             // Copy over domain from configuration
             this.domain = Ensure.IsNotNullOrWhitespace(() => configuration.Domain);
 
-            // Build Graph Service Client
-            var confidentialClientApplication = ConfidentialClientApplicationBuilder
-                .Create(configuration.AppId)
-                .WithTenantId(configuration.TenantId)
-                .WithClientSecret(configuration.ClientSecret)
-                .Build();
+            // The client credentials flow requires that you request the
+            // /.default scope, and preconfigure your permissions on the
+            // app registration in Azure. An administrator must grant consent
+            // to those permissions beforehand.
+            var scopes = new[] { "https://graph.microsoft.com/.default" };
 
-            var authProvider = new ClientCredentialProvider(confidentialClientApplication);
-            this.graphServiceClient = new GraphServiceClient(authProvider);
+            var options = new TokenCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzurePublicCloud };
+
+            var clientSecretCredential = new ClientSecretCredential(
+                configuration.TenantId,
+                configuration.AppId,
+                configuration.ClientSecret,
+                options);
+
+            this.graphServiceClient = new GraphServiceClient(clientSecretCredential, scopes);
 
             this.Logger.LogTrace("Completed construction of Azure Active Directory Repository");
         }

@@ -1,5 +1,5 @@
 # Build Environment
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 
 # Restore and build
@@ -12,7 +12,7 @@ RUN rm ./out/Backend*
 RUN rm ./out/SeedDatabase*
 
 # Build production runtime image
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 
 # Set Runtime environment variables
 ARG ASPNETCORE_ENVIRONMENT
