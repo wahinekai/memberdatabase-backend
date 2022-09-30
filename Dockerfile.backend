@@ -11,6 +11,10 @@ RUN dotnet build ./src/MemberDatabase.sln --no-restore --configuration Release -
 RUN rm ./out/AzureAdConnector*
 RUN rm ./out/SeedDatabase*
 
+# Copy Over Correct JSON file set
+RUN rm -rf ./out/Properties*
+COPY ./src/BackendHost/Properties ./out
+
 # Build production runtime image
 FROM mcr.microsoft.com/dotnet/sdk:6.0
 
