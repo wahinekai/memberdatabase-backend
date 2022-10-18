@@ -183,7 +183,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
                     // Joined & Terminated requried, renewal null
                     this.JoinedDate = Ensure.IsNotNull(() => this.JoinedDate);
                     this.RenewalDate = null;
-                    this.TerminatedDate = Ensure.IsNotNull(() => this.JoinedDate);
+                    this.TerminatedDate = Ensure.IsNotNull(() => this.TerminatedDate);
                     break;
             }
 
