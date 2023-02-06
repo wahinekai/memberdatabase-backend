@@ -88,6 +88,11 @@ namespace WahineKai.MemberDatabase.Dto.Models
         public DateTime? StartedSurfing { get; set; }
 
         /// <summary>
+        /// Gets or sets the date a member started surfing
+        /// </summary>
+        public MemberStatus? Status { get; set; }
+
+        /// <summary>
         /// Gets or sets a member's boards
         /// </summary>
         public ICollection<string> Boards { get; set; } = new Collection<string>();
@@ -153,6 +158,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
             stringBuilder.AppendLine($"Photo Url: {this.PhotoUrl}");
             stringBuilder.AppendLine($"Biography: {this.Biography}");
             stringBuilder.AppendLine($"Started Surfing: {this.StartedSurfing}");
+            stringBuilder.AppendLine($"Member Status: {this.Status}");
             stringBuilder.AppendLine("Boards:");
 
             foreach (var board in this.Boards)

@@ -47,11 +47,17 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         [HttpGet]
         [ActionName("AllUsers.csv")]
         [Produces("text/csv")]
-        public async Task<ICollection<AdminUser>> DownloadCsvAsync()
+        public async Task<ICollection<AdminUserCSV>> DownloadCsvAsync()
         {
             this.Logger.LogDebug("Getting all users in a CSV");
             var users = await this.userService.GetAllUsersAsync(this.GetUserEmailFromContext());
-            return users;
+            List<AdminUserCSV> csvList = new List<AdminUserCSV>();
+            foreach (var user in users)
+            {
+                csvList.Add(AdminUserCSV.ConvertUserToCSV(user));
+            }
+                
+            return csvList;
         }
 
         /// <summary>
