@@ -7,11 +7,9 @@
 
 namespace WahineKai.MemberDatabase.Dto.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Globalization;
-    using System.Text;
-    using Newtonsoft.Json;
-    using WahineKai.Common;
     using WahineKai.Common.Contracts;
     using WahineKai.MemberDatabase.Dto.Enums;
 
@@ -102,12 +100,13 @@ namespace WahineKai.MemberDatabase.Dto.Models
 
         public string Boards { get; set; }
         public string SurfSpots { get; set; }
+        public string Positions { get; set; }
 
         /// <summary>
         /// Gets or sets TimeStamp Property from Cosmos DB
         /// </summary>
         [JsonProperty(PropertyName = "_ts")]
-        public long? TimeStamp { get; set; }
+        public long? TimeStamp { get; }
 
         public static AdminUserCSV ConvertUserToCSV(AdminUser user)
         {
@@ -131,16 +130,16 @@ namespace WahineKai.MemberDatabase.Dto.Models
             csvUser.Chapter = user.Chapter;
             csvUser.Birthdate = csvUser.ConvertDate(user.Birthdate);
             csvUser.Level = user.Level;
-            csvUser.StartedSurfing = user.StartedSurfing ;
+            csvUser.StartedSurfing = user.StartedSurfing;
             csvUser.Boards = string.Join(":", user.Boards);
-            csvUser.SurfSpots = string.Join(":",user.SurfSpots);
+            csvUser.SurfSpots = string.Join(":", user.SurfSpots);
             csvUser.PhotoUrl = user.PhotoUrl;
             csvUser.Biography = user.Biography;
             csvUser.Status = user.Status;
             csvUser.JoinedDate = csvUser.ConvertDate(user.JoinedDate);
             csvUser.RenewalDate = csvUser.ConvertDate(user.RenewalDate);
             csvUser.TerminatedDate = csvUser.ConvertDate(user.TerminatedDate);
-            csvUser.Positions = user.Positions;
+            csvUser.Positions = string.Join(":", user.Positions);
             csvUser.EnteredInFacebookChapter = user.EnteredInFacebookChapter;
             csvUser.EnteredInFacebookWki = user.EnteredInFacebookWki;
             csvUser.NeedsNewMemberBag = user.NeedsNewMemberBag;
@@ -149,7 +148,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
             csvUser.PostalCode = user.PostalCode;
             csvUser.SocialMediaOptOut = user.SocialMediaOptOut;
 
-            
+
             return csvUser;
         }
 
@@ -167,6 +166,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
             }
             return datestring;
         }
+
 
 
     }
