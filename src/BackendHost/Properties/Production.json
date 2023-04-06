@@ -21,9 +21,9 @@
   },
   "AzureSearch": {
     "Endpoint": "https://wahinekai-memberdatabase.search.windows.net",
-    "IndexName": "wahinekai-memberdatabase",
+    "IndexName": "wahinekai-memberdatabase0323",
     "ServiceKey": "<Our Azure Search API Key (set in Azure KeyVault, do not add here!!!)>",
-    "SuggesterName": "wahinekai-memberdatabase"
+    "SuggesterName": "wahinekai-memberdatabase0323"
   },
   "KeyVault": {
     "Url": "https://wahinekai-keyvault.vault.azure.net/"
