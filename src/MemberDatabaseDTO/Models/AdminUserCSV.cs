@@ -16,7 +16,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
     /// <summary>
     /// Model of a user with all fields - to be worked on by admin
     /// </summary>
-    public class AdminUserCSV : ReadByAllUser, IValidatable
+    public class AdminUserCSV
     {
         /// <summary>
         /// Gets or sets a value indicating whether a user is an admin user
@@ -37,16 +37,27 @@ namespace WahineKai.MemberDatabase.Dto.Models
         /// Gets or sets the user's street address, not required
         /// </summary>
         public string? StreetAddress { get; set; }
+        public string? City { get; private set; }
+        public string? Region { get; private set; }
+        public string? Country { get; private set; }
+        public string? Occupation { get; private set; }
+        public Chapter Chapter { get; private set; }
 
         /// <summary>
         /// Gets or sets the user's birth date - not required.
         /// </summary>
         public string? Birthdate { get; set; }
+        public Level? Level { get; private set; }
+        public DateTime? StartedSurfing { get; private set; }
 
         /// <summary>
         /// Gets the age of the user
         /// </summary>
         public int? Age { get; set; }
+        public string? Email { get; private set; }
+        public string? FirstName { get; private set; }
+        public string? LastName { get; private set; }
+        public string? FacebookName { get; private set; }
 
         /// <summary>
         /// Gets or sets the membership status of the user.
@@ -92,6 +103,7 @@ namespace WahineKai.MemberDatabase.Dto.Models
         /// Gets or sets the date a user has won a surfboard - null if the user hasn't won
         /// </summary>
         public string? DateSurfboardWon { get; set; }
+        public string? PostalCode { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a member has opted out of social media
@@ -100,6 +112,8 @@ namespace WahineKai.MemberDatabase.Dto.Models
 
         public string Boards { get; set; }
         public string SurfSpots { get; set; }
+        public string? PhotoUrl { get; private set; }
+        public string? Biography { get; private set; }
         public string Positions { get; set; }
 
         /// <summary>
