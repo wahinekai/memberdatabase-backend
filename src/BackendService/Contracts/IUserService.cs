@@ -27,6 +27,13 @@ namespace WahineKai.MemberDatabase.Backend.Service.Contracts
         public Task<ICollection<AdminUser>> GetAllUsersAsync(string userEmail);
 
         /// <summary>
+        /// Gets all users after checking that the user email given is an administrator
+        /// </summary>
+        /// <param name="userEmail">Email of the calling user</param>
+        /// <returns>A Collection of users</returns>
+        public Task<ICollection<AdminUser>> GetAllActiveUsersAsync(string userEmail);
+
+        /// <summary>
         /// Get the profile of the a user
         /// </summary>
         /// <param name="userEmail">E-mail address of the user to get</param>

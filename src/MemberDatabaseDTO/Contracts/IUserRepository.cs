@@ -47,6 +47,12 @@ namespace WahineKai.MemberDatabase.Dto.Contracts
         public Task<ICollection<T>> GetAllUsersAsync();
 
         /// <summary>
+        /// Gets all active users from the repository
+        /// </summary>
+        /// <returns>A collection of Active users</returns>
+        public Task<ICollection<T>> GetAllActiveUsersAsync();
+
+        /// <summary>
         /// Adds a user to the database
         /// </summary>
         /// <param name="user">The user to add to the database</param>

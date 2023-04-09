@@ -149,6 +149,31 @@ namespace WahineKai.MemberDatabase.Dto
         }
 
         /// <inheritdoc/>
+        public async Task<ICollection<T>> GetAllActiveUsersAsync()
+        {
+            this.Logger.LogDebug("Getting all active users from Cosmos DB");
+
+            using var iterator = await this.WithRetriesAsync<FeedIterator<T>, CosmosException>(
+                () => this.container.GetItemQueryIterator<T>("SELECT * FROM Users u where NOT IS_DEFINED(u.TerminatedDate)"));
+
+            var users = new Collection<T>();
+
+            while (iterator.HasMoreResults)
+            {
+                foreach (var user in await iterator.ReadNextAsync())
+                {
+                    Ensure.IsNotNull(() => user);
+                    user.Validate();
+
+                    users.Add(user);
+                }
+            }
+
+            this.Logger.LogInformation($"Got {users.Count} active users from Cosmos DB");
+
+            return users;
+        }
+        /// <inheritdoc/>
         public async Task<IList<T>> GetUsersByIdCollectionAsync(IEnumerable<Guid> idList)
         {
             // Sanity check input
