@@ -154,7 +154,7 @@ namespace WahineKai.MemberDatabase.Dto
             this.Logger.LogDebug("Getting all active users from Cosmos DB");
 
             using var iterator = await this.WithRetriesAsync<FeedIterator<T>, CosmosException>(
-                () => this.container.GetItemQueryIterator<T>("SELECT * FROM Users u where NOT IS_DEFINED(u.TerminatedDate)"));
+                () => this.container.GetItemQueryIterator<T>("SELECT * FROM Users u where u.Status <> \"Terminated\")"));
 
             var users = new Collection<T>();
 
