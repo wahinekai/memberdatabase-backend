@@ -124,6 +124,27 @@ namespace WahineKai.MemberDatabase.Backend.Service
             this.Logger.LogTrace($"Got {users.Count} users from the user repository");
 
             return users;
+         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public async Task<ICollection<AdminUser>> GetAllActiveUsersAsync(string userEmail)
+        {
+            // Sanity check input
+            userEmail = Ensure.IsNotNullOrWhitespace(() => userEmail);
+
+            await this.EnsureCallingUserPermissionsAsync(userEmail);
+
+            this.Logger.LogDebug("Getting all active users from repository");
+
+            var users = await this.userRepository.GetAllActiveUsersAsync();
+
+            this.Logger.LogTrace($"Got {users.Count} users from the user repository");
+
+            return users;
         }
 
         /// <inheritdoc/>

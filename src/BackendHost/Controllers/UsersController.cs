@@ -61,6 +61,25 @@ namespace WahineKai.MemberDatabase.Backend.Host.Controllers
         }
 
         /// <summary>
+        /// Returns a CSV file of all non terminated users
+        /// </summary>
+        /// <returns>A CSV file</returns>
+        [HttpGet]
+        [ActionName("AllActiveUsers.csv")]
+        [Produces("text/csv")]
+        public async Task<ICollection<AdminUserCSV>> DownloadActiveCsvAsync()
+        {
+            this.Logger.LogDebug("Getting all users in a CSV");
+            var users = await this.userService.GetAllActiveUsersAsync(this.GetUserEmailFromContext());
+            List<AdminUserCSV> csvList = new List<AdminUserCSV>();
+            foreach (var user in users)
+            {
+                csvList.Add(AdminUserCSV.ConvertUserToCSV(user));
+            }
+
+            return csvList;
+        }
+        /// <summary>
         /// Imports CSV file
         /// </summary>
         /// <returns>Import Return</returns>
