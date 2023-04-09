@@ -152,9 +152,13 @@ namespace WahineKai.MemberDatabase.Dto
         public async Task<ICollection<T>> GetAllActiveUsersAsync()
         {
             this.Logger.LogDebug("Getting all active users from Cosmos DB");
+            var parameterizedQuery = new QueryDefinition(
+                query: "SELECT * FROM Users u WHERE u.Status <> @status"
+            )
+            .WithParameter("@status", "Terminated");
 
             using var iterator = await this.WithRetriesAsync<FeedIterator<T>, CosmosException>(
-                () => this.container.GetItemQueryIterator<T>("SELECT * FROM Users u where NOT IS_DEFINED(u.TerminatedDate)"));
+                () => this.container.GetItemQueryIterator<T>(queryDefinition:parameterizedQuery));
 
             var users = new Collection<T>();
 
