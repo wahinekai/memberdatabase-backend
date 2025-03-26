@@ -15,6 +15,12 @@ namespace WahineKai.MemberDatabase.Dto.Enums
     public enum Chapter
     {
         /// <summary>
+        /// Corpus Christi chapter of Wahine Kai
+        /// </summary>
+        [EnumMember(Value = "Corpus Christi")]
+        CorpusChristi,
+
+        /// <summary>
         /// Virginia Beach chapter of Wahine Kai
         /// </summary>
         [EnumMember(Value = "Virginia Beach")]

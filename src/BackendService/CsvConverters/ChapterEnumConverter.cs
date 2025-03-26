@@ -28,7 +28,9 @@ namespace WahineKai.MemberDatabase.Backend.Service.CsvConverters
         {
             switch (text.ToLower())
             {
-                case "virginia beach":
+                case "corpus christi":
+                    return Chapter.CorpusChristi;
+                 case "virginia beach":
                     return Chapter.VirginiaBeach;
                 case "san diego" or "sandiego" or "sd":
                     return Chapter.SanDiego;
