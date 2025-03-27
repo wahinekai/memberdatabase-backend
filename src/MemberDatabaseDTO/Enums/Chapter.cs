@@ -10,7 +10,7 @@ namespace WahineKai.MemberDatabase.Dto.Enums
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Chapters of Wahine Kai
+    /// Chapters of Wahine Kai add new ones here
     /// </summary>
     public enum Chapter
     {
